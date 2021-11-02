@@ -1,6 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import axios from "axios";
 
+function getTest() {
+  axios
+    .get("http://localhost:8000/", { crossdomain: true })
+    .then((response) => {
+      console.log(response);
+    });
+}
 function App() {
   return (
     <div className="App">
@@ -17,6 +25,7 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={getTest}>Get Test</button>
       </header>
     </div>
   );
