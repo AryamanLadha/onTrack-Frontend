@@ -1,24 +1,20 @@
-//how to use
-//font: ${({ theme }) => theme.font.display1};
-// color: ${({ theme }) => theme.color.primary};
-
 const color = {
-    // colors
-  };
-  
-  /**
-   * bold: 700
-   * medium: 600
-   * regular: 400
-   * light: 300
-   */
-  const font = {
-    // fonts 
-  };
-  
-  const theme = {
-    color,
-    font,
-  };
-  
-  export default theme;
+  button: "#C4C4C4",
+};
+
+/**
+* bold: 700
+* medium: 600
+* regular: 400
+* light: 300
+*/
+const font = {
+  button: "normal 400 25px/25px 'Work Sans'",
+};
+
+const theme = {
+  color,
+  font,
+};
+
+export default theme;

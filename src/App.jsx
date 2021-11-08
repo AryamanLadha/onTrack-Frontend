@@ -1,4 +1,6 @@
 import axios from "axios";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./styles/theme";
 
 function getTest() {
   axios
@@ -9,11 +11,13 @@ function getTest() {
 }
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={getTest}>Get Test</button>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <header className="App-header">
+          <button onClick={getTest}>Get Test</button>
+        </header>
+      </div>
+    </ThemeProvider>
   );
 }
 
