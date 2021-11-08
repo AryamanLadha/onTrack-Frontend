@@ -17,7 +17,7 @@ function App() {
       <div className="App">
         <header className="App-header">
           <button onClick={getTest}>Get Test</button>
-          <PageButton />
+          <PageButton text={"next"} size={"long"}/>
         </header>
       </div>
     </ThemeProvider>
