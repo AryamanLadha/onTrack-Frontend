@@ -1,8 +1,9 @@
 import axios from "axios";
+import SearchBar from "./components/SearchBar"
 
 function getTest() {
   axios
-    .get("http://localhost:8000/", { crossdomain: true })
+    .get("localhost:8000/", { crossdomain: true })
     .then((response) => {
       console.log(response);
     });
@@ -12,6 +13,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <button onClick={getTest}>Get Test</button>
+        <SearchBar />
       </header>
     </div>
   );
