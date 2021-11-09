@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./styles/theme";
+import CourseCard from "./components/CourseCard";
 
 function getTest() {
   axios
@@ -15,6 +16,7 @@ function App() {
       <div className="App">
         <header className="App-header">
           <button onClick={getTest}>Get Test</button>
+          <CourseCard name={"CS32"} />
         </header>
       </div>
     </ThemeProvider>
