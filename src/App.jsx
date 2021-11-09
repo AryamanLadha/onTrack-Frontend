@@ -1,5 +1,4 @@
 import axios from "axios";
-import { PageButton } from "./components";
 import GlobalStyle from "./styles/GlobalStyle";
 
 
@@ -18,7 +17,6 @@ function App() {
       <div className="App">
         <header className="App-header">
           <button onClick={getTest}>Get Test</button>
-          <PageButton text={"Next"} size={"long"}/>
         </header>
       </div>
     </>
