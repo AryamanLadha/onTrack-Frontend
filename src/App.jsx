@@ -1,7 +1,7 @@
 import axios from "axios";
 import { PageButton } from "./components";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "./styles/theme";
+import GlobalStyle from "./styles/GlobalStyle";
+
 
 function getTest() {
   axios
@@ -13,14 +13,15 @@ function getTest() {
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <>
+      <GlobalStyle />
       <div className="App">
         <header className="App-header">
           <button onClick={getTest}>Get Test</button>
-          <PageButton text={"next"} size={"long"}/>
+          <PageButton text={"Next"} size={"long"}/>
         </header>
       </div>
-    </ThemeProvider>
+    </>
   );
 }
 
