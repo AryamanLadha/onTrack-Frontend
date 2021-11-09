@@ -1,6 +1,6 @@
 import axios from "axios";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "./styles/theme";
+import GlobalStyle from "./styles/GlobalStyle";
+
 
 function getTest() {
   axios
@@ -9,15 +9,17 @@ function getTest() {
       console.log(response);
     });
 }
+
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <>
+      <GlobalStyle />
       <div className="App">
         <header className="App-header">
           <button onClick={getTest}>Get Test</button>
         </header>
       </div>
-    </ThemeProvider>
+    </>
   );
 }
 
