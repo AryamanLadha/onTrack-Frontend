@@ -10,7 +10,8 @@ const color = {
 */
 
 const font = {
-  button: "normal 400 2.5rem/2.5rem 'Work Sans'",
+  button: "normal 400 25px/25px 'Work Sans'",
+  courseCard: "normal 400 20px/20px 'Arial'"
 };
 
 const theme = {
