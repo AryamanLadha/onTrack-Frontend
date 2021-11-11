@@ -9,12 +9,12 @@ import { makeStyles } from "@mui/styles"
 const useStyles = makeStyles (theme => ({
     courseCard: {
         backgroundColor: theme.color.button,
-        width: '175px',
-        height: '175px',
-        borderRadius: '25px', 
+        width: '17.5rem',
+        height: '17.5rem',
+        borderRadius: '2.5rem', 
         textAlign: 'center',
         verticalAlign: 'middle',
-        lineHeight: '175px',
+        lineHeight: '17.5rem',
         font: theme.font.courseCard,
     }
 }));

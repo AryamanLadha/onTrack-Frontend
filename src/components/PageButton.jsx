@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import ButtonUnstyled from "@mui/core/ButtonUnstyled";
 import { makeStyles } from "@mui/styles"
 
@@ -16,8 +17,14 @@ const useStyles = makeStyles(theme => ({
 
 export default function PageButton({...props}) {
   const classes = useStyles(props);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/courses');
+  };
+
   return (
-    <ButtonUnstyled className={classes.button}>
+    <ButtonUnstyled className={classes.button} onClick={handleClick}>
       {props.text}
     </ButtonUnstyled>
   );

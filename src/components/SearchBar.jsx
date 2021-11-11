@@ -1,46 +1,56 @@
 import * as React from "react";
 import SearchIcon from "../assets/icons/Vector.svg";
-import InputBase from "@mui/material/InputBase";
-import { styled } from "@mui/styles"
+import FormControl from "@mui/material/FormControl";
+import { makeStyles } from "@mui/styles";
 
 
-const SearchBox = styled(InputBase)({
-  width: '100%',
-  padding: '65px',
+const useStyles = makeStyles(theme =>({
+  searchBox: {
+    width: "100%", 
 
-  '& input': {
-    '&::placeholder' : {
-      color: '#000000 !important',
+    '& input': {
+      background: theme.color.lightgrey,
+      height: "5rem",
+      font: theme.font.searchBar,
+      '&::placeholder' : {
+        font: theme.font.searchBar,
+        color: '#000000 !important',
+      }
+    }
+  }, 
+  
+  SearchBoxWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    width: "85rem",
+    height: "7.5rem",
+    paddingLeft: "6.5rem",
+    background: theme.color.lightgrey,
+    boxSizing: "border-box",
+    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+    borderRadius: "37.5px",
+
+    '& img' : {
+      position: "relative",
+      left: "-5rem",
+      width: '38px',
+      height: '38px',
     }
   }
-});
-
-const SearchBoxWrapper = styled('div')({
-  width: '850px',
-  height: '75px',
-  padding: '20px',
-  background: '#E7E7E7',
-  border: '1px solid #000000',
-  boxSizing: 'border-box',
-  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-  borderRadius: '37.5px',
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-
-  '& img' : {
-    width: '38px',
-    height: '38px',
-  }
-})
+}));
 
 export default function SearchBar() {
+  const classes = useStyles();
+
   return (
-    <SearchBoxWrapper>
-      <SearchBox
-        placeholder="What courses have you taken?" 
-      />
+    <div className={classes.SearchBoxWrapper}>
+      <FormControl
+        className={classes.searchBox}
+      >
+        <input placeholder="What courses have you taken?" />
+      </FormControl>
       <img src={SearchIcon} alt="searchIcon"/>
-    </SearchBoxWrapper>
+    </div>
   );
 }

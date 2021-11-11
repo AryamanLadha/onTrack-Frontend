@@ -1,5 +1,7 @@
 const color = {
     button: "#C4C4C4",
+    black: "#000000",
+    lightgrey: "#E7E7E7",
   };
 
 /**
@@ -10,8 +12,11 @@ const color = {
 */
 
 const font = {
-  button: "normal 400 25px/25px 'Work Sans'",
-  courseCard: "normal 400 20px/20px 'Arial'"
+  button: "normal 400 2.5rem/2.5rem 'Work Sans'",
+  searchBar: "italic 400 2rem/2rem 'Work Sans'",
+  courseCard: "normal 400 2rem/2rem 'Arial'",
+  title: "normal 700 4.5rem/4.5rem 'Work Sans'",
+  subtitle: "normal 400 2rem/2rem 'Work Sans'",
 };
 
 const theme = {
