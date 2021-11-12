@@ -4,7 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-// Pass string array like this as prop
+// Pass string array like this to props
 const majorsData = [
   "African American Studies",
   "African and Middle Eastern Studies",
