@@ -12,7 +12,7 @@ function getTest() {
     });
 }
 
-function App({major, changeMajor}) {
+function App({major, changeMajor, courses, getCourses}) {
   return (
     <>
       <GlobalStyle />
@@ -21,6 +21,8 @@ function App({major, changeMajor}) {
           <button onClick={getTest}>Get Test</button>
           <div>{major}</div>
           <button onClick={() => changeMajor('Poetry')}>Change Major to Poetry</button>
+          <div>Courses from the API are: {courses}</div>
+          <button onClick={() => getCourses()}>Get Courses</button>
         </header>
       </div>
     </>
@@ -29,13 +31,15 @@ function App({major, changeMajor}) {
 
 const mapStateToProps = (state) => {
   return ({
-    major: state.major
+    major: state.major,
+    courses: state.courses
   })
 };
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    changeMajor: (newMajor) => dispatch({type: 'CHANGE_MAJOR', payload:{newMajor}})
+    changeMajor: (newMajor) => dispatch({type: 'CHANGE_MAJOR', payload:{newMajor}}),
+    getCourses:  () => dispatch({type: 'GET_COURSES', payload:{}})
   });
 
 }
