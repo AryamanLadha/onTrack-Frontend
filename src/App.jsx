@@ -1,10 +1,9 @@
 import axios from "axios";
 import GlobalStyle from "./styles/GlobalStyle";
 
-
 function getTest() {
   axios
-    .get("localhost:8000/", { crossdomain: true })
+    .get("http://localhost:8000/", { crossdomain: true })
     .then((response) => {
       console.log(response);
     });
