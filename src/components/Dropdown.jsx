@@ -18,6 +18,7 @@ export default function Dropdown(props) {
   const handleChange = (event) => {
     setMajor(event.target.value);
   };
+  
   return (
     <div>
       <FormControl fullWidth>
