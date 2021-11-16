@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { makeStyles } from "@mui/styles"
 import { CourseCard, SearchBar, PageButton } from "../components"
 
@@ -8,7 +8,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     flexDirection: "column",
     width: "100vw",
-    height: "100vh",
   },
 
   header: {
@@ -17,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     width: "100rem", 
     height: "8.5rem",
-    marginTop: "15.4rem",
+    marginTop: "5rem",
     marginBottom: "4.9rem",
   },
 
@@ -35,38 +34,30 @@ const useStyles = makeStyles(theme => ({
     marginTop: "1rem",
   },
 
-  courseCardContainer: {
+  courseCardWrapper: {
     display: "flex",
     flexDirection: "column",
     marginTop: "5.6rem",
-    marginBottom: "13.5rem",
+    marginBottom: "6rem",
     width: "87.6rem",
-    height: "23.5rem",
     font: theme.font.button,
   },
 
-  courseCardCarousel: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+  courseCardContainer: {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, 1fr)",
     marginTop: "3rem",
   }
 }))
 
-const courses = [
-    "Psych 85",
-    "Psych 85",
-    "Psych 85",
-    "Psych 85",
-];
 
-function EnterCourses() {
+function EnterCourses({ courses }) {
   const classes = useStyles();
-  const courseCardArray = courses.map((course) => {
-    return (
-      <CourseCard name={course}/>
-    )
-  })
+  const [numRows, setNumRows] = useState(0);
+
+  useEffect(() => {
+    setNumRows(parseInt(courses.length/4)+1);
+  }, [courses]);
 
   return (
 		<div className={classes.layout}>
@@ -79,11 +70,14 @@ function EnterCourses() {
         </span>
 			</header>
       <SearchBar />
-      <div className={classes.courseCardContainer}>
-        <p>Popular courses for this major</p>
-        <div className={classes.courseCardCarousel}>
-          {courseCardArray}
-        </div>
+      <div className={classes.courseCardWrapper}>
+        {Array.from(Array(numRows).keys()).map((i) => (
+          <div key={i} className={classes.courseCardContainer}>
+            {courses.slice(i*4, (i+1)*4).map((course, idx) => (
+              <CourseCard key={idx} name={course} />
+            ))}
+           </div>
+        ))}
       </div>
       <PageButton text={"next"} size={"long"}/>
 		</div>

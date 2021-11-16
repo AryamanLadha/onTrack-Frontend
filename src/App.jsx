@@ -3,6 +3,16 @@ import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EnterCourses from "./pages/EnterCourses";
 
+const courses = [
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+];
 
 function App() {
   return (
@@ -10,7 +20,7 @@ function App() {
       <GlobalStyle />
       <Router>
         <Routes>
-          <Route exact path="/courses" element={<EnterCourses />} />
+          <Route exact path="/courses" element={<EnterCourses courses={courses}/>} />
         </Routes>
       </Router>
     </>
