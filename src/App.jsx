@@ -1,24 +1,28 @@
-import axios from "axios";
+import React from "react";
 import GlobalStyle from "./styles/GlobalStyle";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import EnterCourses from "./pages/EnterCourses";
 
-
-function getTest() {
-  axios
-    .get("localhost:8000/", { crossdomain: true })
-    .then((response) => {
-      console.log(response);
-    });
-}
+const courses = [
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+];
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <div className="App">
-        <header className="App-header">
-          <button onClick={getTest}>Get Test</button>
-        </header>
-      </div>
+      <Router>
+        <Routes>
+          <Route exact path="/courses" element={<EnterCourses courses={courses}/>} />
+        </Routes>
+      </Router>
     </>
   );
 }
