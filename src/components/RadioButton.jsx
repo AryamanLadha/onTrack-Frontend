@@ -6,36 +6,49 @@ import Radio from '@mui/material/Radio';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from "@mui/styles"
 
-const useStyles = makeStyles((theme) => ({
-    freshman: {
-        font: theme.font.subtitle,
-        backgroundColor: theme.color.lightgrey, 
-    },
-    Laura: {
-        font: theme.font.subtitle,
-    },
+
+const useStyles = makeStyles((theme) => ({ 
+  formControl: {
+    font: theme.font.title,
+    width: "15.2rem",
+    height: "8.8rem",
+  },
+  freshman: {
+    font: theme.font.radioButton,
+    backgroundColor: theme.color.lightgrey, 
+  },
+  font: {
+    font: theme.font.radioButton,
+  },
 }));
 
 export default function RadioButton() 
 {
   const classes = useStyles();
   return(
-    <FormControl 
-      component="fieldset"
-    >
+    <FormControl className={classes.formControl}>
       <RadioGroup
         name="radio-buttons-group"
       >
-        <div className={classes.Laura}> Laura </div> 
         <FormControlLabel   
           value="Freshman" 
           control={<Radio />} 
-          label={<Typography variant="caption">Freshman</Typography>} 
+          label={
+          <Typography 
+            className={classes.font} 
+            variant="caption">
+            Freshman
+          </Typography>} 
         />
         <FormControlLabel 
           value="Transfer" 
           control={<Radio />} 
-          label={<Typography variant="caption">Transfer</Typography>} 
+          label={
+          <Typography 
+            className={classes.font} 
+            variant="caption">
+              Transfer
+            </Typography>} 
         />
       </RadioGroup>
     </FormControl>
