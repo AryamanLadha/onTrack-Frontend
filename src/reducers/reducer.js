@@ -1,22 +1,10 @@
-import axios from "axios";
+
 const initState = {
     major: 'History',
-    courses: []
-}
-
-//Every action is an object of the following type:
-// {
-// type:
-// payload:
-// }
-
-
-const getCourses = () => {
-    axios
-    .get("localhost:8000/api/courses", { crossdomain: true })
-    .then((response) => {
-        return response
-    })
+    courses: 'N\\A',
+    eligibleCourses: [],
+    year: '2019',
+    allMajors: "Not received yet"
 }
 
 const reducer = (state = initState,action) => {
@@ -28,13 +16,18 @@ const reducer = (state = initState,action) => {
         });
     }
 
-    if(action.type === 'GET_ALL_COURSES'){
-        const courses = getCourses()
-        console.log('Courses are: ', courses);
+    if(action.type === 'GET_COURSES_SUCCESS'){
         return ({
             ...state,
-            courses: courses
+            courses: action.payload.courses
         })
+    }
+
+    if(action.type === 'GET_MAJORS_SUCCESS'){
+        return ({
+            ...state,
+            allMajors: action.payload.allMajors
+        });
     }
     return state
 }
