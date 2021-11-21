@@ -1,7 +1,7 @@
 
 const initState = {
     major: null,
-    courses: []
+    courses: [],
     eligibleCourses: [],
     year: null,
     allMajors: []
