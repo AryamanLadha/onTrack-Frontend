@@ -1,10 +1,10 @@
 
 const initState = {
-    major: 'History',
-    courses: 'N\\A',
+    major: null,
+    courses: []
     eligibleCourses: [],
-    year: '2019',
-    allMajors: "Not received yet"
+    year: null,
+    allMajors: []
 }
 
 const reducer = (state = initState,action) => {
