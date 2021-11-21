@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-const displayData = [
+const majors = [
   { name: "African American Studies" },
   { name: "African and Middle Eastern Studies" },
   { name: "American Indian Studies" },
@@ -10,38 +10,32 @@ const displayData = [
   { name: "Ancient Near East and Egyptology" },
 ];
 
-let selected = [];
-
 export default function AutoDropdown() {
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = useState("");
+  const options = majors.map((option) => option.name);
+
+  useEffect(() => {
+    console.log(options);
+  })
 
   return (
-    <div>
-      {selected.map((itemName) => {
-        return <div>{itemName}</div>;
-      })}
-      <h1>Enter your major(s)</h1>
-      <br />
-      <Autocomplete
-        multiple
+    <>
+      <Autocomplete   
         id="tags-standard"
+        hiddenLabel="true"
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
-          selected.map
         }}
-        options={displayData}
-        getOptionLabel={(option) => option.name}
-        //defaultValue={[option[0]]}
+        options={options}
+        getOptionLabel={(option) => option}
         renderInput={(params) => (
           <TextField
             {...params}
             variant="standard"
-            label="Majors"
-            //placeholder="Favorites"
           />
         )}
       />
-    </div>
+    </>
   );
 }

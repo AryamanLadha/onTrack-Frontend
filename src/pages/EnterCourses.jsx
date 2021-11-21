@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { makeStyles } from "@mui/styles"
-import { CourseCard, SearchBar, PageButton } from "../components"
+import { CourseCard, PageButton, AutoDropdown } from "../components"
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -69,14 +69,14 @@ function EnterCourses({ courses }) {
           One last step....We promise.
         </span>
 			</header>
-      <SearchBar />
+      <AutoDropdown />
       <div className={classes.courseCardWrapper}>
         {Array.from(Array(numRows).keys()).map((i) => (
           <div key={i} className={classes.courseCardContainer}>
             {courses.slice(i*4, (i+1)*4).map((course, idx) => (
               <CourseCard key={idx} name={course} />
             ))}
-           </div>
+          </div>
         ))}
       </div>
       <PageButton text={"next"} size={"long"}/>
