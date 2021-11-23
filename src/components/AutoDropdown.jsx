@@ -17,22 +17,34 @@ const useStyles = makeStyles(theme =>({
       padding: "0rem 6rem 0rem 6rem",
       background: theme.color.lightgrey,
       boxSizing: "border-box",
-      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
       borderRadius: "3.75rem",
       font: theme.font.searchBar,
       '&::placeholder' : {
         font: theme.font.searchBar,
         color: '#000000 !important',
       }
+    },
+    
+  },
+
+  defaultMenu: {
+    height: "5rem",
+    background: theme.color.lightgrey,
+    font: theme.font.subtitle,
+    borderRadius: "2rem",
+    boxShadow: "none !important",
+
+    "& .MuiPaper-root": {
+      
     }
   },
 
   selectionMenu: {
-    height: "25rem",
-    borderTop: "2px solid white !important",
+    height: "5rem",
+    borderTop: "0.1rem solid white",
     background: theme.color.lightgrey,
     font: theme.font.subtitle,
-    borderRadius: "3.75rem",
+    borderRadius: "2rem",
     boxShadow: "none !important",
   },
 
@@ -41,15 +53,18 @@ const useStyles = makeStyles(theme =>({
     overflow: "auto",
     background: theme.color.lightgrey,
     font: theme.font.subtitle,
-    borderRadius: "1rem",
-    boxShadow: "none",
+    borderRadius: "2rem",
+    boxShadow: "none !important",
 
     '& li': {
-      margin: "2.4rem 1.5rem",
+      height: "5rem",
+      padding: "0.3rem 0.9rem",
+      margin: "0.3rem 1rem",
+      borderRadius: "1.5rem",
     },
 
-    '& li [aria-expanded="true"]' : {
-      backgroundColor: "blue !important",
+    '& li[aria-selected="true"]' : {
+      background: theme.color.grey,
     }
   },
 }));
@@ -64,14 +79,13 @@ const majors = [
 ];
 
 
-
 export default function AutoDropdown() {
   const [open, setOpen] = useState(false);
   const options = majors.map((option) => option.name);
   const classes = useStyles(open);
   const customPopper = function(props) {
     return (
-      <Popper {...props} placement="bottom-start" />
+      <Popper {...props} className={classes.defaultMenu} placement="bottom-start" />
     )
   }
   const customPaper = function(props) {
@@ -80,23 +94,24 @@ export default function AutoDropdown() {
     )
   }
 
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
   useEffect(() => {
   }, [open])
 
   return (
     <>
       <Autocomplete
-        className={classes.OpenWrapper}
+        className={
+          classes.OpenWrapper
+        }
+        classes={{
+          option: classes.option
+        }}
         id="dropdown"
+        // open={open}
         PopperComponent={customPopper}
         PaperComponent={customPaper}
+        freeSolo={true}
         options={options}
-        open={open}
-        onOpen={handleOpen}
         multiple={true}
         ListboxProps={{ className : classes.eachMenu }}
         renderInput={(params) => (
@@ -104,7 +119,7 @@ export default function AutoDropdown() {
             <input 
               className={classes.selectionMenu}
               type="text" 
-              placeholder="Enter your major"
+              placeholder={"What courses have you taken?"}
               {...params.inputProps} 
             />
           </div>

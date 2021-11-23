@@ -9,7 +9,7 @@ const theme = createTheme({
     subtitle: "normal 400 2rem/2rem 'Work Sans'",
   },
   color: {
-    button: "#C4C4C4",
+    grey: "#C4C4C4 !important",
     black: "#000000",
     lightgrey: "#E7E7E7",
   }
