@@ -94,6 +94,10 @@ export default function AutoDropdown() {
     )
   }
 
+  const handleOpen = () => {
+    setOpen(!open);
+  }
+
   useEffect(() => {
   }, [open])
 
@@ -107,7 +111,7 @@ export default function AutoDropdown() {
           option: classes.option
         }}
         id="dropdown"
-        // open={open}
+        open={open}
         PopperComponent={customPopper}
         PaperComponent={customPaper}
         freeSolo={true}
@@ -117,6 +121,7 @@ export default function AutoDropdown() {
         renderInput={(params) => (
           <div ref={params.InputProps.ref}>
             <input 
+              onClick={handleOpen}
               className={classes.selectionMenu}
               type="text" 
               placeholder={"What courses have you taken?"}
