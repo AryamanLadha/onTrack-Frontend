@@ -10,6 +10,7 @@ const theme = createTheme({
     radioButton: "normal 400 2rem/2rem 'Work Sans' !important",
   },
   color: {
+    button: "#C4C4C4",
     grey: "#C4C4C4 !important",
     black: "#000000",
     lightgrey: "#E7E7E7",

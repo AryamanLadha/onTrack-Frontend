@@ -42,8 +42,7 @@ const useStyles = (open, empty) => makeStyles(theme =>({
   selectionMenu: {
     offset: "0rem, 0rem, 0rem, 0rem",
     width: "29rem",
-    marginTop: "1rem",
-    marginLeft: "-2rem",
+    marginTop: ".5rem",
     borderTop: "0.5rem solid white",
     borderRadius: "2rem 2rem 0rem 0rem",
     boxShadow: "none !important",
