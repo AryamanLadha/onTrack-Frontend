@@ -69,7 +69,7 @@ function EnterCourses({ courses }) {
           One last step....We promise.
         </span>
 			</header>
-      <AutoDropdown />
+      <AutoDropdown whichPage={'courses'}/>
       <div className={classes.courseCardWrapper}>
         {Array.from(Array(numRows).keys()).map((i) => (
           <div key={i} className={classes.courseCardContainer}>
