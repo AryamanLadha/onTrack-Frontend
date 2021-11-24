@@ -1,8 +1,10 @@
-import React from "react";
-import InputLabel from "@mui/material/InputLabel";
+import React, { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import InputBase from '@mui/material/InputBase';
+import { makeStyles } from "@mui/styles";
+import { red } from "@mui/material/colors";
 
 // Pass string array like this to props
 const majorsData = [
@@ -13,24 +15,104 @@ const majorsData = [
   "Ancient Near East and Egyptology",
 ];
 
+const useStyles = (open, empty) => makeStyles(theme =>({
+  input: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    width: "29rem",
+    height: "6rem",
+    padding: "1rem 2rem 0rem 2rem",
+    background: theme.color.lightgrey,
+    boxSizing: "border-box",
+    borderRadius: open ? "1.5rem 1.5rem 0rem 0rem" : "1.5rem",
+
+    '& .MuiInputBase-input': {
+      font: empty ? theme.font.searchBar : theme.font.subtitle,
+    },
+
+    '& .Mui-focused': {
+      outline:"none",
+      background:"none",
+    },
+
+    '& .MuiSelect-icon': {
+      color: theme.color.icongrey,
+      fontSize: "6rem",
+    }
+  },
+
+  selectionMenu: {
+    offset: "0rem, 0rem, 0rem, 0rem",
+    width: "29rem",
+    marginTop: "1rem",
+    marginLeft: "-2rem",
+    borderTop: "0.5rem solid white",
+    borderRadius: "2rem 2rem 0rem 0rem",
+    boxShadow: "none !important",
+    font: theme.font.subtitle,
+  },
+
+  dropdownMenu: {
+    maxHeight: "40rem",
+    overflow: "auto",
+    background: theme.color.lightgrey,
+    borderRadius: "0rem 0rem 2rem 2rem",
+    boxShadow: "none !important",
+
+    '& li': {
+      height: "5rem",
+      padding: "0.3rem 0.9rem",
+      margin: "0.3rem 1rem",
+      borderRadius: "1.5rem",
+      font: theme.font.subtitle,
+    },
+
+    '& li[aria-selected="true"]' : {
+      background: theme.color.grey,
+    }
+  },
+}));
+
 export default function Dropdown(props) {
-  const [major, setMajor] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [empty, setEmpty] = useState(true);
+  const classes = useStyles(open, empty)();
+
+  const [option, setOption] = React.useState("");
   const handleChange = (event) => {
-    setMajor(event.target.value);
+    setOption(event.target.value);
+    setOpen(!open);
+    setEmpty(false);
   };
+
+  const handleClick = () => {
+    setOpen(!open);
+  }
   
   return (
     <div>
       <FormControl fullWidth>
-        <InputLabel id="majors-label">Enter your major</InputLabel>
         <Select
-          id="majors-select"
-          value={major}
-          label="Enter your major"
+          variant={"standard"}
+          value={option}
+          displayEmpty
+          renderValue={
+            option !== "" ? undefined : () => <span>Select a quarter</span>
+          }
+          onOpen={handleClick}
+          onClose={handleClick}
           onChange={handleChange}
+          input={<InputBase className={classes.input} />}
+          MenuProps={{
+            classes: {
+              paper: classes.selectionMenu,
+              list: classes.dropdownMenu,
+            }
+          }}
         >
-          {props.majors.map((majorName) => {
-            return <MenuItem value={majorName}>{majorName}</MenuItem>;
+          {props.options.map((optionName) => {
+            return <MenuItem value={optionName}>{optionName}</MenuItem>;
           })}
         </Select>
       </FormControl>
