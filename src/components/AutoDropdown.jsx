@@ -60,12 +60,11 @@ const useStyles = props => makeStyles(theme =>({
     '&.MuiPaper-root': {
       font: theme.font.subtitle,
       backgroundColor: theme.color.lightgrey,
-      height: "7rem",
+      height: "8rem",
       borderRadius: "0rem 0rem 2rem 2rem",
     }, 
 
     '& .MuiAutocomplete-noOptions': {
-      height: "7rem",
       padding: "2.7rem 4rem !important",
       font: theme.font.subtitle,
       borderRadius: "0rem 0rem 2rem 2rem",
@@ -110,7 +109,7 @@ const majors = [
   { name: "Life Sciences" },
 ];
 
-export default function AutoDropdown({ whichPage }) {
+export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) {
   const [open, setOpen] = useState(false);
 
   const props = {  
@@ -147,7 +146,11 @@ export default function AutoDropdown({ whichPage }) {
     setOpen(!open);
   }
 
-  const handleKeyUp = () => {
+  const handleKeyUp = (params) => {
+    console.log("value: ", params.inputProps.value);
+    let filteredOptions = majors.filter(major => major.name.toLowerCase().startsWith(params.inputProps.value.toLowerCase()));
+    console.log("filteredOptions: ", filteredOptions);
+    setLengthOfFilteredOptions(filteredOptions.length);
     setOpen(true);
   }
 
@@ -172,7 +175,7 @@ export default function AutoDropdown({ whichPage }) {
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>
             <input 
               onClick={handleClick}
-              onKeyUp={handleKeyUp}
+              onKeyUp={handleKeyUp(params)}
               type="text" 
               placeholder={ 
                 whichPage === "courses" 
@@ -216,4 +219,5 @@ export default function AutoDropdown({ whichPage }) {
 
 AutoDropdown.defaultProps = {
   whichPage: "majors",
+  setLengthOfFilteredOptions: () => {},
 }

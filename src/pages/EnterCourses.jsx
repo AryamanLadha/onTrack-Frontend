@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { makeStyles } from "@mui/styles"
 import { CourseCard, PageButton, AutoDropdown } from "../components"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = marginTop => makeStyles(theme => ({
   layout: {
     display: "flex",
     alignItems: "center",
@@ -37,6 +37,7 @@ const useStyles = makeStyles(theme => ({
   courseCardWrapper: {
     display: "flex",
     flexDirection: "column",
+    marginTop: `${marginTop}rem`,
     marginBottom: "6rem",
     width: "87.6rem",
     font: theme.font.button,
@@ -52,9 +53,14 @@ const useStyles = makeStyles(theme => ({
 
 function EnterCourses({ courses }) {
   const [numRows, setNumRows] = useState(0);
-
-  const classes = useStyles();
-
+  const [lengthOfFilteredOptions, setLengthOfFilteredOptions] = useState(5);
+  const marginTop = lengthOfFilteredOptions < 5 
+  ? lengthOfFilteredOptions  === 0
+    ? 15
+    : lengthOfFilteredOptions * 5 + 10 
+  : 35; 
+  const classes = useStyles(marginTop)();
+  
   useEffect(() => {
     setNumRows(parseInt(courses.length/4)+1);
   }, [courses]);
@@ -70,7 +76,8 @@ function EnterCourses({ courses }) {
         </span>
 			</header>
       <AutoDropdown 
-        whichPage={'courses'} 
+        whichPage={'courses'}
+        setLengthOfFilteredOptions={setLengthOfFilteredOptions} 
       />
       <div className={classes.courseCardWrapper}>
         {Array.from(Array(numRows).keys()).map((i) => (
