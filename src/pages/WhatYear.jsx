@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react";
 import { makeStyles } from "@mui/styles";
 import { Dropdown, RadioButton, PageButton } from "../components";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   layout: {
     display: "flex",
     alignItems: "center",
@@ -14,8 +14,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
-    flexWrap: "wrap",
-    width: "100rem", 
+    width: "100rem",
     height: "8.5rem",
     marginTop: "5rem",
     marginBottom: "4.9rem",
@@ -23,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 
   title: {
     font: theme.font.title,
-    color: theme.color.black, 
+    color: theme.color.black,
     textAlign: "center",
     margin: "0 0 0 0.9rem",
     fontWeight: "bold",
@@ -38,6 +37,12 @@ const useStyles = makeStyles(theme => ({
   spacer: {
     height: "6.5rem",
   },
+
+  button: {
+    display: "inlineBlock",
+    width: "20%",
+    margin: "0 auto",
+  },
 }));
 
 export default function WhatYear() {
@@ -46,13 +51,11 @@ export default function WhatYear() {
   return (
     <div className={classes.layout}>
       <header className={classes.header}>
-				<h1 className={classes.title}>
-          When did you enter UCLA?
-        </h1>
+        <h1 className={classes.title}>When did you enter UCLA?</h1>
         <div className={classes.subtitle}>
-        We're all counting down the days till graduation.
+          We're all counting down the days till graduation.
         </div>
-			</header>
+      </header>
       <div>
         <div
           className={classes.subtitle}
@@ -73,11 +76,7 @@ export default function WhatYear() {
         >
           <Dropdown
             placeholder="Select a quarter"
-            options={[
-              "Fall 2018",
-              "Winter 2019",
-              "Sping 2019",
-            ]}
+            options={["Fall 2018", "Winter 2019", "Sping 2019"]}
           />
         </div>
       </div>
@@ -102,17 +101,13 @@ export default function WhatYear() {
         >
           <Dropdown
             placeholder="Select a quarter"
-            options={[
-              "Fall 2018",
-              "Winter 2019",
-              "Sping 2019",
-            ]}
+            options={["Fall 2018", "Winter 2019", "Sping 2019"]}
           />
         </div>
       </div>
       <div className={classes.spacer}></div>
-      <div  style={{ marginLeft: "-28rem" }}>
-      <div
+      <div style={{ marginLeft: "-28rem" }}>
+        <div
           className={classes.subtitle}
           style={{
             float: "left",
@@ -134,29 +129,10 @@ export default function WhatYear() {
       </div>
       <div style={{ height: "20rem" }}></div>
       <div>
-        <div
-          style={{
-            float: "right",
-            width: "10%",
-          }}
-        >
-          <PageButton
-            text="Next"
-            size="short"
-          />
-        </div>
-        <div
-          style={{
-            float: "left",
-            width: "10%",
-          }}
-        >
-          <PageButton
-            text="Back"
-            size="short"
-          />
-        </div>
+        <PageButton text="Back" size="short" className={classes.button} />
+        <div style={{display: "inlineBlock", width: "30%", backgroundColor: "red"}}></div>
+        <PageButton text="Next" size="short" classname={classes.button} />
       </div>
     </div>
-  )
+  );
 }
