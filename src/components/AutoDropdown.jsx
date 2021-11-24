@@ -86,7 +86,7 @@ const useStyles = props => makeStyles(theme =>({
     '& li': {
       height: "5rem",
       padding: "0.3rem 3rem !important",
-      margin: "0.3rem 1rem",
+      margin: "0.4rem 1rem",
       borderRadius: "1.5rem",
       overflow: "true",
     },
@@ -148,9 +148,18 @@ export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) 
     setOpen(!open);
   }
 
+  const handleKeyUp = () => {
+    if (whichPage === 'courses') {
+      setOpen(true)
+    }
+  }
+
   const handleChange = (params) => {
     let filteredOptions = majors.filter(major => major.name.toLowerCase().startsWith(params.inputProps.value.toLowerCase()));
     setLengthOfFilteredOptions(filteredOptions.length);
+    if (!open) {
+      setLengthOfFilteredOptions(-1);
+    }
   }
 
   return (
@@ -173,6 +182,7 @@ export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) 
         renderInput={(params) => (
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>
             <input
+              onKeyUp={handleKeyUp}
               onChange={handleChange(params)}
               type="text" 
               placeholder={ 
