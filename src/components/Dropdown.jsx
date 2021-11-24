@@ -4,16 +4,13 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputBase from '@mui/material/InputBase';
 import { makeStyles } from "@mui/styles";
-import { red } from "@mui/material/colors";
 
 // Pass string array like this to props
-const majorsData = [
-  "African American Studies",
-  "African and Middle Eastern Studies",
-  "American Indian Studies",
-  "American Literature and Culture",
-  "Ancient Near East and Egyptology",
-];
+const quartersData = [
+  "Fall 2018",
+  "Winter 2019",
+  "Sping 2019",
+]
 
 const useStyles = (open, empty) => makeStyles(theme =>({
   input: {
@@ -82,7 +79,6 @@ export default function Dropdown(props) {
   const [option, setOption] = React.useState("");
   const handleChange = (event) => {
     setOption(event.target.value);
-    setOpen(!open);
     setEmpty(false);
   };
 
@@ -98,7 +94,7 @@ export default function Dropdown(props) {
           value={option}
           displayEmpty
           renderValue={
-            option !== "" ? undefined : () => <span>Select a quarter</span>
+            option !== "" ? undefined : () => <span>{props.placeholder}</span>
           }
           onOpen={handleClick}
           onClose={handleClick}

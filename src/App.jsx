@@ -30,7 +30,7 @@ function App() {
           <Route exact path="/courses" element={<EnterCourses courses={courses}/>} />
         </Routes>
       </Router>
-      <Dropdown options={quartersData} />
+      <Dropdown placeholder="Select a quarter" options={quartersData} />
     </>
   );
 }
