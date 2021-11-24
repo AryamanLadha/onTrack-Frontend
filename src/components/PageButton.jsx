@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     border: "0rem",
     marginBottom: "5rem",
     borderRadius: props => props.size === "short" ? '3.1rem' : '3.75rem',
-    backgroundColor: theme.color.button,
+    backgroundColor: theme.color.grey,
     font: theme.font.button,
   }
 }));

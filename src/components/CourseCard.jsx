@@ -7,7 +7,7 @@ import { makeStyles } from "@mui/styles"
 //this is classes and coursecard is a property
 const useStyles = makeStyles (theme => ({
   courseCard: {
-    backgroundColor: theme.color.button,
+    backgroundColor: theme.color.grey,
     width: '17.5rem',
     height: '17.5rem',
     borderRadius: '2.5rem', 
