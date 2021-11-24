@@ -26,11 +26,11 @@ const useStyles = (open, empty) => makeStyles(theme =>({
 
     '& .MuiInputBase-input': {
       font: empty ? theme.font.searchBar : theme.font.subtitle,
-    },
 
-    '& .Mui-focused': {
-      outline:"none",
-      background:"none",
+      '&:focus': {
+        outline:"none",
+        background: theme.color.lightgrey,
+      },
     },
 
     '& .MuiSelect-icon': {
