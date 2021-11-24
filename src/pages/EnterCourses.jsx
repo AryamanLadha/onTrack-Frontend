@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { makeStyles } from "@mui/styles"
-import { CourseCard, SearchBar, PageButton } from "../components"
+import { CourseCard, SearchBar, PageButton} from "../components"
 
 const useStyles = makeStyles(theme => ({
   layout: {
