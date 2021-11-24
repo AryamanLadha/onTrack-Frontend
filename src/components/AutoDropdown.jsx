@@ -46,6 +46,8 @@ const useStyles = props => makeStyles(theme =>({
     },
 
     '& .triangle' : {
+      position: "relative",
+      zIndex: "1rem",
       width: "2.6rem",
     }
   },
@@ -142,16 +144,13 @@ export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) 
     stringify: (option) => option.name,
   });
 
-  const handleClick = () => {
+  const handleIconClick = () => {
     setOpen(!open);
   }
 
-  const handleKeyUp = (params) => {
-    console.log("value: ", params.inputProps.value);
+  const handleChange = (params) => {
     let filteredOptions = majors.filter(major => major.name.toLowerCase().startsWith(params.inputProps.value.toLowerCase()));
-    console.log("filteredOptions: ", filteredOptions);
     setLengthOfFilteredOptions(filteredOptions.length);
-    setOpen(true);
   }
 
   return (
@@ -173,9 +172,8 @@ export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) 
         ListboxProps={{ className : classes.dropDownMenu }}
         renderInput={(params) => (
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>
-            <input 
-              onClick={handleClick}
-              onKeyUp={handleKeyUp(params)}
+            <input
+              onChange={handleChange(params)}
               type="text" 
               placeholder={ 
                 whichPage === "courses" 
@@ -199,14 +197,14 @@ export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) 
                 <img 
                   src={TriangleDown}
                   className="triangle" 
-                  onClick={handleClick}
+                  onClick={handleIconClick}
                   alt="searchIcon" 
                 />
               : 
                 <img 
                   src={TriangleUp}
                   className="triangle" 
-                  onClick={handleClick}
+                  onClick={handleIconClick}
                   alt="searchIcon" 
                 />
             )}
