@@ -35,13 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   spacer: {
-    height: "6.5rem",
-  },
-
-  button: {
-    display: "inlineBlock",
-    width: "20%",
-    margin: "0 auto",
+    height: "4.5rem",
   },
 }));
 
@@ -80,7 +74,7 @@ export default function WhatYear() {
           />
         </div>
       </div>
-      <div className={classes.spacer}></div>
+      <div style={{ height: "4.5rem" }}></div>
       <div>
         <div
           className={classes.subtitle}
@@ -105,15 +99,14 @@ export default function WhatYear() {
           />
         </div>
       </div>
-      <div className={classes.spacer}></div>
+      <div style={{ height: "6.4rem" }}></div>
       <div style={{ marginLeft: "-28rem" }}>
         <div
           className={classes.subtitle}
           style={{
             float: "left",
             width: "60%",
-            padding: "1rem 2rem 0rem 3rem",
-            //marginLeft: "-20rem",
+            padding: "0rem 2rem 0rem 3rem",
           }}
         >
           Entered as a:
@@ -127,11 +120,17 @@ export default function WhatYear() {
           <RadioButton />
         </div>
       </div>
-      <div style={{ height: "20rem" }}></div>
-      <div>
-        <PageButton text="Back" size="short" className={classes.button} />
-        <div style={{display: "inlineBlock", width: "30%", backgroundColor: "red"}}></div>
-        <PageButton text="Next" size="short" classname={classes.button} />
+      <div style={{ height: "9.8rem" }}></div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          width: "99rem",
+          justifyContent: "space-between",
+        }}
+      >
+        <PageButton text="Back" size="short" />
+        <PageButton text="Next" size="short" />
       </div>
     </div>
   );
