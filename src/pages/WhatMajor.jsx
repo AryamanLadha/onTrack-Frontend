@@ -15,22 +15,16 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     flexDirection: "column",
     width: "100rem",
-    height: "5.3rem",
+    height: "9.4rem",
     marginTop: "20.4rem",
-  },
-
-  footer: {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
-    marginTop: "33.2rem",
+    marginBottom: "12.4rem",
   },
 
   title: {
     font: theme.font.title,
     color: theme.color.black,
     textAlign: "center",
-    margin: "0 0 0 0.9rem",
+   margin: "0 0 0 0.9rem",
     fontWeight: "bold",
   },
 
@@ -38,8 +32,15 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     font: theme.font.subtitle,
     marginTop: "1.8rem",
-    marginBottom: "14.4rem",
   },
+
+  footer: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    marginTop: "34.6rem",
+  },
+
 
   prompt: {
     textAlign: "center",
@@ -56,11 +57,10 @@ function WhatYear() {
     <div className={classes.layout}>
       <header className={classes.header}>
         <h1 className={classes.title}>Enter Your Major(s)</h1>
+        <span className={classes.subtitle}>Insert some subtitle here.</span>
       </header>
 
-      <span className={classes.subtitle}>Insert some subtitle here.</span>
-
-      < AutoDropdown />
+      <AutoDropdown whichPage={"majors"} />
 
       <footer className={classes.footer}>
         <PageButton text={"next"} size={"short"} />
