@@ -37,7 +37,6 @@ const useStyles = makeStyles(theme => ({
   courseCardWrapper: {
     display: "flex",
     flexDirection: "column",
-    marginTop: "5.6rem",
     marginBottom: "6rem",
     width: "87.6rem",
     font: theme.font.button,
@@ -52,8 +51,9 @@ const useStyles = makeStyles(theme => ({
 
 
 function EnterCourses({ courses }) {
-  const classes = useStyles();
   const [numRows, setNumRows] = useState(0);
+
+  const classes = useStyles();
 
   useEffect(() => {
     setNumRows(parseInt(courses.length/4)+1);
@@ -69,7 +69,9 @@ function EnterCourses({ courses }) {
           One last step....We promise.
         </span>
 			</header>
-      <AutoDropdown whichPage={'courses'}/>
+      <AutoDropdown 
+        whichPage={'courses'} 
+      />
       <div className={classes.courseCardWrapper}>
         {Array.from(Array(numRows).keys()).map((i) => (
           <div key={i} className={classes.courseCardContainer}>

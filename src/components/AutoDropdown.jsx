@@ -40,7 +40,7 @@ const useStyles = props => makeStyles(theme =>({
     backgroundColor: theme.color.lightgrey,
     boxShadow: "none !important",
 
-    '&.css-1ps6pg7-MuiPaper-root': {
+    '&.MuiPaper-root': {
       font: theme.font.subtitle,
       backgroundColor: theme.color.lightgrey,
       height: "7rem",
@@ -48,14 +48,16 @@ const useStyles = props => makeStyles(theme =>({
     }, 
 
     '& .MuiAutocomplete-noOptions': {
-      height: "5rem",
-      padding: "2rem 3rem",
-      margin: "0.3rem 1rem",
+      height: "7rem",
+      padding: "2.7rem 4rem !important",
+      font: theme.font.subtitle,
+      borderRadius: "0rem 0rem 2rem 2rem",
       backgroundColor: theme.color.lightgrey,
     }
   },
 
   dropDownMenu: {
+    width: props.whichPage === "courses" ? "85rem" : "64.7rem",
     maxHeight: "5rem",
     overflow: "auto",
     backgroundColor: theme.color.lightgrey,
@@ -68,6 +70,7 @@ const useStyles = props => makeStyles(theme =>({
       padding: "0.3rem 3rem !important",
       margin: "0.3rem 1rem",
       borderRadius: "1.5rem",
+      overflow: "true",
     },
 
     '& li[aria-selected="true"]' : {
@@ -106,12 +109,19 @@ export default function AutoDropdown({ whichPage }) {
   }
   const customPaper = function(props) {
     return (
-      <Paper {...props} className={classes.selectionMenu} />
+      <Paper {...props} 
+        className={classes.selectionMenu} 
+        elevation={0}
+      />
     )
   }
 
-  const handleOpen = () => {
+  const handleClick = () => {
     setOpen(!open);
+  }
+
+  const handleKeyUp = () => {
+    setOpen(true);
   }
 
   return (
@@ -136,7 +146,8 @@ export default function AutoDropdown({ whichPage }) {
         renderInput={(params) => (
           <div ref={params.InputProps.ref}>
             <input 
-              onClick={handleOpen}
+              onClick={handleClick}
+              onKeyUp={handleKeyUp}
               type="text" 
               placeholder={ 
                 whichPage === "courses" 
@@ -152,4 +163,8 @@ export default function AutoDropdown({ whichPage }) {
       />
     </>
   )
+}
+
+AutoDropdown.defaultProps = {
+  whichPage: "major",
 }
