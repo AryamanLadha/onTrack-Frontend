@@ -76,7 +76,7 @@ function EnterCourses({ courses }) {
         </span>
 			</header>
       <AutoDropdown 
-        whichPage={'courses'}
+        whichPage={"courses"}
         setLengthOfFilteredOptions={setLengthOfFilteredOptions} 
       />
       <div className={classes.courseCardWrapper}>
@@ -88,7 +88,7 @@ function EnterCourses({ courses }) {
           </div>
         ))}
       </div>
-      <PageButton text={"next"} size={"long"}/>
+      <PageButton page={"courses"} text={"next"} size={"long"}/>
 		</div>
   )
 }

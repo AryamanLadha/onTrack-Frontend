@@ -16,12 +16,36 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// button props: text, size, page
 export default function PageButton({...props}) {
   const classes = useStyles(props);
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/courses');
+    if (props.page === 'major') {
+      navigate('/minor')
+    } 
+    
+    else if (props.page === 'minor') {
+      props.text === "Back" 
+        ? navigate('/major')
+        : navigate('/year')
+    } 
+    
+    else if (props.page === 'year') {
+      props.text === "Back"
+        ? navigate('/minor')
+        : navigate('/courses')
+    } 
+
+    else if (props.page === 'courses') {
+      navigate('/result')
+    } 
+    else { // props.page === 'result'
+      props.text === "Back"
+        ? navigate('/courses')
+        : navigate('/done')
+    }
   };
 
   return (
