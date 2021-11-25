@@ -205,14 +205,14 @@ export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) 
               open 
               ? 
                 <img 
-                  src={TriangleDown}
+                  src={TriangleUp}
                   className="triangle" 
                   onClick={handleIconClick}
                   alt="searchIcon" 
                 />
               : 
                 <img 
-                  src={TriangleUp}
+                  src={TriangleDown}
                   className="triangle" 
                   onClick={handleIconClick}
                   alt="searchIcon" 
