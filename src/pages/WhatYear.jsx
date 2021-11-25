@@ -129,8 +129,8 @@ export default function WhatYear() {
           justifyContent: "space-between",
         }}
       >
-        <PageButton text="Back" size="short" />
-        <PageButton text="Next" size="short" />
+        <PageButton page={"year"} text="Back" size="short" />
+        <PageButton page={"year"} text="Next" size="short" />
       </div>
     </div>
   );
