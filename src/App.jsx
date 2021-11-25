@@ -22,7 +22,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/courses" element={<EnterCourses courses={courses}/>} />
-          <Route exact path="/major" element={<WhatMajor />} />
+          <Route exact path="/major" element={<WhatMajor majmin = {"minors"} />} />
         </Routes>
       </Router>
     </>

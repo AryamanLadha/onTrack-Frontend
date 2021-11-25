@@ -50,23 +50,53 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function WhatYear() {
+function WhatMajor({majmin}) {
   const classes = useStyles();
 
   return (
     <div className={classes.layout}>
       <header className={classes.header}>
-        <h1 className={classes.title}>Enter Your Major(s)</h1>
+        <h1 className={classes.title}>Enter Your 
+        { 
+           majmin === "majors"
+            ? " Major(s)"
+            : " Minor(s)"
+        }
+
+        </h1>
         <span className={classes.subtitle}>Insert some subtitle here.</span>
       </header>
-
-      <AutoDropdown whichPage={"majors"} />
-
+        <div> 
+        {
+            majmin === "majors"
+            ?  <AutoDropdown whichPage={"majors"} />
+            : <AutoDropdown whichPage={"minors"} />
+        }
+        </div>
+      
+      
       <footer className={classes.footer}>
-        <PageButton text={"next"} size={"short"} />
+        {
+            majmin === "majors"
+            ?  <PageButton text={"next"} size={"short"} />
+            :  
+              <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "99rem",
+                justifyContent: "space-between",
+              }}
+              >
+              <PageButton text="Back" size="short" />
+              <PageButton text="Next" size="short" />
+          </div>
+        }
+        
       </footer>
+
     </div>
   );
 }
 
-export default WhatYear;
+export default WhatMajor;
