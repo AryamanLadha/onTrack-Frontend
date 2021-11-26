@@ -9,7 +9,7 @@ export const getCourses = () => {
             //dispatch the action after you have the result.
             axios.get("http://localhost:8000/api/courses", { crossdomain: true })
             .then(res => {
-                dispatch({ type: "GET_COURSES_SUCCESS", payload: {courses: res.data}})
+                dispatch({ type: "GET_COURSES_SUCCESS", payload: {courses: res.data.courses}})
             }).catch(error => {console.log(error)})
         }
     );
@@ -27,7 +27,7 @@ export const getMajors = () => {
     return (dispatch) => {
         axios.get("http://localhost:8000/api/majors", { crossdomain: true })
         .then(res => {
-            dispatch({type: 'GET_MAJORS_SUCCESS', payload: {allMajors: res.data}})
+            dispatch({type: 'GET_MAJORS_SUCCESS', payload: {allMajors: res.data.majors}})
         }).catch(error => {console.log(error)})
     }
 }
