@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchIcon from "../assets/icons/SearchIcon.svg";
 import TriangleUp from "../assets/icons/TriangleUp.svg";
 import TriangleDown from "../assets/icons/TriangleDown.svg";
@@ -7,6 +7,8 @@ import Popper from '@mui/core/Popper';
 import Paper from '@mui/material/Paper';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 import { makeStyles } from "@mui/styles";
+import { connect } from 'react-redux';
+import {getCourses, getMajors} from "../actions/actions"
 
 
 const useStyles = props => makeStyles(theme =>({
@@ -98,20 +100,20 @@ const useStyles = props => makeStyles(theme =>({
 }));
 
 // mockdata for now
-const majors = [
-  { name: "African American Studies" },
-  { name: "African and Middle Eastern Studies" },
-  { name: "American Indian Studies" },
-  { name: "American Literature and Culture" },
-  { name: "Ancient Near East and Egyptology" },
-  { name: "Chemical Engineering" },
-  { name: "Bioengineering" },
-  { name: "Bioinformatics" },
-  { name: "Cognitive Science" },
-  { name: "Life Sciences" },
-];
+// const majors = [
+//   { name: "African American Studies" },
+//   { name: "African and Middle Eastern Studies" },
+//   { name: "American Indian Studies" },
+//   { name: "American Literature and Culture" },
+//   { name: "Ancient Near East and Egyptology" },
+//   { name: "Chemical Engineering" },
+//   { name: "Bioengineering" },
+//   { name: "Bioinformatics" },
+//   { name: "Cognitive Science" },
+//   { name: "Life Sciences" },
+// ];
 
-export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) {
+function AutoDropdown({ whichPage, setLengthOfFilteredOptions, data, getData}) {
   const [open, setOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -119,8 +121,15 @@ export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) 
     open: open,
     whichPage: whichPage,
   }
-  const options = majors;
+
+  // Make sure to do this check all the time
+  const options = data.length!==0 && (whichPage === 'courses' ? data.map(course => ({name: course.abbreviation + " "+ course.number})) : data.map(major => ({name : major.name})))
   const classes = useStyles(props)();
+
+  useEffect(() => {
+    getData()
+    // eslint-disable-next-line
+  },[]);
 
   const customPopper = function(props) {
     return (
@@ -140,6 +149,7 @@ export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) 
     )
   }
 
+  // These are the options for the auto dropdown.
   const filterOptions = createFilterOptions({
     matchFrom: 'start',
     stringify: (option) => option.name,
@@ -155,8 +165,9 @@ export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) 
     }
   }
 
+  // Make sure to check if options is null
   const handleChange = (params) => {
-    let filteredOptions = majors.filter(major => major.name.toLowerCase().startsWith(params.inputProps.value.toLowerCase()));
+    let filteredOptions = options && options.filter(major => major.name.toLowerCase().startsWith(params.inputProps.value.toLowerCase()));
     setLengthOfFilteredOptions(filteredOptions.length);
     if (!open) {
       setLengthOfFilteredOptions(-1);
@@ -230,3 +241,32 @@ AutoDropdown.defaultProps = {
   whichPage: "majors",
   setLengthOfFilteredOptions: () => {},
 }
+
+const mapStateToProps = (state, { whichPage }) => {
+
+  return (
+    whichPage === 'courses' ? 
+      { 
+        data: state.courses
+      } 
+    : 
+      {
+        data: state.allMajors
+      }
+  )
+};
+
+const mapDispatchToProps = (dispatch, { whichPage }) => {
+  return (
+    whichPage === 'courses' ? 
+      { 
+        getData: () => dispatch(getCourses())
+      } 
+    : 
+      {
+        getData: () => dispatch(getMajors())
+      }
+  )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AutoDropdown);
