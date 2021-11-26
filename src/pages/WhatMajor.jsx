@@ -78,7 +78,7 @@ function WhatMajor({majmin}) {
       <footer className={classes.footer}>
         {
             majmin === "majors"
-            ?  <PageButton text={"next"} size={"short"} />
+            ?  <PageButton text={"next"} size={"short"} page = {"majors"} />
             :  
               <div
               style={{
@@ -88,8 +88,8 @@ function WhatMajor({majmin}) {
                 justifyContent: "space-between",
               }}
               >
-              <PageButton text="Back" size="short" />
-              <PageButton text="Next" size="short" />
+              <PageButton text="Back" size="short" page = {"minors"} />
+              <PageButton text="Next" size="short" page = {"minors"} />
           </div>
         }
         
