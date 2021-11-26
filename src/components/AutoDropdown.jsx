@@ -113,6 +113,7 @@ const majors = [
 
 export default function AutoDropdown({ whichPage, setLengthOfFilteredOptions }) {
   const [open, setOpen] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   const props = {  
     open: open,
