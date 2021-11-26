@@ -115,6 +115,7 @@ const useStyles = props => makeStyles(theme =>({
 
 function AutoDropdown({ whichPage, setLengthOfFilteredOptions, data, getData}) {
   const [open, setOpen] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   const props = {  
     open: open,
@@ -216,14 +217,14 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, data, getData}) {
               open 
               ? 
                 <img 
-                  src={TriangleDown}
+                  src={TriangleUp}
                   className="triangle" 
                   onClick={handleIconClick}
                   alt="searchIcon" 
                 />
               : 
                 <img 
-                  src={TriangleUp}
+                  src={TriangleDown}
                   className="triangle" 
                   onClick={handleIconClick}
                   alt="searchIcon" 
