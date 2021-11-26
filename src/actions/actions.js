@@ -9,7 +9,8 @@ export const getCourses = () => {
             //dispatch the action after you have the result.
             axios.get("http://localhost:8000/api/courses", { crossdomain: true })
             .then(res => {
-                dispatch({ type: "GET_COURSES_SUCCESS", payload: {courses: res.data}})
+                console.log(res.data.courses);
+                dispatch({ type: "GET_COURSES_SUCCESS", payload: {courses: res.data.courses}})
             }).catch(error => {console.log(error)})
         }
     );

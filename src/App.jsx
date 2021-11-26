@@ -20,7 +20,7 @@ function App() {
       <GlobalStyle />
       <Router>
         <Routes>
-          <Route exact path="/courses" element={<EnterCourses courses={courses}/>} />
+          <Route exact path="/courses" element={<EnterCourses/>} />
         </Routes>
       </Router>
     </>

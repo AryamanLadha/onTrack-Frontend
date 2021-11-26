@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { makeStyles } from "@mui/styles"
 import { CourseCard, SearchBar, PageButton } from "../components"
+import { connect } from 'react-redux'
+import { getCourses } from '../actions/actions.js'
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -51,12 +53,20 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-function EnterCourses({ courses }) {
+function EnterCourses({ courses, getCourses }) {
   const classes = useStyles();
   const [numRows, setNumRows] = useState(0);
 
+  // Make the API call to get courses as soon as we mount
   useEffect(() => {
-    setNumRows(parseInt(courses.length/4)+1);
+    getCourses()
+    // eslint-disable-next-line
+  },[]);
+
+  useEffect(() => {
+    const newRows = parseInt(courses.length/4)+1;
+    console.log('NewRows:', newRows)
+    setNumRows(newRows);
   }, [courses]);
 
   return (
@@ -70,18 +80,31 @@ function EnterCourses({ courses }) {
         </span>
 			</header>
       <SearchBar />
-      <div className={classes.courseCardWrapper}>
+      {courses.length!== 0 ? JSON.stringify(courses) : 'Nothing here yet'}
+      {/* <div className={classes.courseCardWrapper}>
         {Array.from(Array(numRows).keys()).map((i) => (
           <div key={i} className={classes.courseCardContainer}>
             {courses.slice(i*4, (i+1)*4).map((course, idx) => (
               <CourseCard key={idx} name={course} />
-            ))}
-           </div>
-        ))}
+          ))}
       </div>
+        ))}
+      </div> */}
       <PageButton text={"next"} size={"long"}/>
 		</div>
   )
 }
 
-export default EnterCourses;
+const mapStateToProps = (state) => {
+  return ({
+    courses: state.courses
+  })
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    getCourses: () => dispatch(getCourses())
+  });
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EnterCourses);
