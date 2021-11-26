@@ -22,30 +22,35 @@ export default function PageButton({...props}) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (props.page === 'major') {
-      navigate('/minor')
+    if (props.page === 'majors') {
+      navigate('/minors')
     } 
     
-    else if (props.page === 'minor') {
+    else if (props.page === 'minors') {
       props.text === "Back" 
-        ? navigate('/major')
+        ? navigate('/majors')
         : navigate('/year')
     } 
     
     else if (props.page === 'year') {
       props.text === "Back"
-        ? navigate('/minor')
+        ? navigate('/minors')
         : navigate('/courses')
     } 
 
     else if (props.page === 'courses') {
-      navigate('/result')
+      navigate('/eligible')
     } 
-    else { // props.page === 'result'
+    
+    else  { //if (props.page === 'eligible') {
       props.text === "Back"
         ? navigate('/courses')
         : navigate('/done')
     }
+    // props.page === "done"
+    // else {
+    //   nothing for now.
+    // }
   };
 
   return (
