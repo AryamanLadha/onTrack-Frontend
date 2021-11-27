@@ -16,10 +16,17 @@ export const getCourses = () => {
 }
 
 // Regular action creator returns an object, i.e an action
-export const changeMajor = (newMajor) => {
+export const setMajors = (newMajors) => {
     return {
-        type: 'CHANGE_MAJOR',
-        payload: {newMajor}
+        type: 'SET_MAJORS',
+        payload: {newMajors}
+    }
+}
+
+export const setminors = (newMinors) => {
+    return {
+        type: 'SET_MINORS',
+        payload: {newMinors}
     }
 }
 

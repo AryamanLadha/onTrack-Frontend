@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { connect } from 'react-redux';
+import { setMajors } from "../actions/actions";
 import { makeStyles } from "@mui/styles";
 import AutoDropdown from "../components/AutoDropdown";
 import { PageButton, TagComponent } from "../components";
@@ -105,7 +107,7 @@ function WhatMajor({ majmin }) {
       <footer className={classes.footer}>
         {
             majmin === "majors"
-            ? <PageButton text={"next"} size={"short"} page={"majors"} />
+            ? <PageButton text={"next"} size={"short"} page={"majors"} onClick={() => setMajors ({selectedMajors})}  />
             :  
               <div
               style={{
@@ -115,8 +117,8 @@ function WhatMajor({ majmin }) {
                 justifyContent: "space-between",
               }}
               >
-              <PageButton text="Back" size="short" page={"minors"} />
-              <PageButton text="Next" size="short" page={"minors"} />
+              <PageButton text="Back" size="short" page={"minors"} onClick={() => setMajors ({selectedMajors})}/> 
+              <PageButton text="Next" size="short" page={"minors"} onClick={() => setMajors ({selectedMajors})} />
           </div>
         }
         
@@ -126,4 +128,19 @@ function WhatMajor({ majmin }) {
   );
 }
 
-export default WhatMajor;
+
+const mapDispatchToProps = (dispatch, { majmin}) => {
+  return (
+    majmin === 'majors' ? 
+      { 
+        setMajors: selectedMajors => dispatch(setMajors(selectedMajors))
+      } 
+    : 
+      {
+        setMajors: selectedMajors => dispatch(setMajors(selectedMajors)) //CHANGE TO MINORS
+      }
+  )
+}
+
+
+export default connect(null, mapDispatchToProps)(WhatMajor);

@@ -1,6 +1,7 @@
 
 const initState = {
-    major: null,
+    majors: null,
+    minors: null,
     courses: [],
     eligibleCourses: [],
     year: null,
@@ -8,11 +9,19 @@ const initState = {
 }
 
 const reducer = (state = initState,action) => {
-    if(action.type === 'CHANGE_MAJOR'){
-        const newMajor = action.payload.newMajor
+    if(action.type === 'SET_MAJORS'){
+        const newMajor = action.payload.newMajors
         return ({
             ...state,
-            major: newMajor
+            majors: newMajor
+        });
+    }
+
+    if(action.type === 'SET_MINORS'){
+        const newMinor = action.payload.newMinors
+        return ({
+            ...state,
+            minors: newMinor
         });
     }
 
