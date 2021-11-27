@@ -1,8 +1,7 @@
 import React from "react";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import EnterCourses from "./pages/EnterCourses";
-import WhatMajor from "./pages/WhatMajor";
+import { EnterCourses, WhatMajor, WhatYear } from "./pages";
 
 const courses = [
   "Psych 85",
@@ -15,14 +14,17 @@ const courses = [
   "Psych 85",
 ];
 
+
 function App() {
   return (
     <>
       <GlobalStyle />
       <Router>
         <Routes>
-          <Route exact path="/courses" element={<EnterCourses courses={courses}/>} />
-          <Route exact path="/major" element={<WhatMajor majmin = {"minors"} />} />
+          <Route exact path="/majors" element={<WhatMajor majmin={"majors"} />} />
+          <Route exact path="/minors" element={<WhatMajor majmin={"minors"} />} />
+          <Route exact path="/year" element={<WhatYear majmin={"year"} />} />
+          <Route exact path="/courses" element={<EnterCourses courses={courses} />} />
         </Routes>
       </Router>
     </>

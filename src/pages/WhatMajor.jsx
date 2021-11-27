@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     font: theme.font.title,
     color: theme.color.black,
     textAlign: "center",
-   margin: "0 0 0 0.9rem",
+    margin: "0 0 0 0.9rem",
     fontWeight: "bold",
   },
 
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function WhatMajor({majmin}) {
+function WhatMajor({ majmin }) {
   const classes = useStyles();
 
   return (
@@ -58,7 +58,7 @@ function WhatMajor({majmin}) {
       <header className={classes.header}>
         <h1 className={classes.title}>Enter Your 
         { 
-           majmin === "majors"
+          majmin === "majors"
             ? " Major(s)"
             : " Minor(s)"
         }
@@ -69,7 +69,7 @@ function WhatMajor({majmin}) {
         <div> 
         {
             majmin === "majors"
-            ?  <AutoDropdown whichPage={"majors"} />
+            ? <AutoDropdown whichPage={"majors"} />
             : <AutoDropdown whichPage={"minors"} />
         }
         </div>
@@ -78,7 +78,7 @@ function WhatMajor({majmin}) {
       <footer className={classes.footer}>
         {
             majmin === "majors"
-            ?  <PageButton text={"next"} size={"short"} page = {"majors"} />
+            ? <PageButton text={"next"} size={"short"} page={"majors"} />
             :  
               <div
               style={{
@@ -88,8 +88,8 @@ function WhatMajor({majmin}) {
                 justifyContent: "space-between",
               }}
               >
-              <PageButton text="Back" size="short" page = {"minors"} />
-              <PageButton text="Next" size="short" page = {"minors"} />
+              <PageButton text="Back" size="short" page={"minors"} />
+              <PageButton text="Next" size="short" page={"minors"} />
           </div>
         }
         
