@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 import { makeStyles } from "@mui/styles";
 import { connect } from 'react-redux';
-import {getCourses, getMajors} from "../actions/actions"
+import { getCourses, getMajors } from "../actions/actions";
 
 
 const useStyles = props => makeStyles(theme =>({
@@ -99,23 +99,8 @@ const useStyles = props => makeStyles(theme =>({
   },
 }));
 
-// mockdata for now
-// const majors = [
-//   { name: "African American Studies" },
-//   { name: "African and Middle Eastern Studies" },
-//   { name: "American Indian Studies" },
-//   { name: "American Literature and Culture" },
-//   { name: "Ancient Near East and Egyptology" },
-//   { name: "Chemical Engineering" },
-//   { name: "Bioengineering" },
-//   { name: "Bioinformatics" },
-//   { name: "Cognitive Science" },
-//   { name: "Life Sciences" },
-// ];
-
-function AutoDropdown({ whichPage, setLengthOfFilteredOptions, data, getData}) {
+function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOptions, data, getData}) {
   const [open, setOpen] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState([]);
 
   const props = {  
     open: open,
@@ -123,13 +108,18 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, data, getData}) {
   }
 
   // Make sure to do this check all the time
-  const options = data.length!==0 && (whichPage === 'courses' ? data.map(course => ({name: course.abbreviation + " "+ course.number})) : data.map(major => ({name : major.name})))
+  const options = 
+    data.length === 0 
+    ? [] 
+    : (whichPage === 'courses' 
+      ? data.map(course => ({name: course.abbreviation + " "+ course.number})) 
+      : data.map(major => ({name : major.name}))
+    )
   const classes = useStyles(props)();
 
   useEffect(() => {
     getData()
-    // eslint-disable-next-line
-  },[]);
+  }, []);
 
   const customPopper = function(props) {
     return (
@@ -165,6 +155,10 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, data, getData}) {
     }
   }
 
+  const handleSelectedOptionsChange = (e, listOfSelectedOptions) => {
+    setSelectedOptions([ ...new Set(listOfSelectedOptions.map(option => option.name))])
+  }
+
   // Make sure to check if options is null
   const handleChange = (params) => {
     let filteredOptions = options && options.filter(major => major.name.toLowerCase().startsWith(params.inputProps.value.toLowerCase()));
@@ -183,6 +177,7 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, data, getData}) {
         }}
         id="dropdown"
         open={open}
+        onChange={handleSelectedOptionsChange}
         PopperComponent={customPopper}
         PaperComponent={customPaper}
         options={options}
