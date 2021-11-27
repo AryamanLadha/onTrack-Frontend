@@ -5,6 +5,7 @@ const theme = createTheme({
     button: "normal 400 2.5rem/2.5rem 'Work Sans'",
     searchBar: "italic 400 2rem/2rem 'Work Sans'",
     courseCard: "normal 400 2rem/2rem 'Arial'",
+    miniCourseCard: "normal 500 2rem/2rem 'Work Sans'",
     title: "normal 700 4.5rem/4.5rem 'Work Sans'",
     subtitle: "normal 400 2rem/2rem 'Work Sans'",
     radioButton: "normal 400 2rem/2rem 'Work Sans' !important",
