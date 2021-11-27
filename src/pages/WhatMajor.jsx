@@ -1,6 +1,7 @@
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import AutoDropdown from "../components/AutoDropdown";
-import PageButton from "../components/PageButton";
+import { PageButton, TagComponent } from "../components";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -48,9 +49,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "auto",
     padding: "0.67rem",
   },
+
+  tagComponentContainer: {
+    display: "flex",
+    flexDirection: "row",
+    width: "64.7rem",
+  }
 }));
 
 function WhatMajor({ majmin }) {
+  const [ selectedMajors, setSelectedMajors ] = useState([]);
   const classes = useStyles();
 
   return (
@@ -69,12 +77,30 @@ function WhatMajor({ majmin }) {
         <div> 
         {
             majmin === "majors"
-            ? <AutoDropdown whichPage={"majors"} />
-            : <AutoDropdown whichPage={"minors"} />
+            ? (
+              (selectedMajors.length !== 0)
+              ? (
+                <div className={classes.tagComponentContainer}>
+                  {selectedMajors.map((major, idx) => (
+                    <TagComponent key={idx} major={major} />
+                  ))}
+                </div>
+              )
+              : <div></div>
+            ) : ( // below is for majmin === "minors"
+              // you have to change it to minors later
+              (selectedMajors.length !== 0)
+              ? (
+                <div className={classes.tagComponentContainer}>
+                  {selectedMajors.map((major, idx) => (
+                    <TagComponent key={idx} major={major} />
+                  ))}
+                </div>
+              ) : <div></div>
+            )
         }
+          <AutoDropdown whichPage={"majors"} setSelectedOptions={setSelectedMajors}/>
         </div>
-      
-      
       <footer className={classes.footer}>
         {
             majmin === "majors"

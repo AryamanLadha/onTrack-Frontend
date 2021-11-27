@@ -121,6 +121,10 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOption
     getData()
   }, []);
 
+  useEffect(() => {
+    console.log(setSelectedOptions)
+  })
+
   const customPopper = function(props) {
     return (
       <Popper 

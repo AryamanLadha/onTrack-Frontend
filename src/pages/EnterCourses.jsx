@@ -89,8 +89,8 @@ function EnterCourses() {
           <div className={classes.courseCardWrapper}>
             {Array.from(Array(numRows).keys()).map((i) => (
               <div key={i} className={classes.courseCardContainer}>
-                {selectedCourses.slice(i*4, (i+1)*4).map((option, idx) => (
-                  <CourseCard key={idx} name={option} />
+                {selectedCourses.slice(i*4, (i+1)*4).map((course, idx) => (
+                  <CourseCard key={idx} name={course} />
                 ))}
               </div>
             ))}
