@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     width: "64.7rem",
+    marginBottom: "2rem",
   }
 }));
 
