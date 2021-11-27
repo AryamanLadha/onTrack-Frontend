@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react'
-import { makeStyles } from "@mui/styles"
-import { CourseCard, PageButton, AutoDropdown } from "../components"
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from "@mui/styles";
+import { CourseCard, PageButton, AutoDropdown } from "../components";
+
 
 const useStyles = marginTop => makeStyles(theme => ({
   layout: {
@@ -8,6 +9,7 @@ const useStyles = marginTop => makeStyles(theme => ({
     alignItems: "center",
     flexDirection: "column",
     width: "100vw",
+    marginTop: "20.4rem",
   },
 
   header: {
@@ -51,10 +53,12 @@ const useStyles = marginTop => makeStyles(theme => ({
 }))
 
 
-function EnterCourses({ courses }) {
-  const [numRows, setNumRows] = useState(0);
-  const [lengthOfFilteredOptions, setLengthOfFilteredOptions] = useState(5);
-  const marginTop = lengthOfFilteredOptions < 5 
+function EnterCourses() {
+  const [ selectedCourses, setSelectedCourses ] = useState([]);
+  const [ numRows, setNumRows ] = useState(0);
+  const [ lengthOfFilteredOptions, setLengthOfFilteredOptions ] = useState(5);
+  const marginTop = 
+  lengthOfFilteredOptions < 5 
   ? lengthOfFilteredOptions  === 0
     ? 15
     : lengthOfFilteredOptions * 5 + 10 
@@ -62,8 +66,8 @@ function EnterCourses({ courses }) {
   const classes = useStyles(marginTop)();
   
   useEffect(() => {
-    setNumRows(parseInt(courses.length/4)+1);
-  }, [courses]);
+    setNumRows(parseInt(selectedCourses.length/4)+1);
+  }, [selectedCourses]);
 
   return (
 		<div className={classes.layout}>
@@ -78,16 +82,21 @@ function EnterCourses({ courses }) {
       <AutoDropdown 
         whichPage={"courses"}
         setLengthOfFilteredOptions={setLengthOfFilteredOptions} 
+        setSelectedOptions={setSelectedCourses}
       />
-      <div className={classes.courseCardWrapper}>
-        {Array.from(Array(numRows).keys()).map((i) => (
-          <div key={i} className={classes.courseCardContainer}>
-            {courses.slice(i*4, (i+1)*4).map((course, idx) => (
-              <CourseCard key={idx} name={course} />
+      {(selectedCourses.length !== 0)
+        ?
+          <div className={classes.courseCardWrapper}>
+            {Array.from(Array(numRows).keys()).map((i) => (
+              <div key={i} className={classes.courseCardContainer}>
+                {selectedCourses.slice(i*4, (i+1)*4).map((course, idx) => (
+                  <CourseCard key={idx} name={course} />
+                ))}
+              </div>
             ))}
           </div>
-        ))}
-      </div>
+        : <div className={classes.courseCardWrapper}></div>
+      }
       <PageButton page={"courses"} text={"next"} size={"long"}/>
 		</div>
   )

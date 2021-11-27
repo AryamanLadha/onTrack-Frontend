@@ -5,19 +5,14 @@ import { makeStyles } from "@mui/styles"
 //this is classes and coursecard is a property
 const useStyles = makeStyles (theme => ({
   tagComponent: {
-    display: 'flex',
+    display: 'flex, inline-block',
     backgroundColor: theme.color.button,
-   // width: '21.7rem',
     height: '5.4rem',
-    textAlign: 'center',
-    justifyContent: 'center',
-    verticalAlign: 'middle',
     lineHeight: '5.4rem',
-    font: theme.font.courseCard,
+    font: theme.font.subtitle,
     borderRadius: '1.6rem', 
-    display: 'inline-block',
-    paddingLeft: '2rem',
-    paddingRight: '2rem',
+    padding: "0rem 2rem",
+    marginRight: "1.3rem",
   }
 }));
 

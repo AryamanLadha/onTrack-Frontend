@@ -9,6 +9,7 @@ const theme = createTheme({
     title: "normal 700 4.5rem/4.5rem 'Work Sans'",
     subtitle: "normal 400 2rem/2rem 'Work Sans'",
     radioButton: "normal 400 2rem/2rem 'Work Sans' !important",
+    accordionDropdown: "normal 500 3rem/3rem 'Work Sans' !important",
   },
   color: {
     button: "#C4C4C4",
@@ -16,6 +17,8 @@ const theme = createTheme({
     black: "#000000",
     lightgrey: "#E7E7E7",
     icongrey: "#A3A3A3",
+    bargrey: "#EDEDED",
+    white: "#000000",
   }
 })
 
