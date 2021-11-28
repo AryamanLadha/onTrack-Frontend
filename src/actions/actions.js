@@ -38,3 +38,10 @@ export const setStartQtr = (newStartQtr) => {
         payload: {newStartQtr}
     }
 }
+
+export const setEndQtr = (newEndQtr) => {
+    return {
+        type: 'SET_END_QTR',
+        payload: {newEndQtr}
+    }
+}

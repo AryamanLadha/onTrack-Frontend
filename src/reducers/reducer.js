@@ -6,6 +6,7 @@ const initState = {
     year: null,
     allMajors: [],
     startQtr: null,
+    endQtr: null,
 }
 
 const reducer = (state = initState,action) => {
@@ -35,6 +36,13 @@ const reducer = (state = initState,action) => {
         return ({
             ...state,
             startQtr: action.payload.newStartQtr
+        });
+    }
+
+    if(action.type === 'SET_END_QTR') {
+        return ({
+            ...state,
+            endQtr: action.payload.newEndQtr
         });
     }
 

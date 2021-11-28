@@ -78,16 +78,12 @@ export default function Dropdown({ placeholder, options, setSelectedOption }) {
   const [option, setOption] = React.useState("");
   const handleChange = (event) => {
     setOption(event.target.value);
-    handleSelectedOptionChange(event.target.value);
+    setSelectedOption(event.target.value);
     setEmpty(false);
   };
 
   const handleClick = () => {
     setOpen(!open);
-  }
-
-  const handleSelectedOptionChange = selectedOption => {
-    setSelectedOption(selectedOption);
   }
   
   return (
