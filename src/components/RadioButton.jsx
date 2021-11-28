@@ -34,11 +34,11 @@ export default function RadioButton({ setSelectedOption })
     <FormControl className={classes.formControl}>
       <RadioGroup
         name="radio-buttons-group"
+        onChange={handleSelectedOptionChange}
       >
         <FormControlLabel   
           value="Freshman" 
           control={<Radio />} 
-          onChange={handleSelectedOptionChange}
           label={
           <Typography 
             className={classes.font} 

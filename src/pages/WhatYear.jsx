@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { Dropdown, RadioButton, PageButton } from "../components";
 import { connect } from "react-redux";
-import { setStartQtr, setEndQtr } from "../actions/actions";
+import { setStartQtr, setEndQtr, setGradeEntered } from "../actions/actions";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function WhatYear({ setStartQtr, setEndQtr }) {
+function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
   const classes = useStyles();
   const [selectedStartQtr, setSelectedStartQtr] = useState("");
   const [selectedEndQtr, setSelectedEndQtr] = useState("");
@@ -144,6 +144,7 @@ function WhatYear({ setStartQtr, setEndQtr }) {
           action={() => {
             setStartQtr(selectedStartQtr);
             setEndQtr(selectedEndQtr);
+            setGradeEntered(selectedGradeEntered);
           }}
         />
       </div>
@@ -155,6 +156,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setStartQtr: (newStartQtr) => dispatch(setStartQtr(newStartQtr)),
     setEndQtr: (newEndQtr) => dispatch(setEndQtr(newEndQtr)),
+    setGradeEntered: (newGradeEntered) => dispatch(setGradeEntered(newGradeEntered))
   };
 };
 
