@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import ButtonUnstyled from "@mui/core/ButtonUnstyled";
 import { makeStyles } from "@mui/styles"
 
-
 const useStyles = makeStyles(theme => ({
   button: {
     width: props => props.size === "short" ? '13.8rem' : '25.5rem',
@@ -51,6 +50,11 @@ export default function PageButton({...props}) {
     // else {
     //   nothing for now.
     // }
+
+    // VERY IMPORTANT -- DISPATCH ACTION IF AVAILABLE
+    if (props.action != null) {
+      props.action();
+    }
   };
 
   return (

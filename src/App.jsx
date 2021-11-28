@@ -2,7 +2,6 @@ import React from "react";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { EnterCourses, WhatMajor, WhatYear } from "./pages";
-import AccordionDropdown from "./components/AccordionDropdown";
 
 const courses = [
   "Psych 85",
@@ -16,7 +15,7 @@ const courses = [
 ];
 
 
-function App() {
+function App({major}) {
   return (
     <>
       <GlobalStyle />
@@ -27,9 +26,6 @@ function App() {
           <Route exact path="/year" element={<WhatYear majmin={"year"} />} />
           <Route exact path="/courses" element={<EnterCourses courses={courses} />} />
         </Routes>
-      <AccordionDropdown>
-
-      </AccordionDropdown>
       </Router>
     </>
   );

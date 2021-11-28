@@ -4,7 +4,8 @@ const initState = {
     courses: [],
     eligibleCourses: [],
     year: null,
-    allMajors: []
+    allMajors: [],
+    startQtr: null,
 }
 
 const reducer = (state = initState,action) => {
@@ -29,6 +30,14 @@ const reducer = (state = initState,action) => {
             allMajors: action.payload.allMajors
         });
     }
+
+    if(action.type === 'SET_START_QTR') {
+        return ({
+            ...state,
+            startQtr: action.payload.newStartQtr
+        });
+    }
+
     return state
 }
 
