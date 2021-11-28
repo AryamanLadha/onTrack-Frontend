@@ -22,9 +22,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RadioButton() 
+export default function RadioButton({ setSelectedOption }) 
 {
   const classes = useStyles();
+
+  const handleSelectedOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  }
+
   return(
     <FormControl className={classes.formControl}>
       <RadioGroup
@@ -33,6 +38,7 @@ export default function RadioButton()
         <FormControlLabel   
           value="Freshman" 
           control={<Radio />} 
+          onChange={handleSelectedOptionChange}
           label={
           <Typography 
             className={classes.font} 

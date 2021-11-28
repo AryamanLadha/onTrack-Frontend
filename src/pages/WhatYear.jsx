@@ -45,6 +45,7 @@ function WhatYear({ setStartQtr, setEndQtr }) {
   const classes = useStyles();
   const [selectedStartQtr, setSelectedStartQtr] = useState("");
   const [selectedEndQtr, setSelectedEndQtr] = useState("");
+  const [selectedGradeEntered, setSelectedGradeEntered] = useState("");
 
   return (
     <div className={classes.layout}>
@@ -123,7 +124,7 @@ function WhatYear({ setStartQtr, setEndQtr }) {
             width: "40%",
           }}
         >
-          <RadioButton />
+          <RadioButton setSelectedOption={setSelectedGradeEntered} />
         </div>
       </div>
       <div style={{ height: "9.8rem" }}></div>
