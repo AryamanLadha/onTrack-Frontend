@@ -70,7 +70,7 @@ const useStyles = (open, empty) => makeStyles(theme =>({
   },
 }));
 
-export default function Dropdown(props) {
+export default function Dropdown({ placeholder, options, setSelectedOption }) {
   const [open, setOpen] = useState(false);
   const [empty, setEmpty] = useState(true);
   const classes = useStyles(open, empty)();
@@ -78,11 +78,16 @@ export default function Dropdown(props) {
   const [option, setOption] = React.useState("");
   const handleChange = (event) => {
     setOption(event.target.value);
+    handleSelectedOptionChange(event.target.value);
     setEmpty(false);
   };
 
   const handleClick = () => {
     setOpen(!open);
+  }
+
+  const handleSelectedOptionChange = selectedOption => {
+    setSelectedOption(selectedOption);
   }
   
   return (
@@ -93,7 +98,7 @@ export default function Dropdown(props) {
           value={option}
           displayEmpty
           renderValue={
-            option !== "" ? undefined : () => <span>{props.placeholder}</span>
+            option !== "" ? undefined : () => <span>{placeholder}</span>
           }
           onOpen={handleClick}
           onClose={handleClick}
@@ -106,7 +111,7 @@ export default function Dropdown(props) {
             }
           }}
         >
-          {props.options.map((optionName) => {
+          {options.map((optionName) => {
             return <MenuItem value={optionName}>{optionName}</MenuItem>;
           })}
         </Select>

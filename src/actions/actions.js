@@ -31,3 +31,10 @@ export const getMajors = () => {
         }).catch(error => {console.log(error)})
     }
 }
+
+export const setStartQtr = (newStartQtr) => {
+    return {
+        type: 'SET_START_QTR',
+        payload: {newStartQtr}
+    }
+}
