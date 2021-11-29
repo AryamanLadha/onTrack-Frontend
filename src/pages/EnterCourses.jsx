@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from "@mui/styles";
 import { CourseCard, PageButton, AutoDropdown } from "../components";
-
+import { connect } from "react-redux";
+import {setCourses} from "../actions/actions";
 
 const useStyles = marginTop => makeStyles(theme => ({
   layout: {
@@ -53,8 +54,8 @@ const useStyles = marginTop => makeStyles(theme => ({
 }))
 
 
-function EnterCourses() {
-  const [ selectedCourses, setSelectedCourses ] = useState([]);
+function EnterCourses({setCourses}) {
+  const [ selectedCourses, setSelectedCourses ] = useState("");
   const [ numRows, setNumRows ] = useState(0);
   const [ lengthOfFilteredOptions, setLengthOfFilteredOptions ] = useState(5);
   const marginTop = 
@@ -97,9 +98,22 @@ function EnterCourses() {
           </div>
         : <div className={classes.courseCardWrapper}></div>
       }
-      <PageButton page={"courses"} text={"next"} size={"long"}/>
+      <PageButton 
+        page={"courses"} 
+        text={"next"} 
+        size={"long"}
+        action={() => {
+          setCourses (selectedCourses);
+        }}
+      />
 		</div>
   )
 }
 
-export default EnterCourses;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCourses: (newCourses) => dispatch(setCourses(newCourses)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(EnterCourses);

@@ -59,3 +59,10 @@ export const setGradeEntered = (newGradeEntered) => {
         payload: {newGradeEntered}
     }
 }
+
+export const setCourses = (newCourses) => {
+    return {
+        type: 'SET_COURSES',
+        payload: {newCourses}
+    }
+}

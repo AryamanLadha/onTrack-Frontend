@@ -4,6 +4,7 @@ const initState = {
     minors: null,
     courses: [],
     eligibleCourses: [],
+    coursesTaken: [],
     year: null,
     allMajors: [],
     startQtr: null,
@@ -58,6 +59,13 @@ const reducer = (state = initState,action) => {
         return({
             ...state,
             gradeEntered: action.payload.newGradeEntered
+        })
+    }
+
+    if(action.type === 'SET_COURSES') {
+        return({
+            ...state,
+            coursesTaken: action.payload.newCourses
         })
     }
 
