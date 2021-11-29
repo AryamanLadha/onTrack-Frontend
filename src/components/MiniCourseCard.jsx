@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: "center",
     lineHeight: "12rem",
     font: theme.font.miniCourseCard,
+    marginRight: "3rem",
   },
 
   cardText: {

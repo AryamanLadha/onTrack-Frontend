@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     flexDirection: "column",
     width: "100vw",
-    marginTop: "20.4rem",
+    marginTop: "10.4rem",
   },
 
   header: {
@@ -38,31 +38,35 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-// mockdata for visuals
-const data = 
+// mockdata for visuals for now!
+const subjectAndCourseData = 
 [
   {
     "quarter" : "Fall 2021",
     "subjects": {
       "Communications" : ["COMM 1", "COMM 10", "COMM 89", "COMM 101", ],
-      "Psychological Science": ["PHYSCI 5", "PHYSCI 107", "PHYSCI 111L", "PHYSCI 140",]
+      "Psychological Science": ["PHYSCI 5", "PHYSCI 107", "PHYSCI 111L", "PHYSCI 140", "PHYSCI 5", "PHYSCI 107", "PHYSCI 111L", "PHYSCI 140", "PHYSCI 5", "PHYSCI 107", "PHYSCI 111L", "PHYSCI 140",],
+      "Life Sciences": ["PHYSCI 5", "PHYSCI 99", "PHYSCI M106", "PHYSCI 108", "PHYSCI 111B", "PHYSCI 111L", "PHYSCI 121",]
     }
   },
   {
-    "quarter": "Winter 2021",
+    "quarter": "Winter 2022",
     "subjects": {
       "Communications" : ["COMM 1", "COMM 10", "COMM 89", "COMM 101", ],
-      "Psychological Science": ["PHYSCI 5", "PHYSCI 13", "PHYSCI 111A", "PHYSCI 121L",]
+      "Psychological Science": ["PHYSCI 5", "PHYSCI 13", "PHYSCI 111A", "PHYSCI 121L", "PHYSCI C126", "PHYSCI C127", "PHYSCI C130",]
+    }
+  },
+  {
+    "quarter": "Spring 2022",
+    "subjects": {
+      "Communications" : ["COMM 1", "COMM 10", "COMM 89", "COMM 101", "COMM 1", "COMM 10", "COMM 89",],
+      "Psychological Science": ["PHYSCI 5", "PHYSCI 99", "PHYSCI M106", "PHYSCI 108", "PHYSCI 111B", "PHYSCI 111L", "PHYSCI 121", "PHYSCI 121",]
     }
   },
 ]
 
 function EligibleCourses() {
   const classes = useStyles();
-
-  // React.useEffect(() => {
-  //   console.log(dataKeys);
-  // }, [])
 
   return (
     <>
@@ -75,11 +79,17 @@ function EligibleCourses() {
             All the courses you can take this year. You're welcome.
           </span>
         </header>
+        <div>
         {
-          data.map((courseObject, index) => (
-            <AccordionDropdown key={index} quarter={courseObject.quarter} courses={courseObject.subjects}/>
+          subjectAndCourseData.map((subjectAndCourseObject, index) => (
+            <AccordionDropdown 
+              key={index} 
+              quarter={subjectAndCourseObject.quarter} 
+              subjectAndcourses={subjectAndCourseObject.subjects}
+            />
           ))
         }
+        </div>
       </div>
     </>
   )
