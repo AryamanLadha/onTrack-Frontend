@@ -12,18 +12,16 @@ const initState = {
 
 const reducer = (state = initState,action) => {
     if(action.type === 'SET_MAJORS'){
-        const newMajor = action.payload.newMajors
         return ({
             ...state,
-            majors: newMajor
+            majors: action.payload.newMajors
         });
     }
 
     if(action.type === 'SET_MINORS'){
-        const newMinor = action.payload.newMinors
         return ({
             ...state,
-            minors: newMinor
+            minors: action.payload.newMinors
         });
     }
 

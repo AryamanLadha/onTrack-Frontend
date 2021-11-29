@@ -23,7 +23,7 @@ export const setMajors = (newMajors) => {
     }
 }
 
-export const setminors = (newMinors) => {
+export const setMinors = (newMinors) => {
     return {
         type: 'SET_MINORS',
         payload: {newMinors}
