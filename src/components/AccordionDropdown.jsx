@@ -5,15 +5,19 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import TriangleDown from "../assets/icons/TriangleDown.svg";
 import { makeStyles } from "@mui/styles";
+import { MiniCourseCard } from "./index";
 
 const useStyles = makeStyles((theme) => ({
   accordionDropdown: {
-    width: "85.27777%",
+    width: "122.8rem",
+    height: "7.2rem",
     flexDirection: "row-reverse",
-    font: theme.font.accordionDropdown,
     borderColor: theme.color.white,
     boxShadow: "none",
-    height: "80%",
+  },
+
+  typography: {
+    font: theme.font.accordionDropdown,
   },
 
   root: {
@@ -24,15 +28,44 @@ const useStyles = makeStyles((theme) => ({
     },
 
     "& .MuiPaper-root": {
-        boxShadow: "none",
+      boxShadow: "none",
     }
   },
 
+  miniCourseCardWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    width: "105.5rem",
+    font: theme.font.accordionDropdown,
+  },
+
+  miniCourseCardContainer: {
+    display: "flex",
+    flexDirection: "row",
+    width: "105.5rem",
+  },
 }));
 
-const AccordionDropdown = () => {
+const courses = [
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+  "Psych 85",
+];
+
+
+const AccordionDropdown = ({quarter, courses}) => {
   //if we were using material ui, <ButtonUnstyled instead of div> -> we would have had to also import buttonUnstyled
   const classes = useStyles(); //so we don't need to pass down props (like we don't need its size) BUT IF WE DID useStyles (props);
+  
+  React.useEffect(() => {
+    console.log(courses);
+  }, [])
+  
   return (
     <div className={classes.root}>
       <Accordion className={classes.accordionDropdown}>
@@ -41,15 +74,25 @@ const AccordionDropdown = () => {
             <img src={TriangleDown} className="triangle" alt="triangle" />
           }
           aria-controls="panel1a-content"
-          id="panel1a-header"
-            
+          id="panel1a-header"           
         >
-          <Typography className={classes.accordionDropdown}>
-            Major Courses
+          <Typography className={classes.typography}>
+            {quarter}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>LAURA WAS HERE</Typography>
+          <div className={classes.miniCourseCardWrapper}>
+            {Object.entries(courses).map(([key, value]) => (
+              <div className={classes.miniCourseCardWrapper}>
+                {key}
+                <div className={classes.miniCourseCardContainer}>
+                  {courses[key].map((course, idx) => (
+                    <MiniCourseCard key={idx} name={course} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </AccordionDetails>
       </Accordion>
     </div>
