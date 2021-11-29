@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { Dropdown, RadioButton, PageButton } from "../components";
+import { connect } from "react-redux";
+import { setStartQtr, setEndQtr } from "../actions/actions";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -39,8 +41,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function WhatYear() {
+function WhatYear({ setStartQtr, setEndQtr }) {
   const classes = useStyles();
+  const [selectedStartQtr, setSelectedStartQtr] = useState("");
+  const [selectedEndQtr, setSelectedEndQtr] = useState("");
 
   return (
     <div className={classes.layout}>
@@ -71,6 +75,7 @@ export default function WhatYear() {
           <Dropdown
             placeholder="Select a quarter"
             options={["Fall 2018", "Winter 2019", "Sping 2019"]}
+            setSelectedOption={setSelectedStartQtr}
           />
         </div>
       </div>
@@ -96,6 +101,7 @@ export default function WhatYear() {
           <Dropdown
             placeholder="Select a quarter"
             options={["Fall 2018", "Winter 2019", "Sping 2019"]}
+            setSelectedOption={setSelectedEndQtr}
           />
         </div>
       </div>
@@ -130,8 +136,25 @@ export default function WhatYear() {
         }}
       >
         <PageButton page={"year"} text="Back" size="short" />
-        <PageButton page={"year"} text="Next" size="short" />
+        <PageButton
+          page={"year"}
+          text="Next"
+          size="short"
+          action={() => {
+            setStartQtr(selectedStartQtr);
+            setEndQtr(selectedEndQtr);
+          }}
+        />
       </div>
     </div>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setStartQtr: (newStartQtr) => dispatch(setStartQtr(newStartQtr)),
+    setEndQtr: (newEndQtr) => dispatch(setEndQtr(newEndQtr)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(WhatYear);
