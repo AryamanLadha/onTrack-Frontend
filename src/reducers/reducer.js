@@ -8,6 +8,7 @@ const initState = {
     allMajors: [],
     startQtr: null,
     endQtr: null,
+    gradeEntered: null,
 }
 
 const reducer = (state = initState,action) => {
@@ -51,6 +52,13 @@ const reducer = (state = initState,action) => {
             ...state,
             endQtr: action.payload.newEndQtr
         });
+    }
+
+    if(action.type === 'SET_GRADE_ENTERED') {
+        return({
+            ...state,
+            gradeEntered: action.payload.newGradeEntered
+        })
     }
 
     return state
