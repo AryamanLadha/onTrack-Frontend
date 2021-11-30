@@ -62,6 +62,10 @@ function WhatMajor({ majmin }) {
   const [ selectedMajors, setSelectedMajors ] = useState([]);
   const classes = useStyles();
 
+  React.useEffect(() => {
+    console.log(selectedMajors);
+  }, [selectedMajors]);
+
   return (
     <div className={classes.layout}>
       <header className={classes.header}>

@@ -1,19 +1,23 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import TriangleDown from "../assets/icons/TriangleDown.svg";
 import { makeStyles } from "@mui/styles";
+import { MiniCourseCard } from "./index";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = (props) => makeStyles((theme) => ({
   accordionDropdown: {
-    width: "85.27777%",
+    width: "122.8rem",
+    height: "7.2rem",
     flexDirection: "row-reverse",
-    font: theme.font.accordionDropdown,
     borderColor: theme.color.white,
     boxShadow: "none",
-    height: "80%",
+  },
+
+  typography: {
+    font: theme.font.accordionDropdown,
   },
 
   root: {
@@ -24,34 +28,102 @@ const useStyles = makeStyles((theme) => ({
     },
 
     "& .MuiPaper-root": {
-        boxShadow: "none",
+      boxShadow: "none",
     }
   },
 
+  miniCourseCardWrapper: {
+    display: "flex",
+    flexDirection: "column",
+  },
+
+  miniCourseCardsBySubject: {
+    display: "flex",
+    flexDirection: "column",
+    width: "117.2rem",
+    margin: "2.6rem 0rem",
+  },
+
+  subject: {
+    font: theme.font.accordionDropdown,
+    marginBottom: "2rem",
+  },
+
+  miniCourseCardContainer: {
+    display: "grid",
+    gridTemplateColumns: "repeat(8, 1fr)",
+    rowGap: "2rem",
+    width: "117rem",
+    height: "auto",
+  },
+
+  emptyDiv: {
+    height: props.height,
+  }
 }));
 
-const AccordionDropdown = () => {
-  //if we were using material ui, <ButtonUnstyled instead of div> -> we would have had to also import buttonUnstyled
-  const classes = useStyles(); //so we don't need to pass down props (like we don't need its size) BUT IF WE DID useStyles (props);
+
+const AccordionDropdown = ({quarter, subjectAndcourses}) => {
+  const [ expanded, setExpanded ] = useState(false);
+  const [ height, setHeight ] = useState(0);
+
+  const props = {
+    height: height,
+  }
+  const classes = useStyles(props)();
+
+  useEffect(() => {
+    const numberOfSubjects = Object.keys(subjectAndcourses).length;
+    let extraRows = 0;
+    // any subjects that have more than 8 courses adds extraRow
+    for (const subject in subjectAndcourses) {
+      extraRows += Math.floor(subjectAndcourses[subject].length/8);
+    }
+    // set height of emptyDiv: when accordian dropdown is expanded
+    expanded 
+    ? setHeight(`${numberOfSubjects*22.7 + extraRows*14}rem`)
+    : setHeight(`0rem`)
+
+  }, [expanded]);
+
+  const handleChange = () => {
+    setExpanded(!expanded);
+  }
+  
   return (
     <div className={classes.root}>
-      <Accordion className={classes.accordionDropdown}>
+      <Accordion 
+        className={classes.accordionDropdown}
+        onChange={handleChange}
+        TransitionProps={{timeout: 0}}
+      >
         <AccordionSummary
           expandIcon={
             <img src={TriangleDown} className="triangle" alt="triangle" />
           }
           aria-controls="panel1a-content"
-          id="panel1a-header"
-            
+          id="panel1a-header"           
         >
-          <Typography className={classes.accordionDropdown}>
-            Major Courses
+          <Typography className={classes.typography}>
+            {quarter}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>LAURA WAS HERE</Typography>
-        </AccordionDetails>
+          <div className={classes.miniCourseCardWrapper}>
+            {Object.entries(subjectAndcourses).map(([key, value]) => (
+              <div className={classes.miniCourseCardsBySubject}>
+                <div className={classes.subject}>{key}</div>
+                <div className={classes.miniCourseCardContainer}>
+                  {value.map((course, idx) => (
+                    <MiniCourseCard key={idx} name={course} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </AccordionDetails> 
       </Accordion>
+      <div className={classes.emptyDiv}></div>
     </div>
   );
 };
