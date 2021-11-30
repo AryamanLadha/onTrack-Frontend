@@ -55,7 +55,7 @@ const useStyles = marginTop => makeStyles(theme => ({
 
 
 function EnterCourses({setCourses}) {
-  const [ selectedCourses, setSelectedCourses ] = useState("");
+  const [ selectedCourses, setSelectedCourses ] = useState([]);
   const [ numRows, setNumRows ] = useState(0);
   const [ lengthOfFilteredOptions, setLengthOfFilteredOptions ] = useState(5);
   const marginTop = 
