@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function WhatMajor({ majmin, setMajors }) {
-  const [selectedMajors, setSelectedMajors] = useState("");
+  const [selectedMajors, setSelectedMajors] = useState([]);
   const classes = useStyles();
 
   return (
