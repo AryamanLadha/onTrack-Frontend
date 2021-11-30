@@ -38,7 +38,9 @@ export default function PageButton({...props}) {
     } 
 
     else if (props.page === 'courses') {
-      navigate('/eligible')
+      props.text === "Back"
+        ? navigate('/year')
+        : navigate('/eligible')
     } 
     
     else  { //if (props.page === 'eligible') {

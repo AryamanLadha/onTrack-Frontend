@@ -97,7 +97,17 @@ function EnterCourses() {
           </div>
         : <div className={classes.courseCardWrapper}></div>
       }
-      <PageButton page={"courses"} text={"next"} size={"long"}/>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          width: "99rem",
+          justifyContent: "space-between",
+        }}
+      >
+        <PageButton page={"courses"} text="Back" size="short" />
+        <PageButton page={"courses"} text="Next" size="short" />
+      </div>
 		</div>
   )
 }
