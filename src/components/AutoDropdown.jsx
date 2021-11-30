@@ -112,9 +112,10 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOption
     data.length === 0 
     ? [] 
     : (whichPage === 'courses' 
-      ? data.map(course => ({name: course.abbreviation + " "+ course.number})) 
+      ? data.map(course => ({name: course["Short name"]})) 
       : data.map(major => ({name : major.name}))
     )
+
   const classes = useStyles(props)();
 
   useEffect(() => {

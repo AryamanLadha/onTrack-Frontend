@@ -9,7 +9,13 @@ export const getCourses = () => {
             //dispatch the action after you have the result.
             axios.get("http://localhost:8000/api/courses", { crossdomain: true })
             .then(res => {
-                dispatch({ type: "GET_COURSES_SUCCESS", payload: {courses: res.data.courses}})
+                // arrayOfCourses has duplicates
+                // coursesData has no duplicates
+                const arrayOfCourses = res.data[0].courses;
+                const courseData = [];
+                arrayOfCourses.map(x => courseData.filter(a => a["Short name"] === x["Short name"]).length > 0 ? null : courseData.push(x));
+                
+                dispatch({ type: "GET_COURSES_SUCCESS", payload: {courses: courseData}})
             }).catch(error => {console.log(error)})
         }
     );
