@@ -16,10 +16,17 @@ export const getCourses = () => {
 }
 
 // Regular action creator returns an object, i.e an action
-export const changeMajor = (newMajor) => {
+export const setMajors = (newMajors) => {
     return {
-        type: 'CHANGE_MAJOR',
-        payload: {newMajor}
+        type: 'SET_MAJORS',
+        payload: {newMajors}
+    }
+}
+
+export const setMinors = (newMinors) => {
+    return {
+        type: 'SET_MINORS',
+        payload: {newMinors}
     }
 }
 
@@ -50,5 +57,12 @@ export const setGradeEntered = (newGradeEntered) => {
     return {
         type: 'SET_GRADE_ENTERED',
         payload: {newGradeEntered}
+    }
+}
+
+export const setCourses = (newCourses) => {
+    return {
+        type: 'SET_COURSES',
+        payload: {newCourses}
     }
 }
