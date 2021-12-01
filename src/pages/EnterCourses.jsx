@@ -105,8 +105,8 @@ function EnterCourses({ setCourses }) {
         <PageButton page={"courses"} text="Back" size="short" />
         <PageButton
           page={"courses"}
-          text={"next"}
-          size={"long"}
+          text={"Next"}
+          size={"short"}
           action={() => {
             setCourses(selectedCourses);
           }}
