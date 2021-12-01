@@ -112,8 +112,8 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOption
     data.length === 0 
     ? [] 
     : (whichPage === 'courses' 
-      ? data.map(course => ({name: course["Short name"]})) 
-      : data.map(major => ({name : major.name}))
+      ? data.map(course => ({"Short name": course["Short name"], "Full name" : course["Full name"]})) 
+      : data.map(major => ({"Short name": major["name"], "Full name" : major["abbreviation"]})) 
     )
 
   const classes = useStyles(props)();
@@ -121,10 +121,6 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOption
   useEffect(() => {
     getData()
   }, []);
-
-  useEffect(() => {
-    console.log(setSelectedOptions)
-  })
 
   const customPopper = function(props) {
     return (
@@ -147,7 +143,7 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOption
   // These are the options for the auto dropdown.
   const filterOptions = createFilterOptions({
     matchFrom: 'start',
-    stringify: (option) => option.name,
+    stringify: (option) => option["Short name"]
   });
 
   const handleIconClick = () => {
@@ -161,12 +157,15 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOption
   }
 
   const handleSelectedOptionsChange = (e, listOfSelectedOptions) => {
-    setSelectedOptions([ ...new Set(listOfSelectedOptions.map(option => option.name))])
+    setSelectedOptions([ ...new Set(listOfSelectedOptions.map(option => option["Short name"]))])
   }
 
   // Make sure to check if options is null
   const handleChange = (params) => {
-    let filteredOptions = options && options.filter(major => major.name.toLowerCase().startsWith(params.inputProps.value.toLowerCase()));
+    let filteredOptions = options && options.filter(option => 
+        option["Short name"].toLowerCase().startsWith(
+          params.inputProps.value.toLowerCase())
+      );
     setLengthOfFilteredOptions(filteredOptions.length);
     if (!open) {
       setLengthOfFilteredOptions(-1);
@@ -187,7 +186,7 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOption
         PaperComponent={customPaper}
         options={options}
         noOptionsText={"No search result"}
-        getOptionLabel={(option) => option.name}
+        getOptionLabel={(option) => option["Short name"]}
         filterOptions={filterOptions}
         multiple={true}
         ListboxProps={{ className : classes.dropDownMenu }}
