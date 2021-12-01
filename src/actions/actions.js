@@ -52,3 +52,17 @@ export const setEndQtr = (newEndQtr) => {
         payload: {newEndQtr}
     }
 }
+
+export const setGradeEntered = (newGradeEntered) => {
+    return {
+        type: 'SET_GRADE_ENTERED',
+        payload: {newGradeEntered}
+    }
+}
+
+export const setCourses = (newCourses) => {
+    return {
+        type: 'SET_COURSES',
+        payload: {newCourses}
+    }
+}

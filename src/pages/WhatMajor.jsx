@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { connect } from 'react-redux';
 import { setMajors } from "../actions/actions";
 import { makeStyles } from "@mui/styles";
 import AutoDropdown from "../components/AutoDropdown";
 import { PageButton, TagComponent } from "../components";
+
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -62,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
 function WhatMajor({ majmin, setMajors }) {
   const [selectedMajors, setSelectedMajors] = useState([]);
   const classes = useStyles();
+
+  React.useEffect(() => {
+    console.log(selectedMajors);
+  }, [selectedMajors]);
 
   return (
     <div className={classes.layout}>
