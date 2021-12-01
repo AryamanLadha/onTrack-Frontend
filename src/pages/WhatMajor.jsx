@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
+import { connect } from 'react-redux';
+import { setMajors } from "../actions/actions";
 import { makeStyles } from "@mui/styles";
 import AutoDropdown from "../components/AutoDropdown";
 import { PageButton, TagComponent } from "../components";
+
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -42,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "34.6rem",
   },
 
-
   prompt: {
     textAlign: "center",
     font: theme.font.subtitle,
@@ -58,8 +60,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function WhatMajor({ majmin }) {
-  const [ selectedMajors, setSelectedMajors ] = useState([]);
+function WhatMajor({ majmin, setMajors }) {
+  const [selectedMajors, setSelectedMajors] = useState([]);
   const classes = useStyles();
 
   React.useEffect(() => {
@@ -75,7 +77,6 @@ function WhatMajor({ majmin }) {
             ? " Major(s)"
             : " Minor(s)"
         }
-
         </h1>
         <span className={classes.subtitle}>Insert some subtitle here.</span>
       </header>
@@ -104,12 +105,22 @@ function WhatMajor({ majmin }) {
               ) : <div></div>
             )
         }
-          <AutoDropdown whichPage={"majors"} setSelectedOptions={setSelectedMajors}/>
+          <AutoDropdown 
+            whichPage={"majors"} 
+            setSelectedOptions={setSelectedMajors}
+          />
         </div>
       <footer className={classes.footer}>
         {
             majmin === "majors"
-            ? <PageButton text={"next"} size={"short"} page={"majors"} />
+            ? <PageButton 
+                text={"next"} 
+                size={"short"} 
+                page={"majors"} 
+                action={() => {
+                  setMajors (selectedMajors);
+                }} 
+              />
             :  
               <div
               style={{
@@ -119,15 +130,40 @@ function WhatMajor({ majmin }) {
                 justifyContent: "space-between",
               }}
               >
-              <PageButton text="Back" size="short" page={"minors"} />
-              <PageButton text="Next" size="short" page={"minors"} />
+              <PageButton 
+                text="Back" 
+                size="short" 
+                page={"minors"} 
+                action={() => {
+                  setMajors (selectedMajors);
+                }}
+              /> 
+              <PageButton 
+                text="Next" 
+                size="short" 
+                page={"minors"} 
+                action={() => {
+                  setMajors (selectedMajors);
+                }}
+              />
           </div>
         }
-        
       </footer>
-
     </div>
   );
 }
 
-export default WhatMajor;
+const mapDispatchToProps = (dispatch, {majmin}) => {
+  return (
+    majmin === 'majors' ? 
+      { 
+        setMajors: newMajors => dispatch(setMajors(newMajors))
+      } 
+    : 
+      {
+        setMajors: newMajors => dispatch(setMajors(newMajors)) //CHANGE TO MINORS
+      }
+  )
+}
+
+export default connect(null, mapDispatchToProps)(WhatMajor);
