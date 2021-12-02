@@ -108,12 +108,12 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOption
   }
 
   // Make sure to do this check all the time
-  const options = 
+  const options =
     data.length === 0 
     ? [] 
     : (whichPage === 'courses' 
       ? data.map(course => ({"Short name": course["Short name"], "Full name" : course["Full name"]})) 
-      : data.map(major => ({"Short name": major["name"], "Full name" : major["abbreviation"]})) 
+      : data.map(major => ({"Short name": major})) 
     )
 
   const classes = useStyles(props)();
