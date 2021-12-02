@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from "@mui/styles";
 import { CourseCard, PageButton, AutoDropdown } from "../components";
 import { connect } from "react-redux";
-import {setCourses} from "../actions/actions";
+import { setCourses } from "../actions/actions";
 import {getEligible} from "../actions/actions";
 
 
@@ -56,16 +56,10 @@ const useStyles = marginTop => makeStyles(theme => ({
 }))
 
 
-function EnterCourses({setCourses}) {
+function EnterCourses({setCourses, getEligible}) {
   const [ selectedCourses, setSelectedCourses ] = useState([]);
   const [ numRows, setNumRows ] = useState(0);
   const [ lengthOfFilteredOptions, setLengthOfFilteredOptions ] = useState(5);
-
-  const studentData = {
-    "currentClasses": [],
-    "completedClasses": selectedCourses,  
-    "major":[] 
-  }
 
   const marginTop = 
   lengthOfFilteredOptions < 5 
@@ -112,8 +106,8 @@ function EnterCourses({setCourses}) {
         text={"next"} 
         size={"long"}
         action={() => {
-          setCourses (selectedCourses);
-          getEligible (studentData);
+          setCourses(selectedCourses);
+          getEligible();
         }}
       />
 		</div>
@@ -123,7 +117,7 @@ function EnterCourses({setCourses}) {
 const mapDispatchToProps = (dispatch) => {
   return {
     setCourses: (newCourses) => dispatch(setCourses(newCourses)),
-    getEligible: (studentData) => dispatch(getEligible(studentData)),
+    getEligible: () => dispatch(getEligible()),
   };
 };
 

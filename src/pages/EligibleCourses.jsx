@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from "@mui/styles";
 import { AccordionDropdown, PageButton } from "../components";
 import { connect } from "react-redux";
-import {getEligible} from "../actions/actions";
 
 
 const useStyles = makeStyles(theme => ({
@@ -49,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 
 
 // mockdata for visuals for now!
-let subjectAndCourseData = 
+let mockData = 
 [
   {
     "quarter" : "Fall 2021",
@@ -75,19 +74,12 @@ let subjectAndCourseData =
   },
 ]
 
-function EligibleCourses() {
+function EligibleCourses({ eligibleCoursesData }) {
   const classes = useStyles();
 
-  React.useEffect(() => {
-    const studentDatatemp = {
-      "currentClasses": [],
-      "completedClasses": ["COM SCI 180", "MATH 32A", "MATH 32B", "MATH 61", "MATH 31B", "MATH 31A", "PHYSICS 1A"],  
-      "major":["COM SCI"] 
-    }
-    const studentData = JSON.stringify (studentDatatemp);
-    console.log (studentData);
-    subjectAndCourseData = getEligible (studentData);
-  });
+  useEffect(() => {
+    eligibleCoursesData && console.log(eligibleCoursesData);
+  }, []);
 
   return (
     <>
@@ -101,14 +93,13 @@ function EligibleCourses() {
           </span>
         </header>
         <div>
-
-        {(subjectAndCourseData.length !== 0)
+        {(mockData.length !== 0)
         ?
-          subjectAndCourseData.map((subjectAndCourseObject, index) => (
+        mockData.map((eligibleCourse, index) => (
             <AccordionDropdown 
               key={index} 
-              quarter={subjectAndCourseObject.quarter} 
-              subjectAndcourses={subjectAndCourseObject.subjects}
+              quarter={eligibleCourse.quarter} 
+              subjectAndcourses={eligibleCourse.subjects}
             />
           ))
           :<div className={classes.pageButtonWrapper}></div>
@@ -123,10 +114,9 @@ function EligibleCourses() {
   )
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (store) => {
   return {
-    getEligible: (studentData) => dispatch(getEligible(studentData)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(EligibleCourses);
+    eligibleCoursesData : store.eligibleCourses
+  }
+}
+export default connect(mapStateToProps, null)(EligibleCourses);

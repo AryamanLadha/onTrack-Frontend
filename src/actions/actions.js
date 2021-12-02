@@ -9,25 +9,33 @@ export const getCourses = () => {
             //dispatch the action after you have the result.
             axios.get("http://localhost:8000/api/courses", { crossdomain: true })
             .then(res => {
-                dispatch({ type: "GET_COURSES_SUCCESS", payload: {courses: res.data.courses}})
+                dispatch({ type: "GET_COURSES_SUCCESS", payload: {courses: res.data}})
             }).catch(error => {console.log(error)})
         }
     );
 }
 
-export const getEligible = (studentData) => {
+export const getEligible = () => {
     return (
         (dispatch) => {
+            // mockData for visuals
+            const mockData={
+                "currentClasses":[],
+                "completedClasses":["COM SCI 180", "MATH 32A", "MATH 32B", "MATH 61", "MATH 31B", "MATH 31A", "PHYSICS 1A"],
+                "major":["COM SCI"]
+            }
+            const studentData = JSON.stringify(mockData);
+
             //make asynchronous call to database
             //dispatch the action after you have the result.
             axios.get("http://localhost:8000/api/courses/eligible", { 
                 crossdomain: true, 
                 params: {
-                studentData
-              }
+                    studentData
+                }
             })
             .then(res => {
-                dispatch({ type: "GET_ELIGIBLE_SUCCESS", payload: {eligibleCourses: res.data.eligibleCourses}})
+                dispatch({ type: "GET_ELIGIBLE_SUCCESS", payload: {eligibleCourses: res.data}})
             }).catch(error => {console.log(error)})
         }
     );
