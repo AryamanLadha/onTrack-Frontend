@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from "@mui/styles";
 import { AccordionDropdown, PageButton } from "../components";
+import { connect } from "react-redux";
+import {getEligible} from "../actions/actions";
 
 
 const useStyles = makeStyles(theme => ({
@@ -47,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 
 
 // mockdata for visuals for now!
-const subjectAndCourseData = 
+let subjectAndCourseData = 
 [
   {
     "quarter" : "Fall 2021",
@@ -76,6 +78,17 @@ const subjectAndCourseData =
 function EligibleCourses() {
   const classes = useStyles();
 
+  React.useEffect(() => {
+    const studentDatatemp = {
+      "currentClasses": [],
+      "completedClasses": ["COM SCI 180", "MATH 32A", "MATH 32B", "MATH 61", "MATH 31B", "MATH 31A", "PHYSICS 1A"],  
+      "major":["COM SCI"] 
+    }
+    const studentData = JSON.stringify (studentDatatemp);
+    console.log (studentData);
+    subjectAndCourseData = getEligible (studentData);
+  });
+
   return (
     <>
       <div className={classes.layout}>
@@ -88,7 +101,9 @@ function EligibleCourses() {
           </span>
         </header>
         <div>
-        {
+
+        {(subjectAndCourseData.length !== 0)
+        ?
           subjectAndCourseData.map((subjectAndCourseObject, index) => (
             <AccordionDropdown 
               key={index} 
@@ -96,6 +111,7 @@ function EligibleCourses() {
               subjectAndcourses={subjectAndCourseObject.subjects}
             />
           ))
+          :<div className={classes.pageButtonWrapper}></div>
         }
         </div>
         <div className={classes.pageButtonWrapper}>
@@ -107,4 +123,10 @@ function EligibleCourses() {
   )
 }
 
-export default EligibleCourses;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getEligible: (studentData) => dispatch(getEligible(studentData)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(EligibleCourses);

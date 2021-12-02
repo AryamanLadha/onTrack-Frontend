@@ -3,6 +3,8 @@ import { makeStyles } from "@mui/styles";
 import { CourseCard, PageButton, AutoDropdown } from "../components";
 import { connect } from "react-redux";
 import {setCourses} from "../actions/actions";
+import {getEligible} from "../actions/actions";
+
 
 const useStyles = marginTop => makeStyles(theme => ({
   layout: {
@@ -58,6 +60,13 @@ function EnterCourses({setCourses}) {
   const [ selectedCourses, setSelectedCourses ] = useState([]);
   const [ numRows, setNumRows ] = useState(0);
   const [ lengthOfFilteredOptions, setLengthOfFilteredOptions ] = useState(5);
+
+  const studentData = {
+    "currentClasses": [],
+    "completedClasses": selectedCourses,  
+    "major":[] 
+  }
+
   const marginTop = 
   lengthOfFilteredOptions < 5 
   ? lengthOfFilteredOptions  === 0
@@ -104,6 +113,7 @@ function EnterCourses({setCourses}) {
         size={"long"}
         action={() => {
           setCourses (selectedCourses);
+          getEligible (studentData);
         }}
       />
 		</div>
@@ -113,6 +123,7 @@ function EnterCourses({setCourses}) {
 const mapDispatchToProps = (dispatch) => {
   return {
     setCourses: (newCourses) => dispatch(setCourses(newCourses)),
+    getEligible: (studentData) => dispatch(getEligible(studentData)),
   };
 };
 
