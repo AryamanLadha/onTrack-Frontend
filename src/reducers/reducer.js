@@ -70,7 +70,6 @@ const reducer = (state = initState,action) => {
     }
 
     if(action.type === 'GET_ELIGIBLE_SUCCESS'){
-        console.log(action.payload.eligibleCourses);
         return ({
             ...state,
             eligibleCourses: action.payload.eligibleCourses

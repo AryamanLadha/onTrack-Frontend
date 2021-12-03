@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { makeStyles } from "@mui/styles";
 import { AccordionDropdown, PageButton } from "../components";
 import { connect } from "react-redux";
-
+import { getEligible } from '../actions/actions';
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -74,11 +74,16 @@ let mockData =
   },
 ]
 
-function EligibleCourses({ eligibleCoursesData }) {
+function EligibleCourses({ getEligible, eligibleCoursesData, storeMajors, storeCoursesTaken }) {
   const classes = useStyles();
 
   useEffect(() => {
-    eligibleCoursesData && console.log(eligibleCoursesData);
+    const studentData = {
+      major: storeMajors,
+      completedClasses: storeCoursesTaken,
+      currentClasses: [],
+    }
+    studentData && getEligible(JSON.stringify(studentData));
   }, []);
 
   return (
@@ -93,9 +98,9 @@ function EligibleCourses({ eligibleCoursesData }) {
           </span>
         </header>
         <div>
-        {(mockData.length !== 0)
+        {(eligibleCoursesData.length !== 0)
         ?
-        mockData.map((eligibleCourse, index) => (
+        eligibleCoursesData.map((eligibleCourse, index) => (
             <AccordionDropdown 
               key={index} 
               quarter={eligibleCourse.quarter} 
@@ -116,7 +121,16 @@ function EligibleCourses({ eligibleCoursesData }) {
 
 const mapStateToProps = (store) => {
   return {
-    eligibleCoursesData : store.eligibleCourses
+    storeMajors: store.majors,
+    storeCoursesTaken: store.coursesTaken,
+    eligibleCoursesData : store.eligibleCourses,
   }
 }
-export default connect(mapStateToProps, null)(EligibleCourses);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getEligible: (studentData) => dispatch(getEligible(studentData)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EligibleCourses);

@@ -15,19 +15,9 @@ export const getCourses = () => {
     );
 }
 
-export const getEligible = () => {
+export const getEligible = (studentData) => {
     return (
         (dispatch) => {
-            // mockData for visuals
-            const mockData={
-                "currentClasses":[],
-                "completedClasses":["COM SCI 180", "MATH 32A", "MATH 32B", "MATH 61", "MATH 31B", "MATH 31A", "PHYSICS 1A"],
-                "major":["COM SCI"]
-            }
-            const studentData = JSON.stringify(mockData);
-
-            //make asynchronous call to database
-            //dispatch the action after you have the result.
             axios.get("http://localhost:8000/api/courses/eligible", { 
                 crossdomain: true, 
                 params: {
@@ -60,7 +50,7 @@ export const getMajors = () => {
     return (dispatch) => {
         axios.get("http://localhost:8000/api/majors", { crossdomain: true })
         .then(res => {
-            dispatch({type: 'GET_MAJORS_SUCCESS', payload: {allMajors: res.data.majors}})
+            dispatch({type: 'GET_MAJORS_SUCCESS', payload: {allMajors: res.data}})
         }).catch(error => {console.log(error)})
     }
 }
