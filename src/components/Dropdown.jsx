@@ -5,13 +5,6 @@ import Select from "@mui/material/Select";
 import InputBase from '@mui/material/InputBase';
 import { makeStyles } from "@mui/styles";
 
-// Pass string array like this to props
-// const quartersData = [
-//   "Fall 2018",
-//   "Winter 2019",
-//   "Sping 2019",
-// ]
-
 const useStyles = (open, empty) => makeStyles(theme =>({
   input: {
     display: "flex",
@@ -50,7 +43,7 @@ const useStyles = (open, empty) => makeStyles(theme =>({
   },
 
   dropdownMenu: {
-    maxHeight: "40rem",
+    maxHeight: "18rem",
     overflow: "auto",
     background: theme.color.lightgrey,
     borderRadius: "0rem 0rem 2rem 2rem",
