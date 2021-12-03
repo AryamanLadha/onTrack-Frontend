@@ -22,7 +22,8 @@ export default function PageButton({...props}) {
 
   const handleClick = () => {
     if (props.page === 'majors') {
-      navigate('/minors')
+      // skip minors
+      navigate('/year')
     } 
     
     else if (props.page === 'minors') {
@@ -33,7 +34,8 @@ export default function PageButton({...props}) {
     
     else if (props.page === 'year') {
       props.text === "Back"
-        ? navigate('/minors')
+      // go back to majors (skip minors)
+        ? navigate('/majors')
         : navigate('/courses')
     } 
 

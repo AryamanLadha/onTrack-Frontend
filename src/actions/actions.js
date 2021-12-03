@@ -34,7 +34,7 @@ export const getMajors = () => {
     return (dispatch) => {
         axios.get("http://localhost:8000/api/majors", { crossdomain: true })
         .then(res => {
-            dispatch({type: 'GET_MAJORS_SUCCESS', payload: {allMajors: res.data.majors}})
+            dispatch({type: 'GET_MAJORS_SUCCESS', payload: {allMajors: res.data}})
         }).catch(error => {console.log(error)})
     }
 }
