@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from "@mui/styles";
 import { AccordionDropdown, PageButton } from "../components";
-
+import { connect } from "react-redux";
+import { getEligible } from '../actions/actions';
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 
 
 // mockdata for visuals for now!
-const subjectAndCourseData = 
+let mockData = 
 [
   {
     "quarter" : "Fall 2021",
@@ -73,8 +74,17 @@ const subjectAndCourseData =
   },
 ]
 
-function EligibleCourses() {
+function EligibleCourses({ getEligible, eligibleCoursesData, storeMajors, storeCoursesTaken }) {
   const classes = useStyles();
+
+  useEffect(() => {
+    const studentData = {
+      major: storeMajors,
+      completedClasses: storeCoursesTaken,
+      currentClasses: [],
+    }
+    studentData && getEligible(JSON.stringify(studentData));
+  }, []);
 
   return (
     <>
@@ -88,14 +98,16 @@ function EligibleCourses() {
           </span>
         </header>
         <div>
-        {
-          subjectAndCourseData.map((subjectAndCourseObject, index) => (
+        {(eligibleCoursesData.length !== 0)
+        ?
+        eligibleCoursesData.map((eligibleCourse, index) => (
             <AccordionDropdown 
               key={index} 
-              quarter={subjectAndCourseObject.quarter} 
-              subjectAndcourses={subjectAndCourseObject.subjects}
+              quarter={eligibleCourse.quarter} 
+              subjectAndcourses={eligibleCourse.subjects}
             />
           ))
+          :<div className={classes.pageButtonWrapper}></div>
         }
         </div>
         <div className={classes.pageButtonWrapper}>
@@ -107,4 +119,18 @@ function EligibleCourses() {
   )
 }
 
-export default EligibleCourses;
+const mapStateToProps = (store) => {
+  return {
+    storeMajors: store.majors,
+    storeCoursesTaken: store.coursesTaken,
+    eligibleCoursesData : store.eligibleCourses,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getEligible: (studentData) => dispatch(getEligible(studentData)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EligibleCourses);

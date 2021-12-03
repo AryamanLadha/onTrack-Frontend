@@ -69,6 +69,13 @@ const reducer = (state = initState,action) => {
         })
     }
 
+    if(action.type === 'GET_ELIGIBLE_SUCCESS'){
+        return ({
+            ...state,
+            eligibleCourses: action.payload.eligibleCourses
+        })
+    }
+
     return state
 }
 

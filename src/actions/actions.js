@@ -15,6 +15,22 @@ export const getCourses = () => {
     );
 }
 
+export const getEligible = (studentData) => {
+    return (
+        (dispatch) => {
+            axios.get("http://localhost:8000/api/courses/eligible", { 
+                crossdomain: true, 
+                params: {
+                    studentData
+                }
+            })
+            .then(res => {
+                dispatch({ type: "GET_ELIGIBLE_SUCCESS", payload: {eligibleCourses: res.data}})
+            }).catch(error => {console.log(error)})
+        }
+    );
+}
+
 // Regular action creator returns an object, i.e an action
 export const setMajors = (newMajors) => {
     return {
