@@ -75,7 +75,7 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
         >
           <Dropdown
             placeholder="Select a quarter"
-            options={["Fall 2018", "Winter 2019", "Sping 2019"]}
+            options={["Fall 2018", "Winter 2019", "Spring 2019", "Summer 2019", "Fall 2019", "Winter 2020", "Spring 2020", "Summer 2020", "Fall 2020", "Winter 2021", "Spring 2021", "Summer 2021", "Fall 2021"]}
             setSelectedOption={setSelectedStartQtr}
           />
         </div>
@@ -101,7 +101,7 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
         >
           <Dropdown
             placeholder="Select a quarter"
-            options={["Fall 2018", "Winter 2019", "Sping 2019"]}
+            options={["Fall 2018", "Winter 2019", "Spring 2019", "Summer 2019", "Fall 2019", "Winter 2020", "Spring 2020", "Summer 2020", "Fall 2020", "Winter 2021", "Spring 2021", "Summer 2021", "Fall 2021"]}
             setSelectedOption={setSelectedEndQtr}
           />
         </div>
