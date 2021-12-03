@@ -28,14 +28,14 @@ export default function PageButton({...props}) {
     
     else if (props.page === 'minors') {
       props.text === "Back" 
-        ? navigate('/majors')
+        ? navigate('/')
         : navigate('/year')
     } 
     
     else if (props.page === 'year') {
       props.text === "Back"
       // go back to majors (skip minors)
-        ? navigate('/majors')
+        ? navigate('/')
         : navigate('/courses')
     } 
 
