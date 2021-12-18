@@ -1,7 +1,7 @@
 import React from 'react';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import {makeStyles} from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import Typography from '@mui/material/Typography';
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RadioButton({setSelectedOption}) {
+export default function RadioButton({ setSelectedOption }) {
   const classes = useStyles();
 
   const handleSelectedOptionChange = (event) => {

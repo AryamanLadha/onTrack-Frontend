@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles} from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 
 //1. makeStyles (theme => : makeStyles is a function that can pass theme as a parameter
 //2. use div for materials ui -> doesn't allow you to use parameters
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CourseCard = ({name}) => {
+const CourseCard = ({ name }) => {
   //if we were using material ui, <ButtonUnstyled instead of div> -> we would have had to also import buttonUnstyled
   const classes = useStyles(); //so we don't need to pass down props (like we don't need its size) BUT IF WE DID useStyles (props);
   return (

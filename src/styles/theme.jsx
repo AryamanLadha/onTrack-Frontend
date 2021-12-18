@@ -1,4 +1,4 @@
-import {createTheme} from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   font: {
@@ -19,14 +19,14 @@ const theme = createTheme({
     icongrey: '#A3A3A3',
     bargrey: '#EDEDED',
     white: '#000000',
-  }
-})
+  },
+});
 
 /**
-* bold: 700
-* medium: 600
-* regular: 400
-* light: 300
-*/
+ * bold: 700
+ * medium: 600
+ * regular: 400
+ * light: 300
+ */
 
 export default theme;

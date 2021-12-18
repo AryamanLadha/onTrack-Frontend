@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {connect} from 'react-redux';
-import {makeStyles} from '@mui/styles';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { makeStyles } from '@mui/styles';
 import AutoDropdown from '../components/AutoDropdown';
-import {PageButton, TagComponent} from '../components';
-import {setMajors} from '../actions/actions';
+import { PageButton, TagComponent } from '../components';
+import { setMajors } from '../actions/actions';
 
 const useStyles = makeStyles((theme) => ({
   layout: {

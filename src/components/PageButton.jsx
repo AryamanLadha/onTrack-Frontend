@@ -1,7 +1,7 @@
 import React from 'react';
 import ButtonUnstyled from '@mui/core/ButtonUnstyled';
-import {makeStyles} from '@mui/styles';
-import {useNavigate} from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // button props: text, size, page
-export default function PageButton({...props}) {
+export default function PageButton({ ...props }) {
   const classes = useStyles(props);
   const navigate = useNavigate();
 

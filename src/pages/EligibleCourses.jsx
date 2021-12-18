@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {makeStyles} from '@mui/styles';
-import {AccordionDropdown, PageButton} from '../components';
-import {getEligible} from '../actions/actions';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { makeStyles } from '@mui/styles';
+import { AccordionDropdown, PageButton } from '../components';
+import { getEligible } from '../actions/actions';
 
 const useStyles = makeStyles((theme) => ({
   layout: {

@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import {makeStyles} from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import Typography from '@mui/material/Typography';
-import {MiniCourseCard} from './index';
+import { MiniCourseCard } from './index';
 import TriangleDown from '../assets/icons/TriangleDown.svg';
 
 const useStyles = (props) =>
@@ -63,7 +63,7 @@ const useStyles = (props) =>
     },
   }));
 
-const AccordionDropdown = ({quarter, subjectAndcourses}) => {
+const AccordionDropdown = ({ quarter, subjectAndcourses }) => {
   const [expanded, setExpanded] = useState(false);
   const [height, setHeight] = useState(0);
 
@@ -94,7 +94,7 @@ const AccordionDropdown = ({quarter, subjectAndcourses}) => {
       <Accordion
         className={classes.accordionDropdown}
         onChange={handleChange}
-        TransitionProps={{timeout: 0}}
+        TransitionProps={{ timeout: 0 }}
       >
         <AccordionSummary
           expandIcon={

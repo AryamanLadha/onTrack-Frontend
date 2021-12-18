@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import InputBase from '@mui/material/InputBase';
-import {makeStyles} from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
@@ -64,7 +64,7 @@ const useStyles = (open, empty) =>
     },
   }));
 
-export default function Dropdown({placeholder, options, setSelectedOption}) {
+export default function Dropdown({ placeholder, options, setSelectedOption }) {
   const [open, setOpen] = useState(false);
   const [empty, setEmpty] = useState(true);
   const classes = useStyles(open, empty)();
