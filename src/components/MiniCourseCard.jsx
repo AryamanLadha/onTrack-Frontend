@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@mui/styles';
+import {makeStyles} from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MiniCourseCard({ name }) {
+export default function MiniCourseCard({name}) {
   const classes = useStyles();
   return (
     <div className={classes.card}>

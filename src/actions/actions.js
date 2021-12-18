@@ -7,9 +7,9 @@ export const getCourses = () => {
         (dispatch) => {
             //make asynchronous call to database
             //dispatch the action after you have the result.
-            axios.get('https://ontrack-backend.herokuapp.com/api/courses', { crossdomain: true })
+            axios.get('https://ontrack-backend.herokuapp.com/api/courses', {crossdomain: true})
             .then(res => {
-                dispatch({ type: 'GET_COURSES_SUCCESS', payload: {courses: res.data}})
+                dispatch({type: 'GET_COURSES_SUCCESS', payload: {courses: res.data}})
             }).catch(error => {console.log(error)})
         }
     );
@@ -18,14 +18,14 @@ export const getCourses = () => {
 export const getEligible = (studentData) => {
     return (
         (dispatch) => {
-            axios.get('https://ontrack-backend.herokuapp.com/api/courses/eligible', { 
+            axios.get('https://ontrack-backend.herokuapp.com/api/courses/eligible', {
                 crossdomain: true, 
                 params: {
                     studentData
                 }
             })
             .then(res => {
-                dispatch({ type: 'GET_ELIGIBLE_SUCCESS', payload: {eligibleCourses: res.data}})
+                dispatch({type: 'GET_ELIGIBLE_SUCCESS', payload: {eligibleCourses: res.data}})
             }).catch(error => {console.log(error)})
         }
     );
@@ -48,7 +48,7 @@ export const setMinors = (newMinors) => {
 
 export const getMajors = () => {
     return (dispatch) => {
-        axios.get('https://ontrack-backend.herokuapp.com/api/majors', { crossdomain: true })
+        axios.get('https://ontrack-backend.herokuapp.com/api/majors', {crossdomain: true})
         .then(res => {
             dispatch({type: 'GET_MAJORS_SUCCESS', payload: {allMajors: res.data}})
         }).catch(error => {console.log(error)})

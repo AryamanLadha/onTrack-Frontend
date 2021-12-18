@@ -1,18 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, } from 'react-router-dom';
-import { EnterCourses, WhatMajor, WhatYear, EligibleCourses } from './pages';
+import {BrowserRouter as Router, Routes, Route, Navigate,} from 'react-router-dom';
+import {EnterCourses, WhatMajor, WhatYear, EligibleCourses} from './pages';
 import GlobalStyle from './styles/GlobalStyle';
-
-const courses = [
-  'Psych 85',
-  'Psych 85',
-  'Psych 85',
-  'Psych 85',
-  'Psych 85',
-  'Psych 85',
-  'Psych 85',
-  'Psych 85',
-];
 
 function App() {
   return (
@@ -26,7 +15,7 @@ function App() {
           <Route
             exact
             path="/courses"
-            element={<EnterCourses courses={courses} />}
+            element={<EnterCourses />}
           />
           <Route exact path="/eligible" element={<EligibleCourses />} />
         </Routes>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { makeStyles } from '@mui/styles';
-import { CourseCard, PageButton, AutoDropdown } from '../components';
-import { setCourses } from '../actions/actions';
+import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
+import {makeStyles} from '@mui/styles';
+import {CourseCard, PageButton, AutoDropdown} from '../components';
+import {setCourses} from '../actions/actions';
 
 const useStyles = (marginTop) =>
   makeStyles((theme) => ({
@@ -54,7 +54,7 @@ const useStyles = (marginTop) =>
     },
   }));
 
-function EnterCourses({ setCourses }) {
+function EnterCourses({setCourses}) {
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [numRows, setNumRows] = useState(0);
   const [lengthOfFilteredOptions, setLengthOfFilteredOptions] = useState(5);

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import { ThemeProvider } from '@mui/material/styles';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import {ThemeProvider} from '@mui/material/styles';
 import thunkMiddleware from 'redux-thunk';
 import App from './App';
 import theme from './styles/theme';

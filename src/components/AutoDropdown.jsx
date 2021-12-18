@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
 import Autocomplete from '@mui/material/Autocomplete';
-import { createFilterOptions } from '@mui/material/Autocomplete';
+import {createFilterOptions} from '@mui/material/Autocomplete';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/core/Popper';
-import { makeStyles } from '@mui/styles';
-import { getCourses, getMajors } from '../actions/actions';
+import {makeStyles} from '@mui/styles';
+import {getCourses, getMajors} from '../actions/actions';
 import SearchIcon from '../assets/icons/SearchIcon.svg';
 import TriangleDown from '../assets/icons/TriangleDown.svg';
 import TriangleUp from '../assets/icons/TriangleUp.svg';
@@ -126,7 +126,7 @@ function AutoDropdown({
           'Short name': course['Short name'],
           'Full name': course['Full name'],
         }))
-      : data.map((major) => ({ 'Short name': major }));
+      : data.map((major) => ({'Short name': major}));
 
   const classes = useStyles(props)();
 
@@ -201,7 +201,7 @@ function AutoDropdown({
         getOptionLabel={(option) => option['Short name']}
         filterOptions={filterOptions}
         multiple={true}
-        ListboxProps={{ className: classes.dropDownMenu }}
+        ListboxProps={{className: classes.dropDownMenu}}
         renderInput={(params) => (
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>
             <input
@@ -246,7 +246,7 @@ AutoDropdown.defaultProps = {
   setLengthOfFilteredOptions: () => {},
 };
 
-const mapStateToProps = (state, { whichPage }) => {
+const mapStateToProps = (state, {whichPage}) => {
   return whichPage === 'courses'
     ? {
         data: state.courses,
@@ -256,7 +256,7 @@ const mapStateToProps = (state, { whichPage }) => {
       };
 };
 
-const mapDispatchToProps = (dispatch, { whichPage }) => {
+const mapDispatchToProps = (dispatch, {whichPage}) => {
   return whichPage === 'courses'
     ? {
         getData: () => dispatch(getCourses()),

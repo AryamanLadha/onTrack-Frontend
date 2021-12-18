@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { makeStyles } from '@mui/styles';
-import { Dropdown, RadioButton, PageButton } from '../components';
-import { setStartQtr, setEndQtr, setGradeEntered } from '../actions/actions';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
+import {makeStyles} from '@mui/styles';
+import {Dropdown, RadioButton, PageButton} from '../components';
+import {setStartQtr, setEndQtr, setGradeEntered} from '../actions/actions';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
+function WhatYear({setStartQtr, setEndQtr, setGradeEntered}) {
   const classes = useStyles();
   const [selectedStartQtr, setSelectedStartQtr] = useState('');
   const [selectedEndQtr, setSelectedEndQtr] = useState('');
@@ -94,7 +94,7 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
           />
         </div>
       </div>
-      <div style={{ height: '4.5rem' }}></div>
+      <div style={{height: '4.5rem'}}></div>
       <div>
         <div
           className={classes.subtitle}
@@ -149,8 +149,8 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
           />
         </div>
       </div>
-      <div style={{ height: '6.4rem' }}></div>
-      <div style={{ marginLeft: '-28rem' }}>
+      <div style={{height: '6.4rem'}}></div>
+      <div style={{marginLeft: '-28rem'}}>
         <div
           className={classes.subtitle}
           style={{
@@ -170,7 +170,7 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
           <RadioButton setSelectedOption={setSelectedGradeEntered} />
         </div>
       </div>
-      <div style={{ height: '9.8rem' }}></div>
+      <div style={{height: '9.8rem'}}></div>
       <div
         style={{
           display: 'flex',
