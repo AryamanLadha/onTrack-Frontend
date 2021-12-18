@@ -1,75 +1,75 @@
-import React, { useState, useEffect } from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import TriangleDown from "../assets/icons/TriangleDown.svg";
-import { makeStyles } from "@mui/styles";
-import { MiniCourseCard } from "./index";
+import React, { useEffect, useState } from 'react';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import { makeStyles } from '@mui/styles';
+import Typography from '@mui/material/Typography';
+import { MiniCourseCard } from './index';
+import TriangleDown from '../assets/icons/TriangleDown.svg';
 
-const useStyles = (props) => makeStyles((theme) => ({
-  accordionDropdown: {
-    width: "122.8rem",
-    height: "7.2rem",
-    flexDirection: "row-reverse",
-    borderColor: theme.color.white,
-    boxShadow: "none",
-  },
-
-  typography: {
-    font: theme.font.accordionDropdown,
-  },
-
-  root: {
-    "& .MuiButtonBase-root": {
-      borderRadius: "1.5rem",
-      background: theme.color.bargrey,
-      boxShadow: "none",
+const useStyles = (props) =>
+  makeStyles((theme) => ({
+    accordionDropdown: {
+      width: '122.8rem',
+      height: '7.2rem',
+      flexDirection: 'row-reverse',
+      borderColor: theme.color.white,
+      boxShadow: 'none',
     },
 
-    "& .MuiPaper-root": {
-      boxShadow: "none",
-    }
-  },
+    typography: {
+      font: theme.font.accordionDropdown,
+    },
 
-  miniCourseCardWrapper: {
-    display: "flex",
-    flexDirection: "column",
-  },
+    root: {
+      '& .MuiButtonBase-root': {
+        borderRadius: '1.5rem',
+        background: theme.color.bargrey,
+        boxShadow: 'none',
+      },
 
-  miniCourseCardsBySubject: {
-    display: "flex",
-    flexDirection: "column",
-    width: "117.2rem",
-    margin: "2.6rem 0rem",
-  },
+      '& .MuiPaper-root': {
+        boxShadow: 'none',
+      },
+    },
 
-  subject: {
-    font: theme.font.accordionDropdown,
-    marginBottom: "2rem",
-  },
+    miniCourseCardWrapper: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
 
-  miniCourseCardContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(8, 1fr)",
-    rowGap: "2rem",
-    width: "117rem",
-    height: "auto",
-  },
+    miniCourseCardsBySubject: {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '117.2rem',
+      margin: '2.6rem 0rem',
+    },
 
-  emptyDiv: {
-    height: props.height,
-  }
-}));
+    subject: {
+      font: theme.font.accordionDropdown,
+      marginBottom: '2rem',
+    },
 
+    miniCourseCardContainer: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(8, 1fr)',
+      rowGap: '2rem',
+      width: '117rem',
+      height: 'auto',
+    },
 
-const AccordionDropdown = ({quarter, subjectAndcourses}) => {
-  const [ expanded, setExpanded ] = useState(false);
-  const [ height, setHeight ] = useState(0);
+    emptyDiv: {
+      height: props.height,
+    },
+  }));
+
+const AccordionDropdown = ({ quarter, subjectAndcourses }) => {
+  const [expanded, setExpanded] = useState(false);
+  const [height, setHeight] = useState(0);
 
   const props = {
     height: height,
-  }
+  };
   const classes = useStyles(props)();
 
   useEffect(() => {
@@ -77,36 +77,33 @@ const AccordionDropdown = ({quarter, subjectAndcourses}) => {
     let extraRows = 0;
     // any subjects that have more than 8 courses adds extraRow
     for (const subject in subjectAndcourses) {
-      extraRows += Math.floor(subjectAndcourses[subject].length/8);
+      extraRows += Math.floor(subjectAndcourses[subject].length / 8);
     }
     // set height of emptyDiv: when accordian dropdown is expanded
-    expanded 
-    ? setHeight(`${numberOfSubjects*22.7 + extraRows*14}rem`)
-    : setHeight(`0rem`)
-
+    expanded
+      ? setHeight(`${numberOfSubjects * 22.7 + extraRows * 14}rem`)
+      : setHeight(`0rem`);
   }, [expanded]);
 
   const handleChange = () => {
     setExpanded(!expanded);
-  }
-  
+  };
+
   return (
     <div className={classes.root}>
-      <Accordion 
+      <Accordion
         className={classes.accordionDropdown}
         onChange={handleChange}
-        TransitionProps={{timeout: 0}}
+        TransitionProps={{ timeout: 0 }}
       >
         <AccordionSummary
           expandIcon={
             <img src={TriangleDown} className="triangle" alt="triangle" />
           }
           aria-controls="panel1a-content"
-          id="panel1a-header"           
+          id="panel1a-header"
         >
-          <Typography className={classes.typography}>
-            {quarter}
-          </Typography>
+          <Typography className={classes.typography}>{quarter}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <div className={classes.miniCourseCardWrapper}>
@@ -121,7 +118,7 @@ const AccordionDropdown = ({quarter, subjectAndcourses}) => {
               </div>
             ))}
           </div>
-        </AccordionDetails> 
+        </AccordionDetails>
       </Accordion>
       <div className={classes.emptyDiv}></div>
     </div>
