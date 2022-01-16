@@ -63,7 +63,7 @@ const useStyles = (props) =>
     },
   }));
 
-const AccordionDropdown = ({ quarter, subjectAndcourses }) => {
+function AccordionDropdown ({ quarter, subjectAndcourses }) {
   const [expanded, setExpanded] = useState(false);
   const [height, setHeight] = useState(0);
 

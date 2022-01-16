@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // button props: text, size, page
-export default function PageButton({ ...props }) {
+function PageButton({ ...props }) {
   const classes = useStyles(props);
   const navigate = useNavigate();
 
@@ -54,3 +54,5 @@ export default function PageButton({ ...props }) {
     </ButtonUnstyled>
   );
 }
+
+export default PageButton;

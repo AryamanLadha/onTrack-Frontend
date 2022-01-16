@@ -64,7 +64,7 @@ const useStyles = (open, empty) =>
     },
   }));
 
-export default function Dropdown({ placeholder, options, setSelectedOption }) {
+function Dropdown({ placeholder, options, setSelectedOption }) {
   const [open, setOpen] = useState(false);
   const [empty, setEmpty] = useState(true);
   const classes = useStyles(open, empty)();
@@ -109,3 +109,5 @@ export default function Dropdown({ placeholder, options, setSelectedOption }) {
     </div>
   );
 }
+
+export default Dropdown;

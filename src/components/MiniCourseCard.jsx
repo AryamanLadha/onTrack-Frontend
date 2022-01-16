@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MiniCourseCard({ name }) {
+function MiniCourseCard({ name }) {
   const classes = useStyles();
   return (
     <div className={classes.card}>
@@ -28,3 +28,5 @@ export default function MiniCourseCard({ name }) {
     </div>
   );
 }
+
+export default MiniCourseCard;

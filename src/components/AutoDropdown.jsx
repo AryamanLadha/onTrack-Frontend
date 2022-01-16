@@ -134,7 +134,7 @@ function AutoDropdown({
     getData();
   }, []);
 
-  const customPopper = function (props) {
+  const customPopper = function(props) {
     return (
       <Popper
         {...props}
@@ -143,7 +143,7 @@ function AutoDropdown({
       />
     );
   };
-  const customPaper = function (props) {
+  const customPaper = function(props) {
     return <Paper {...props} className={classes.selectionMenu} elevation={0} />;
   };
 

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CourseCard = ({ name }) => {
+function CourseCard ({ name }) {
   //if we were using material ui, <ButtonUnstyled instead of div> -> we would have had to also import buttonUnstyled
   const classes = useStyles(); //so we don't need to pass down props (like we don't need its size) BUT IF WE DID useStyles (props);
   return (

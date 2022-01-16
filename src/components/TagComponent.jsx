@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TagComponent = ({ major }) => {
+function TagComponent ({ major }) {
   const classes = useStyles(); //so we don't need to pass down props (like we don't need its size) BUT IF WE DID useStyles (props);
   return <div className={classes.tagComponent}>{major}</div>;
 };
