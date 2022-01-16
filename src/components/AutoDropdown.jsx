@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import SearchIcon from "../assets/icons/SearchIcon.svg";
 import TriangleUp from "../assets/icons/TriangleUp.svg";
 import TriangleDown from "../assets/icons/TriangleDown.svg";
 import Autocomplete from "@mui/material/Autocomplete";
 import Popper from '@mui/core/Popper';
 import Paper from '@mui/material/Paper';
-import { createFilterOptions } from '@mui/material/Autocomplete';
 import { makeStyles } from "@mui/styles";
 import { connect } from 'react-redux';
 import { getCourses, getMajors } from "../actions/actions";
@@ -99,28 +98,32 @@ const useStyles = props => makeStyles(theme =>({
   },
 }));
 
-function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOptions, data, getData}) {
+function AutoDropdown({ whichPage, setLengthOfFilteredOptions, selectedOptions, setSelectedOptions, data, getData}) {
   const [open, setOpen] = useState(false);
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []); 
 
   const props = {  
     open: open,
     whichPage: whichPage,
   }
+  const classes = useStyles(props)();
 
-  // Make sure to do this check all the time
   const options =
     data.length === 0 
     ? [] 
-    : (whichPage === 'courses' 
-      ? data.map(course => ({"Short name": course["Short name"], "Full name" : course["Full name"]})) 
-      : data.map(major => ({"Short name": major})) 
-    )
-
-  const classes = useStyles(props)();
+    : (whichPage === 'courses')
+      ? data.map(course => course["Short name"]) 
+      : data.map(major => major)
 
   useEffect(() => {
     getData()
   }, []);
+
+  // force update when selectedOptions changes
+  useEffect(() => {
+    forceUpdate();
+  }, [forceUpdate, selectedOptions])
 
   const customPopper = function(props) {
     return (
@@ -140,35 +143,32 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOption
     )
   }
 
-  // These are the options for the auto dropdown.
-  const filterOptions = createFilterOptions({
-    matchFrom: 'start',
-    stringify: (option) => option["Short name"]
-  });
-
   const handleIconClick = () => {
     setOpen(!open);
   }
 
+  // when in enter courses page & key up, set autocomplete open
   const handleKeyUp = () => {
     if (whichPage === 'courses') {
       setOpen(true)
     }
   }
 
-  const handleSelectedOptionsChange = (e, listOfSelectedOptions) => {
-    setSelectedOptions([ ...new Set(listOfSelectedOptions.map(option => option["Short name"]))])
+  // when selecting/unselecting options, set and store selected options
+  const handleSelectedOptionsChange = (e, value) => {
+    setSelectedOptions(value);
   }
 
-  // Make sure to check if options is null
   const handleChange = (params) => {
     let filteredOptions = options && options.filter(option => 
-        option["Short name"].toLowerCase().startsWith(
-          params.inputProps.value.toLowerCase())
+        option?.toLowerCase().split(' ').join('').startsWith(
+          params.inputProps.value.toLowerCase().split(' ').join(''))
       );
-    setLengthOfFilteredOptions(filteredOptions.length);
-    if (!open) {
-      setLengthOfFilteredOptions(-1);
+    if (whichPage === "courses") {
+      setLengthOfFilteredOptions(filteredOptions.length);
+      if (!open) {
+        setLengthOfFilteredOptions(-1);
+      }
     }
   }
 
@@ -186,9 +186,9 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, setSelectedOption
         PaperComponent={customPaper}
         options={options}
         noOptionsText={"No search result"}
-        getOptionLabel={(option) => option["Short name"]}
-        filterOptions={filterOptions}
         multiple={true}
+        // pre-set selectedOptions
+        value={selectedOptions} 
         ListboxProps={{ className : classes.dropDownMenu }}
         renderInput={(params) => (
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>

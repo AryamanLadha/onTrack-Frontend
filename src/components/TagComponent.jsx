@@ -16,10 +16,15 @@ const useStyles = makeStyles (theme => ({
   }
 }));
 
-const TagComponent = ({major}) => {
-  const classes = useStyles(); //so we don't need to pass down props (like we don't need its size) BUT IF WE DID useStyles (props);
+const TagComponent = ({ major, selectedMajors, setSelectedMajors }) => {
+  const classes = useStyles(); 
+  const handleClick = () => {
+    let arr = selectedMajors;
+    arr = arr.filter(element => element !== major);
+    setSelectedMajors(arr);
+  }
     return (
-      <div className = {classes.tagComponent}> 
+      <div className = {classes.tagComponent} onClick={handleClick}> 
         {major}
       </div>
   );
