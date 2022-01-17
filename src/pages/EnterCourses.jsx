@@ -118,6 +118,7 @@ function EnterCourses({ setCourses }) {
 }
 
 const mapDispatchToProps = (dispatch) => {
+  // Update the store with courses the user has taken
   return {
     setCourses: (newCourses) => dispatch(setCourses(newCourses)),
   };

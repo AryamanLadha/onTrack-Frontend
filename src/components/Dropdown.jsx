@@ -19,6 +19,7 @@ const useStyles = (open, empty) =>
       borderRadius: open ? '1.5rem 1.5rem 0rem 0rem' : '1.5rem',
 
       '& .MuiInputBase-input': {
+        // If no option is selected, change the font color to a lighter gray
         font: empty ? theme.font.searchBar : theme.font.subtitle,
 
         '&:focus': {
@@ -70,6 +71,7 @@ function Dropdown({ placeholder, options, setSelectedOption }) {
   const classes = useStyles(open, empty)();
 
   const [option, setOption] = React.useState('');
+  // When an option is selected, update the component to display it, update the store with the option's value, and mark the Dropdown as no longer empty
   const handleChange = (event) => {
     setOption(event.target.value);
     setSelectedOption(event.target.value);
@@ -87,6 +89,7 @@ function Dropdown({ placeholder, options, setSelectedOption }) {
           variant={'standard'}
           value={option}
           displayEmpty
+          // workaround on MUI Select so that placeholder value is rendered as default
           renderValue={
             option !== '' ? undefined : () => <span>{placeholder}</span>
           }

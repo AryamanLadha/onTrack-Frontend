@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   button: {
+    // Two sizes of buttonsm depending on prop passed
     width: (props) => (props.size === 'short' ? '13.8rem' : '25.5rem'),
     height: '7.5rem',
     border: '0rem',

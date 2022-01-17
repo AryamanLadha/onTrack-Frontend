@@ -126,6 +126,8 @@ function EligibleCourses({
 }) {
   const classes = useStyles();
 
+  // 1. When page renders, create an object to hold display data, uses data pulled from the store (majors and courses taken)
+  // 2. Then dispatch getEligible action to get the list of courses to display on this page (which will be stored in currentClasses portion of studentData object)
   useEffect(() => {
     const studentData = {
       major: storeMajors,
@@ -167,6 +169,7 @@ function EligibleCourses({
 }
 
 const mapStateToProps = (store) => {
+  // Get the user's major(s), courses taken, and eligible courses
   return {
     storeMajors: store.majors,
     storeCoursesTaken: store.coursesTaken,
@@ -175,6 +178,7 @@ const mapStateToProps = (store) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
+  // Dispatch eligible courses (based on studentData object) to the store
   return {
     getEligible: (studentData) => dispatch(getEligible(studentData)),
   };

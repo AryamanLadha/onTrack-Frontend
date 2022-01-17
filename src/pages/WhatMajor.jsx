@@ -142,6 +142,7 @@ function WhatMajor({ majmin, setMajors }) {
 }
 
 const mapDispatchToProps = (dispatch, { majmin }) => {
+  // Depending on the value of `majmin`, this page will either update the store with the user's majors or minors
   return majmin === 'majors'
     ? {
         setMajors: (newMajors) => dispatch(setMajors(newMajors)),
