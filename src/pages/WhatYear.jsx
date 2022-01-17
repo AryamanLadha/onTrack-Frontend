@@ -52,7 +52,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
       setStartQtr(selectedStartQtr);
     if (selectedEndQtr != "")
       setEndQtr(selectedEndQtr);
-    if (selectedGradeEntered)
+    if (selectedGradeEntered != "")
       setGradeEntered(selectedGradeEntered);
   }
 
