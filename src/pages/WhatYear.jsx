@@ -176,7 +176,7 @@ const mapStateToProps = (store) => {
     storeStartQtr: store.startQtr,
     storeEndQtr: store.endQtr,
     storeGradeEntered: store.gradeEntered,
-  };
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -184,7 +184,7 @@ const mapDispatchToProps = (dispatch) => {
     setStartQtr: (newStartQtr) => dispatch(setStartQtr(newStartQtr)),
     setEndQtr: (newEndQtr) => dispatch(setEndQtr(newEndQtr)),
     setGradeEntered: (newGradeEntered) => dispatch(setGradeEntered(newGradeEntered))
-  };
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WhatYear);

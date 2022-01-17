@@ -166,7 +166,7 @@ const mapStateToProps = (store, { majmin }) => {
         storeMajors: store.majors,  // CHANGE TO MINORS
       }
   )
-}
+};
 
 const mapDispatchToProps = (dispatch, {majmin}) => {
   return (
@@ -179,6 +179,6 @@ const mapDispatchToProps = (dispatch, {majmin}) => {
         setMajors: newMajors => dispatch(setMajors(newMajors)) //CHANGE TO MINORS
       }
   )
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(WhatMajor);

@@ -125,12 +125,12 @@ const mapStateToProps = (store) => {
     storeCoursesTaken: store.coursesTaken,
     eligibleCoursesData : store.eligibleCourses,
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getEligible: (studentData) => dispatch(getEligible(studentData)),
   }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EligibleCourses);

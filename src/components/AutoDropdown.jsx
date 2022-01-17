@@ -267,6 +267,6 @@ const mapDispatchToProps = (dispatch, { whichPage }) => {
         getData: () => dispatch(getMajors())
       }
   )
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AutoDropdown);
