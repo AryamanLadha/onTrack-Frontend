@@ -1,6 +1,6 @@
 import React from "react";
 import GlobalStyle from "./styles/GlobalStyle";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { EnterCourses, WhatMajor, WhatYear, EligibleCourses } from "./pages";
 
 const courses = [

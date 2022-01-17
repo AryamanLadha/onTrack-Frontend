@@ -84,13 +84,17 @@ function WhatMajor({ majmin, setMajors }) {
               ? (
                 <div className={classes.tagComponentContainer}>
                   {selectedMajors.map((major, idx) => (
-                    <TagComponent key={idx} major={major} />
+                    <TagComponent 
+                      key={idx} 
+                      major={major} 
+                      selectedMajors={selectedMajors}
+                      setSelectedMajors={setSelectedMajors}
+                    />
                   ))}
                 </div>
               )
               : <div></div>
-            ) : ( // below is for majmin === "minors"
-              // you have to change it to minors later
+            ) : ( 
               (selectedMajors.length !== 0)
               ? (
                 <div className={classes.tagComponentContainer}>
@@ -103,6 +107,7 @@ function WhatMajor({ majmin, setMajors }) {
         }
           <AutoDropdown 
             whichPage={"majors"} 
+            selectedOptions={selectedMajors}
             setSelectedOptions={setSelectedMajors}
           />
         </div>
