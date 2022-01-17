@@ -41,12 +41,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
+function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, setEndQtr, setGradeEntered }) {
   const classes = useStyles();
   const [selectedStartQtr, setSelectedStartQtr] = useState("");
   const [selectedEndQtr, setSelectedEndQtr] = useState("");
   const [selectedGradeEntered, setSelectedGradeEntered] = useState("");
+
+  const handleClick = () => {
+    if (selectedStartQtr != "")
+      setStartQtr(selectedStartQtr);
+    if (selectedEndQtr != "")
+      setEndQtr(selectedEndQtr);
+    if (selectedGradeEntered)
+      setGradeEntered(selectedGradeEntered);
+  }
 
   return (
     <div className={classes.layout}>
@@ -75,7 +83,7 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
           }}
         >
           <Dropdown
-            placeholder="Select a quarter"
+            placeholder={storeStartQtr != null && storeStartQtr != "" ? storeStartQtr : "Select a quarter"}
             options={["Fall 2018", "Winter 2019", "Spring 2019", "Summer 2019", "Fall 2019", "Winter 2020", "Spring 2020", "Summer 2020", "Fall 2020", "Winter 2021", "Spring 2021", "Summer 2021", "Fall 2021"]}
             setSelectedOption={setSelectedStartQtr}
           />
@@ -101,7 +109,7 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
           }}
         >
           <Dropdown
-            placeholder="Select a quarter"
+            placeholder={storeEndQtr != null && storeEndQtr != "" ? storeEndQtr : "Select a quarter"}
             options={["Fall 2018", "Winter 2019", "Spring 2019", 
             "Summer 2019", "Fall 2019", "Winter 2020", "Spring 2020", 
             "Summer 2020", "Fall 2020", "Winter 2021", "Spring 2021", 
@@ -132,7 +140,9 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
             width: "40%",
           }}
         >
-          <RadioButton setSelectedOption={setSelectedGradeEntered} />
+          <RadioButton
+            initialOption={storeGradeEntered != null && storeGradeEntered != "" ? storeGradeEntered : undefined}
+            setSelectedOption={setSelectedGradeEntered} />
         </div>
       </div>
       <div style={{ height: "9.8rem" }}></div>
@@ -144,21 +154,30 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
           justifyContent: "space-between",
         }}
       >
-        <PageButton page={"year"} text="Back" size="short" />
+        <PageButton
+          page={"year"}
+          text="Back"
+          size="short"
+          action={handleClick}
+        />
         <PageButton
           page={"year"}
           text="Next"
           size="short"
-          action={() => {
-            setStartQtr(selectedStartQtr);
-            setEndQtr(selectedEndQtr);
-            setGradeEntered(selectedGradeEntered);
-          }}
+          action={handleClick}
         />
       </div>
     </div>
   );
 }
+
+const mapStateToProps = (store) => {
+  return {
+    storeStartQtr: store.startQtr,
+    storeEndQtr: store.endQtr,
+    storeGradeEntered: store.gradeEntered,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -168,4 +187,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(WhatYear);
+export default connect(mapStateToProps, mapDispatchToProps)(WhatYear);
