@@ -1,3 +1,4 @@
+// Initial state of the store.
 const initState = {
   majors: [],
   minors: [],
@@ -10,6 +11,8 @@ const initState = {
   endQtr: null,
   gradeEntered: null,
 };
+
+// Reducers to append action payloads to the current store.
 
 const reducer = (state = initState, action) => {
   if (action.type === 'SET_MAJORS') {

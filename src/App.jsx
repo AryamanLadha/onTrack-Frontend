@@ -9,6 +9,7 @@ function App() {
       <GlobalStyle />
       <Router>
         <Routes>
+          {/* Default path goes to WhatMajor page */}
           <Route exact path="/" element={<WhatMajor majmin={'majors'} />} />
           {/* <Route exact path="/minors" element={<WhatMajor majmin={"minors"} />} /> */}
           <Route exact path="/year" element={<WhatYear majmin={'year'} />} />

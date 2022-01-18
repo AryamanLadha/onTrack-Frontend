@@ -60,8 +60,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function WhatMajor({ majmin, setMajors }) {
-  const [selectedMajors, setSelectedMajors] = useState([]);
   const classes = useStyles();
+  
+  // This hook is very important! See AutoDropdown component below...
+  const [selectedMajors, setSelectedMajors] = useState([]);
 
   return (
     <div className={classes.layout}>
@@ -83,8 +85,8 @@ function WhatMajor({ majmin, setMajors }) {
           ) : (
             <div></div>
           )
-        ) : // below is for majmin === "minors"
-        // you have to change it to minors later
+        ) : // Below is for majmin === "minors"
+        // You have to change it to minors later
         selectedMajors.length !== 0 ? (
           <div className={classes.tagComponentContainer}>
             {selectedMajors.map((major, idx) => (
@@ -96,6 +98,8 @@ function WhatMajor({ majmin, setMajors }) {
         )}
         <AutoDropdown
           whichPage={'majors'}
+          // Passing the setSelectedMajors function as an attribute. The logic to update selectedMajors is handled in the component itself.
+          // We follow this structure for all of our components!
           setSelectedOptions={setSelectedMajors}
         />
       </div>
@@ -121,7 +125,7 @@ function WhatMajor({ majmin, setMajors }) {
             <PageButton
               text="Back"
               size="short"
-              page={'minors'}
+              page="minors"
               action={() => {
                 setMajors(selectedMajors);
               }}
@@ -129,7 +133,7 @@ function WhatMajor({ majmin, setMajors }) {
             <PageButton
               text="Next"
               size="short"
-              page={'minors'}
+              page="minors"
               action={() => {
                 setMajors(selectedMajors);
               }}

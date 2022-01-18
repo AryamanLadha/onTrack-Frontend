@@ -2,9 +2,9 @@ import React from 'react';
 import { makeStyles } from '@mui/styles';
 
 //1. makeStyles (theme => : makeStyles is a function that can pass theme as a parameter
-//2. use div for materials ui -> doesn't allow you to use parameters
+//2. Use div for MUI -> doesn't allow you to use parameters
 
-//this is classes and coursecard is a property
+// This is classes and coursecard is a property
 const useStyles = makeStyles((theme) => ({
   card: {
     backgroundColor: theme.color.grey,
@@ -23,14 +23,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CourseCard ({ name }) {
-  //if we were using material ui, <ButtonUnstyled instead of div> -> we would have had to also import buttonUnstyled
-  const classes = useStyles(); //so we don't need to pass down props (like we don't need its size) BUT IF WE DID useStyles (props);
+function CourseCard({ name }) {
+  // If we were using MUI, <ButtonUnstyled instead of div> -> we would have had to also import buttonUnstyled
+  const classes = useStyles(); // So we don't need to pass down props (like we don't need its size) BUT IF WE DID useStyles (props);
+  
   return (
     <div className={classes.card}>
       <span className={classes.cardText}>{name}</span>
     </div>
   );
-};
+}
 
 export default CourseCard;

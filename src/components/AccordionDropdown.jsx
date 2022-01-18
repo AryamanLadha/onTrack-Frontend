@@ -63,23 +63,23 @@ const useStyles = (props) =>
     },
   }));
 
-function AccordionDropdown ({ quarter, subjectAndcourses }) {
-  const [expanded, setExpanded] = useState(false);
-  const [height, setHeight] = useState(0);
-
+function AccordionDropdown({ quarter, subjectAndcourses }) {
   const props = {
     height: height,
   };
   const classes = useStyles(props)();
 
+  const [expanded, setExpanded] = useState(false);
+  const [height, setHeight] = useState(0);
+
   useEffect(() => {
     const numberOfSubjects = Object.keys(subjectAndcourses).length;
     let extraRows = 0;
-    // any subjects that have more than 8 courses adds extraRow
+    // Any subjects that have more than 8 courses adds extraRow
     for (const subject in subjectAndcourses) {
       extraRows += Math.floor(subjectAndcourses[subject].length / 8);
     }
-    // set height of emptyDiv: when accordian dropdown is expanded
+    // Set height of emptyDiv: when accordian dropdown is expanded
     expanded
       ? setHeight(`${numberOfSubjects * 22.7 + extraRows * 14}rem`)
       : setHeight(`0rem`);
@@ -123,6 +123,6 @@ function AccordionDropdown ({ quarter, subjectAndcourses }) {
       <div className={classes.emptyDiv}></div>
     </div>
   );
-};
+}
 
 export default AccordionDropdown;

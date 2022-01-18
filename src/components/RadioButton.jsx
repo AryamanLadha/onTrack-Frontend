@@ -29,6 +29,7 @@ function RadioButton({ setSelectedOption }) {
   };
 
   return (
+    // This component currently has hard-coded options `Freshman` and `Transfer` since we only use it on the WhatYear page. May need to make it generalizable later.
     <FormControl className={classes.formControl}>
       <RadioGroup
         name="radio-buttons-group"

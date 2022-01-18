@@ -111,12 +111,10 @@ function AutoDropdown({
   getData,
 }) {
   const [open, setOpen] = useState(false);
-
   const props = {
     open: open,
     whichPage: whichPage,
   };
-
   // Make sure to do this check all the time
   const options =
     data.length === 0
@@ -127,14 +125,13 @@ function AutoDropdown({
           'Full name': course['Full name'],
         }))
       : data.map((major) => ({ 'Short name': major }));
-
   const classes = useStyles(props)();
 
   useEffect(() => {
     getData();
   }, []);
 
-  const customPopper = function(props) {
+  const customPopper = (props) => {
     return (
       <Popper
         {...props}
@@ -143,7 +140,7 @@ function AutoDropdown({
       />
     );
   };
-  const customPaper = function(props) {
+  const customPaper = (props) => {
     return <Paper {...props} className={classes.selectionMenu} elevation={0} />;
   };
 

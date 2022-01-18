@@ -55,10 +55,6 @@ const useStyles = (marginTop) =>
   }));
 
 function EnterCourses({ setCourses }) {
-  const [selectedCourses, setSelectedCourses] = useState([]);
-  const [numRows, setNumRows] = useState(0);
-  const [lengthOfFilteredOptions, setLengthOfFilteredOptions] = useState(5);
-
   const marginTop =
     lengthOfFilteredOptions < 5
       ? lengthOfFilteredOptions === 0
@@ -66,6 +62,10 @@ function EnterCourses({ setCourses }) {
         : lengthOfFilteredOptions * 5 + 10
       : 35;
   const classes = useStyles(marginTop)();
+
+  const [selectedCourses, setSelectedCourses] = useState([]);
+  const [numRows, setNumRows] = useState(0);
+  const [lengthOfFilteredOptions, setLengthOfFilteredOptions] = useState(5);
 
   useEffect(() => {
     setNumRows(parseInt(selectedCourses.length / 4) + 1);
@@ -82,6 +82,7 @@ function EnterCourses({ setCourses }) {
         setLengthOfFilteredOptions={setLengthOfFilteredOptions}
         setSelectedOptions={setSelectedCourses}
       />
+      {/* Logic to display grid of CourseCards based on selections */}
       {selectedCourses.length !== 0 ? (
         <div className={classes.courseCardWrapper}>
           {Array.from(Array(numRows).keys()).map((i) => (
@@ -103,11 +104,11 @@ function EnterCourses({ setCourses }) {
           justifyContent: 'space-between',
         }}
       >
-        <PageButton page={'courses'} text="Back" size="short" />
+        <PageButton page="courses" text="Back" size="short" />
         <PageButton
-          page={'courses'}
-          text={'Next'}
-          size={'short'}
+          page="courses"
+          text="Next"
+          size="short"
           action={() => {
             setCourses(selectedCourses);
           }}

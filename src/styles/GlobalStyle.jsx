@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
+// Resetting CSS before theming
 const GlobalStyle = createGlobalStyle`
   ${reset}
   * {

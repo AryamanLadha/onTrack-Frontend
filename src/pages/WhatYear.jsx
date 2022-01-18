@@ -43,18 +43,21 @@ const useStyles = makeStyles((theme) => ({
 
 function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
   const classes = useStyles();
+
+  // Hooks to store selections for this page
   const [selectedStartQtr, setSelectedStartQtr] = useState('');
   const [selectedEndQtr, setSelectedEndQtr] = useState('');
   const [selectedGradeEntered, setSelectedGradeEntered] = useState('');
-  
+
+  // Logic to generate list of quarters to be displayed as Dropdown options
   const year = new Date().getFullYear();
-  const years = [...Array(7).keys()].map(x => x+year-2);
-  const seasons = ["Winter", "Spring", "Summer", "Fall"];
+  const years = [...Array(7).keys()].map((x) => x + year - 2);
+  const seasons = ['Winter', 'Spring', 'Summer', 'Fall'];
   const startQuarters = [];
-  startQuarters.push("Fall " + (year-3).toString());
-  for (let i=0; i<years.length; i++){
-    for (let j=0; j<seasons.length; j++){
-      startQuarters.push(seasons[j] + " " + years[i].toString());
+  startQuarters.push('Fall ' + (year - 3).toString());
+  for (let i = 0; i < years.length; i++) {
+    for (let j = 0; j < seasons.length; j++) {
+      startQuarters.push(seasons[j] + ' ' + years[i].toString());
     }
   }
 
@@ -86,7 +89,7 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
         >
           <Dropdown
             placeholder="Select a quarter"
-            options={startQuarters.slice(0,12)}
+            options={startQuarters.slice(0, 12)}
             setSelectedOption={setSelectedStartQtr}
           />
         </div>
@@ -147,9 +150,9 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
           justifyContent: 'space-between',
         }}
       >
-        <PageButton page={'year'} text="Back" size="short" />
+        <PageButton page="year" text="Back" size="short" />
         <PageButton
-          page={'year'}
+          page="year"
           text="Next"
           size="short"
           action={() => {
@@ -168,7 +171,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setStartQtr: (newStartQtr) => dispatch(setStartQtr(newStartQtr)),
     setEndQtr: (newEndQtr) => dispatch(setEndQtr(newEndQtr)),
-    setGradeEntered: (newGradeEntered) => dispatch(setGradeEntered(newGradeEntered)),
+    setGradeEntered: (newGradeEntered) =>
+      dispatch(setGradeEntered(newGradeEntered)),
   };
 };
 

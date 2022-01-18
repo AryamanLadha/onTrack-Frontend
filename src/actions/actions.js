@@ -1,38 +1,50 @@
 import axios from 'axios';
 
-// When you make an API call, or anything asynchronous, the action creator returns a function.
+// When you make an API call, or anything asynchronous, the action creator returns a function
 
 // API call to get list of all courses
 export const getCourses = () => {
-  //Return a function that takes in a dispatch object, which dispatches an action to the reducer.
-  return (
-    (dispatch) => {
-      //make asynchronous call to database
-      //dispatch the action after you have the result.
-      axios.get('https://ontrack-backend.herokuapp.com/api/courses', { crossdomain: true })
-      .then(res => {
-        dispatch({ type: 'GET_COURSES_SUCCESS', payload: { courses: res.data } })
-      }).catch(error => {console.log(error)})
-    }
-  );
-}
+  // Return a function that takes in a dispatch object, which dispatches an action to the reducer
+  return (dispatch) => {
+    // 1. Make asynchronous call to database
+    // 2. Dispatch the action after you have the result
+    axios
+      .get('https://ontrack-backend.herokuapp.com/api/courses', {
+        crossdomain: true,
+      })
+      .then((res) => {
+        dispatch({
+          type: 'GET_COURSES_SUCCESS',
+          payload: { courses: res.data },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 
 // API call to get eligible courses based on majors/prerequisites
 export const getEligible = (studentData) => {
-  return (
-    (dispatch) => {
-      axios.get('https://ontrack-backend.herokuapp.com/api/courses/eligible',
-      { crossdomain: true, 
+  return (dispatch) => {
+    axios
+      .get('https://ontrack-backend.herokuapp.com/api/courses/eligible', {
+        crossdomain: true,
         params: {
-          studentData
-        }
+          studentData,
+        },
       })
-      .then(res => {
-        dispatch({ type: 'GET_ELIGIBLE_SUCCESS', payload: { eligibleCourses: res.data } })
-      }).catch(error => {console.log(error)})
-    }
-  );
-}
+      .then((res) => {
+        dispatch({
+          type: 'GET_ELIGIBLE_SUCCESS',
+          payload: { eligibleCourses: res.data },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 
 // Regular action creator returns an object, i.e an action
 
@@ -40,56 +52,65 @@ export const getEligible = (studentData) => {
 export const setMajors = (newMajors) => {
   return {
     type: 'SET_MAJORS',
-    payload: { newMajors }
-  }
-}
+    payload: { newMajors },
+  };
+};
 
 // Update store with array of selected minors when next/back button is pressed
 export const setMinors = (newMinors) => {
   return {
     type: 'SET_MINORS',
-    payload: { newMinors }
-  }
-}
+    payload: { newMinors },
+  };
+};
 
 // API call to get list of major names
 export const getMajors = () => {
   return (dispatch) => {
-    axios.get('https://ontrack-backend.herokuapp.com/api/majors', { crossdomain: true })
-    .then(res => {
-      dispatch({ type: 'GET_MAJORS_SUCCESS', payload: { allMajors: res.data } })
-    }).catch(error => { console.log(error) })
-  }
-}
+    axios
+      .get('https://ontrack-backend.herokuapp.com/api/majors', {
+        crossdomain: true,
+      })
+      .then((res) => {
+        dispatch({
+          type: 'GET_MAJORS_SUCCESS',
+          payload: { allMajors: res.data },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 
 // Update store with selected start quarter when next/back button is pressed
 export const setStartQtr = (newStartQtr) => {
   return {
     type: 'SET_START_QTR',
-    payload: { newStartQtr }
-  }
-}
+    payload: { newStartQtr },
+  };
+};
 
 // Update store with selected end quarter when next/back button is pressed
 export const setEndQtr = (newEndQtr) => {
   return {
     type: 'SET_END_QTR',
-    payload: {newEndQtr}
-  }
-}
+    payload: { newEndQtr },
+  };
+};
 
 // Update store with selected grade (fresh/soph) when next/back button is pressed
 export const setGradeEntered = (newGradeEntered) => {
   return {
     type: 'SET_GRADE_ENTERED',
-    payload: {newGradeEntered}
-  }
-}
+    payload: { newGradeEntered },
+  };
+};
 
 // Update store with array of courses taken when next/back button is pressed
 export const setCourses = (newCourses) => {
   return {
     type: 'SET_COURSES',
-    payload: {newCourses}
-  }
-}
+    payload: { newCourses },
+  };
+};

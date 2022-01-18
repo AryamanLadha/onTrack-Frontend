@@ -5,7 +5,7 @@ import { makeStyles } from '@mui/styles';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
-const useStyles = (open, empty) =>
+const useStyles = (props) =>
   makeStyles((theme) => ({
     input: {
       display: 'flex',
@@ -16,11 +16,12 @@ const useStyles = (open, empty) =>
       padding: '1rem 2rem 0rem 2rem',
       background: theme.color.lightgrey,
       boxSizing: 'border-box',
-      borderRadius: open ? '1.5rem 1.5rem 0rem 0rem' : '1.5rem',
+      // Disable border radius on bottom corners of Dropdown box if open
+      borderRadius: props.open ? '1.5rem 1.5rem 0rem 0rem' : '1.5rem',
 
       '& .MuiInputBase-input': {
         // If no option is selected, change the font color to a lighter gray
-        font: empty ? theme.font.searchBar : theme.font.subtitle,
+        font: props.empty ? theme.font.searchBar : theme.font.subtitle,
 
         '&:focus': {
           outline: 'none',
@@ -65,10 +66,15 @@ const useStyles = (open, empty) =>
     },
   }));
 
+// `placeholder` prop is the Dropdown's default value
 function Dropdown({ placeholder, options, setSelectedOption }) {
   const [open, setOpen] = useState(false);
   const [empty, setEmpty] = useState(true);
-  const classes = useStyles(open, empty)();
+  const props = {
+    open: open,
+    empty: empty,
+  }
+  const classes = useStyles(props)();
 
   const [option, setOption] = React.useState('');
   // When an option is selected, update the component to display it, update the store with the option's value, and mark the Dropdown as no longer empty
@@ -89,7 +95,7 @@ function Dropdown({ placeholder, options, setSelectedOption }) {
           variant={'standard'}
           value={option}
           displayEmpty
-          // workaround on MUI Select so that placeholder value is rendered as default
+          // Workaround on MUI Select so that placeholder value is rendered as default
           renderValue={
             option !== '' ? undefined : () => <span>{placeholder}</span>
           }

@@ -46,78 +46,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// mockdata for visuals for now!
-let mockData = [
-  {
-    quarter: 'Fall 2021',
-    subjects: {
-      Communications: ['COMM 1', 'COMM 10', 'COMM 89', 'COMM 101'],
-      'Psychological Science': [
-        'PHYSCI 5',
-        'PHYSCI 107',
-        'PHYSCI 111L',
-        'PHYSCI 140',
-        'PHYSCI 5',
-        'PHYSCI 107',
-        'PHYSCI 111L',
-        'PHYSCI 140',
-        'PHYSCI 5',
-        'PHYSCI 107',
-        'PHYSCI 111L',
-        'PHYSCI 140',
-      ],
-      'Life Sciences': [
-        'PHYSCI 5',
-        'PHYSCI 99',
-        'PHYSCI M106',
-        'PHYSCI 108',
-        'PHYSCI 111B',
-        'PHYSCI 111L',
-        'PHYSCI 121',
-      ],
-    },
-  },
-  {
-    quarter: 'Winter 2022',
-    subjects: {
-      Communications: ['COMM 1', 'COMM 10', 'COMM 89', 'COMM 101'],
-      'Psychological Science': [
-        'PHYSCI 5',
-        'PHYSCI 13',
-        'PHYSCI 111A',
-        'PHYSCI 121L',
-        'PHYSCI C126',
-        'PHYSCI C127',
-        'PHYSCI C130',
-      ],
-    },
-  },
-  {
-    quarter: 'Spring 2022',
-    subjects: {
-      Communications: [
-        'COMM 1',
-        'COMM 10',
-        'COMM 89',
-        'COMM 101',
-        'COMM 1',
-        'COMM 10',
-        'COMM 89',
-      ],
-      'Psychological Science': [
-        'PHYSCI 5',
-        'PHYSCI 99',
-        'PHYSCI M106',
-        'PHYSCI 108',
-        'PHYSCI 111B',
-        'PHYSCI 111L',
-        'PHYSCI 121',
-        'PHYSCI 121',
-      ],
-    },
-  },
-];
-
 function EligibleCourses({
   getEligible,
   eligibleCoursesData,
@@ -126,9 +54,10 @@ function EligibleCourses({
 }) {
   const classes = useStyles();
 
-  // 1. When page renders, create an object to hold display data, uses data pulled from the store (majors and courses taken)
+  // 1. When page renders, create an object to hold display data, uses data pulled from the store (majors and coursesTaken). See mapStateToProps below.
   // 2. Then dispatch getEligible action to get the list of courses to display on this page (which will be stored in currentClasses portion of studentData object)
   useEffect(() => {
+    // See API Docs for more detail about course object structure: https://docs.google.com/document/d/1K_EwdJnraRhgYYT1dDU4aiw_GFCbMcqSNi7-EAOIdJA/edit?usp=sharing
     const studentData = {
       major: storeMajors,
       completedClasses: storeCoursesTaken,
@@ -147,6 +76,7 @@ function EligibleCourses({
           </span>
         </header>
         <div>
+          {/* Displaying grid of miniCourseCards. We parse data from the course object to do this. */}
           {eligibleCoursesData.length !== 0 ? (
             eligibleCoursesData.map((eligibleCourse, index) => (
               <AccordionDropdown
@@ -160,8 +90,8 @@ function EligibleCourses({
           )}
         </div>
         <div className={classes.pageButtonWrapper}>
-          <PageButton text="Back" size="short" page={'eligible'} />
-          <PageButton text="Next" size="short" page={'eligible'} />
+          <PageButton text="Back" size="short" page="eligible" />
+          <PageButton text="Next" size="short" page="eligible" />
         </div>
       </div>
     </>

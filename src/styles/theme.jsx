@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
+// Note: We use 1rem=10px when converting from Figma wireframes
 const theme = createTheme({
   font: {
     button: 'normal 400 2.5rem/2.5rem "Work Sans"',

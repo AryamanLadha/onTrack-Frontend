@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 
+// Styled slightly smaller than regular CourseCard, for use on EligibleCourses page
 const useStyles = makeStyles((theme) => ({
   card: {
     backgroundColor: theme.color.grey,
