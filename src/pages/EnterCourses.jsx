@@ -55,6 +55,7 @@ const useStyles = (marginTop) =>
   }));
 
 function EnterCourses({ setCourses }) {
+  const [lengthOfFilteredOptions, setLengthOfFilteredOptions] = useState(5);
   const marginTop =
     lengthOfFilteredOptions < 5
       ? lengthOfFilteredOptions === 0
@@ -65,7 +66,6 @@ function EnterCourses({ setCourses }) {
 
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [numRows, setNumRows] = useState(0);
-  const [lengthOfFilteredOptions, setLengthOfFilteredOptions] = useState(5);
 
   useEffect(() => {
     setNumRows(parseInt(selectedCourses.length / 4) + 1);

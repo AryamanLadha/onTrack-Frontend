@@ -64,13 +64,13 @@ const useStyles = (props) =>
   }));
 
 function AccordionDropdown({ quarter, subjectAndcourses }) {
+  const [height, setHeight] = useState(0);
   const props = {
     height: height,
   };
   const classes = useStyles(props)();
 
   const [expanded, setExpanded] = useState(false);
-  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     const numberOfSubjects = Object.keys(subjectAndcourses).length;
