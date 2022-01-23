@@ -98,7 +98,7 @@ const useStyles = props => makeStyles(theme =>({
   },
 }));
 
-function AutoDropdown({ whichPage, setLengthOfFilteredOptions, selectedOptions, setSelectedOptions, data, getData}) {
+function AutoDropdown({ whichPage, setLengthOfFilteredOptions, initialSelectedOptions, selectedOptions, setSelectedOptions, data, getData}) {
   const [open, setOpen] = useState(false);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []); 
@@ -117,7 +117,8 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, selectedOptions, 
       : data.map(major => major)
 
   useEffect(() => {
-    getData()
+    getData();
+    setSelectedOptions(selectedOptions.concat(initialSelectedOptions));
   }, []);
 
   // force update when selectedOptions changes
@@ -266,6 +267,6 @@ const mapDispatchToProps = (dispatch, { whichPage }) => {
         getData: () => dispatch(getMajors())
       }
   )
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AutoDropdown);

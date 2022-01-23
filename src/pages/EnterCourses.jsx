@@ -54,7 +54,7 @@ const useStyles = (marginTop) =>
     },
   }));
 
-function EnterCourses({ setCourses }) {
+function EnterCourses({ storeCoursesTaken, setCourses }) {
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [numRows, setNumRows] = useState(0);
   const [lengthOfFilteredOptions, setLengthOfFilteredOptions] = useState(5);
@@ -80,6 +80,7 @@ function EnterCourses({ setCourses }) {
       <AutoDropdown
         whichPage={"courses"}
         setLengthOfFilteredOptions={setLengthOfFilteredOptions}
+        initialSelectedOptions={storeCoursesTaken}
         selectedOptions={selectedCourses}
         setSelectedOptions={setSelectedCourses}
       />
@@ -109,7 +110,14 @@ function EnterCourses({ setCourses }) {
           justifyContent: "space-between",
         }}
       >
-        <PageButton page={"courses"} text="Back" size="short" />
+        <PageButton
+          page={"courses"}
+          text="Back"
+          size="short"
+          action={() => {
+            setCourses(selectedCourses);
+          }}
+        />
         <PageButton
           page={"courses"}
           text={"Next"}
@@ -123,10 +131,16 @@ function EnterCourses({ setCourses }) {
   );
 }
 
+const mapStateToProps = (store) => {
+  return {
+    storeCoursesTaken: store.coursesTaken,
+  }
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setCourses: (newCourses) => dispatch(setCourses(newCourses)),
-  };
+  }
 };
 
-export default connect(null, mapDispatchToProps)(EnterCourses);
+export default connect(mapStateToProps, mapDispatchToProps)(EnterCourses);

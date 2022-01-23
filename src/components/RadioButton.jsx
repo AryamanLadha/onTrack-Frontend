@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RadioButton({ setSelectedOption }) 
+export default function RadioButton({ initialOption, setSelectedOption }) 
 {
   const classes = useStyles();
 
@@ -34,6 +34,7 @@ export default function RadioButton({ setSelectedOption })
     <FormControl className={classes.formControl}>
       <RadioGroup
         name="radio-buttons-group"
+        defaultValue={initialOption}
         onChange={handleSelectedOptionChange}
       >
         <FormControlLabel   

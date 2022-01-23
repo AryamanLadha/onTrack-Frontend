@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function WhatMajor({ majmin, setMajors }) {
+function WhatMajor({ majmin, storeMajors, setMajors }) {
   const [selectedMajors, setSelectedMajors] = useState([]);
   const classes = useStyles();
 
@@ -76,7 +76,7 @@ function WhatMajor({ majmin, setMajors }) {
         </h1>
         <span className={classes.subtitle}>Insert some subtitle here.</span>
       </header>
-        <div> 
+        <div>
         {
             majmin === "majors"
             ? (
@@ -106,7 +106,8 @@ function WhatMajor({ majmin, setMajors }) {
             )
         }
           <AutoDropdown 
-            whichPage={"majors"} 
+            whichPage={"majors"}
+            initialSelectedOptions={storeMajors}
             selectedOptions={selectedMajors}
             setSelectedOptions={setSelectedMajors}
           />
@@ -154,6 +155,19 @@ function WhatMajor({ majmin, setMajors }) {
   );
 }
 
+const mapStateToProps = (store, { majmin }) => {
+  return (
+    majmin === 'majors' ?
+      {
+        storeMajors: store.majors,
+      }
+    :
+      {
+        storeMajors: store.majors,  // CHANGE TO MINORS
+      }
+  )
+};
+
 const mapDispatchToProps = (dispatch, {majmin}) => {
   return (
     majmin === 'majors' ? 
@@ -165,6 +179,6 @@ const mapDispatchToProps = (dispatch, {majmin}) => {
         setMajors: newMajors => dispatch(setMajors(newMajors)) //CHANGE TO MINORS
       }
   )
-}
+};
 
-export default connect(null, mapDispatchToProps)(WhatMajor);
+export default connect(mapStateToProps, mapDispatchToProps)(WhatMajor);
