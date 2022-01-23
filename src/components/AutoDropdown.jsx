@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import SearchIcon from "../assets/icons/SearchIcon.svg";
 import TriangleUp from "../assets/icons/TriangleUp.svg";
 import TriangleDown from "../assets/icons/TriangleDown.svg";
@@ -92,16 +92,22 @@ const useStyles = props => makeStyles(theme =>({
       overflow: "true",
     },
 
+    '& li[aria-disabled="true"]' : {
+      opacity: "1 !important",
+      background: theme.color.lightgrey,
+      font: theme.font.subtitle,
+    },
+
     '& li[aria-selected="true"]' : {
-      background: theme.color.grey,
+      opacity: 1,
+      background: theme.color.lightgrey,
+      font: theme.font.subtitle,
     },
   },
 }));
 
-function AutoDropdown({ whichPage, setLengthOfFilteredOptions, initialSelectedOptions, selectedOptions, setSelectedOptions, data, getData}) {
+function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOptions, selectedOptions, setSelectedOptions, data, getData}) {
   const [open, setOpen] = useState(false);
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []); 
 
   const props = {  
     open: open,
@@ -121,10 +127,6 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, initialSelectedOp
     setSelectedOptions(selectedOptions.concat(initialSelectedOptions));
   }, []);
 
-  // force update when selectedOptions changes
-  useEffect(() => {
-    forceUpdate();
-  }, [forceUpdate, selectedOptions])
 
   const customPopper = function(props) {
     return (
@@ -137,13 +139,15 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, initialSelectedOp
   }
   const customPaper = function(props) {
     return (
-      <Paper {...props} 
+      <Paper 
+        {...props} 
         className={classes.selectionMenu} 
         elevation={0}
       />
     )
   }
 
+  // when clicking on triangle, open the menu
   const handleIconClick = () => {
     setOpen(!open);
   }
@@ -158,19 +162,15 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, initialSelectedOp
   // when selecting/unselecting options, set and store selected options
   const handleSelectedOptionsChange = (e, value) => {
     setSelectedOptions(value);
-  }
 
-  const handleChange = (params) => {
-    let filteredOptions = options && options.filter(option => 
-        option?.toLowerCase().split(' ').join('').startsWith(
-          params.inputProps.value.toLowerCase().split(' ').join(''))
-      );
+    // On enter-courses page, set length of selected options to make space for course cards
     if (whichPage === "courses") {
-      setLengthOfFilteredOptions(filteredOptions.length);
+      setLengthOfSelectedCourses(selectedOptions.length < 5 ? 5 : selectedOptions.length);
       if (!open) {
-        setLengthOfFilteredOptions(-1);
+        setLengthOfSelectedCourses(-1);
       }
     }
+
   }
 
   return (
@@ -188,14 +188,16 @@ function AutoDropdown({ whichPage, setLengthOfFilteredOptions, initialSelectedOp
         options={options}
         noOptionsText={"No search result"}
         multiple={true}
+        // disable all the options in the dropdown (disable unselecting from the menu)
+        getOptionDisabled={option => (selectedOptions.includes(option)) ? true : false}
         // pre-set selectedOptions
         value={selectedOptions} 
         ListboxProps={{ className : classes.dropDownMenu }}
-        renderInput={(params) => (
+        renderInput={(params) => 
+          (
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>
             <input
               onKeyUp={handleKeyUp}
-              onChange={handleChange(params)}
               type="text" 
               placeholder={ 
                 whichPage === "courses" 

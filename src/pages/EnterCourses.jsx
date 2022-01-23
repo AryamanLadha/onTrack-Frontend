@@ -57,13 +57,13 @@ const useStyles = (marginTop) =>
 function EnterCourses({ storeCoursesTaken, setCourses }) {
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [numRows, setNumRows] = useState(0);
-  const [lengthOfFilteredOptions, setLengthOfFilteredOptions] = useState(5);
+  const [lengthOfSelectedCourses, setLengthOfSelectedCourses] = useState(5);
 
   const marginTop =
-    lengthOfFilteredOptions < 5
-      ? lengthOfFilteredOptions === 0
+    lengthOfSelectedCourses < 5
+      ? lengthOfSelectedCourses === 0
         ? 15
-        : lengthOfFilteredOptions * 5 + 10
+        : lengthOfSelectedCourses * 5 + 10
       : 35;
   const classes = useStyles(marginTop)();
 
@@ -79,7 +79,7 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
       </header>
       <AutoDropdown
         whichPage={"courses"}
-        setLengthOfFilteredOptions={setLengthOfFilteredOptions}
+        setLengthOfSelectedCourses={setLengthOfSelectedCourses}
         initialSelectedOptions={storeCoursesTaken}
         selectedOptions={selectedCourses}
         setSelectedOptions={setSelectedCourses}
