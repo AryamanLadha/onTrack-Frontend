@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SearchIcon from "../assets/icons/SearchIcon.svg";
 import TriangleUp from "../assets/icons/TriangleUp.svg";
 import TriangleDown from "../assets/icons/TriangleDown.svg";
@@ -108,6 +108,7 @@ const useStyles = props => makeStyles(theme =>({
 
 function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOptions, selectedOptions, setSelectedOptions, data, getData}) {
   const [open, setOpen] = useState(false);
+  const listRef = useRef(null);
 
   const props = {  
     open: open,
@@ -171,6 +172,8 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
       }
     }
 
+    // when selecting an option, scroll to the very top of the menu
+    listRef.current.scrollIntoView()
   }
 
   return (
@@ -192,7 +195,10 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
         getOptionDisabled={option => (selectedOptions.includes(option)) ? true : false}
         // pre-set selectedOptions
         value={selectedOptions} 
-        ListboxProps={{ className : classes.dropDownMenu }}
+        ListboxProps={{ 
+          className : classes.dropDownMenu,
+          ref: listRef,
+        }}
         renderInput={(params) => 
           (
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>
