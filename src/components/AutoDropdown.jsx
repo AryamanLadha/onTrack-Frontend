@@ -191,8 +191,16 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
         options={options}
         noOptionsText={"No search result"}
         multiple={true}
-        // disable all the options in the dropdown (disable unselecting from the menu)
-        getOptionDisabled={option => (selectedOptions.includes(option)) ? true : false}
+        getOptionDisabled={option => 
+          // disable all the options when more than 3 majors are selected
+          (whichPage !== "courses" && selectedOptions.length >= 3) 
+          ? true 
+          // disable options that are selected
+          : (selectedOptions.includes(option)) 
+            ? true
+            : false
+        }
+
         // pre-set selectedOptions
         value={selectedOptions} 
         ListboxProps={{ 
