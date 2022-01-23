@@ -89,7 +89,12 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
           {Array.from(Array(numRows).keys()).map((i) => (
             <div key={i} className={classes.courseCardContainer}>
               {selectedCourses.slice(i * 4, (i + 1) * 4).map((course, idx) => (
-                <CourseCard key={idx} name={course} />
+                <CourseCard 
+                  key={idx} 
+                  name={course}
+                  selectedCourses={selectedCourses}
+                  setSelectedCourses={setSelectedCourses} 
+                />
               ))}
             </div>
           ))}

@@ -2,7 +2,7 @@
 import * as React from "react"
 import { makeStyles } from "@mui/styles"
 
-//this is classes and coursecard is a property
+
 const useStyles = makeStyles (theme => ({
   tagComponent: {
     display: 'flex, inline-block',
@@ -19,10 +19,9 @@ const useStyles = makeStyles (theme => ({
 const TagComponent = ({ major, selectedMajors, setSelectedMajors }) => {
   const classes = useStyles(); 
   const handleClick = () => {
-    let arr = selectedMajors;
-    arr = arr.filter(element => element !== major);
-    setSelectedMajors(arr);
+    setSelectedMajors(selectedMajors.filter(element => element !== major));
   }
+
     return (
       <div className = {classes.tagComponent} onClick={handleClick}> 
         {major}
