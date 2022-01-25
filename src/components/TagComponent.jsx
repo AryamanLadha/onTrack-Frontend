@@ -17,14 +17,13 @@ const useStyles = makeStyles((theme) => ({
 const TagComponent = ({ major, selectedMajors, setSelectedMajors }) => {
   const classes = useStyles();
   const handleClick = () => {
-    let arr = selectedMajors;
-    arr = arr.filter((element) => element !== major);
-    setSelectedMajors(arr);
-  };
-  return (
-    <div className={classes.tagComponent} onClick={handleClick}>
-      {major}
-    </div>
+    setSelectedMajors(selectedMajors.filter(element => element !== major));
+  }
+
+    return (
+      <div className = {classes.tagComponent} onClick={handleClick}> 
+        {major}
+      </div>
   );
 };
 

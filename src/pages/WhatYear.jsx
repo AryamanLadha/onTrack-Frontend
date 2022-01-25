@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
+function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, setEndQtr, setGradeEntered }) {
   const classes = useStyles();
 
   // Hooks to store selections for this page
@@ -59,6 +59,15 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
     for (let j = 0; j < seasons.length; j++) {
       startQuarters.push(seasons[j] + ' ' + years[i].toString());
     }
+  }
+
+  const handleClick = () => {
+    if (selectedStartQtr != "")
+      setStartQtr(selectedStartQtr);
+    if (selectedEndQtr != "")
+      setEndQtr(selectedEndQtr);
+    if (selectedGradeEntered != "")
+      setGradeEntered(selectedGradeEntered);
   }
 
   return (
@@ -88,7 +97,7 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
           }}
         >
           <Dropdown
-            placeholder="Select a quarter"
+            placeholder={storeStartQtr != null && storeStartQtr != "" ? storeStartQtr : "Select a quarter"}
             options={startQuarters.slice(0, 12)}
             setSelectedOption={setSelectedStartQtr}
           />
@@ -114,7 +123,7 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
           }}
         >
           <Dropdown
-            placeholder="Select a quarter"
+            placeholder={storeEndQtr != null && storeEndQtr != "" ? storeEndQtr : "Select a quarter"}
             options={startQuarters}
             setSelectedOption={setSelectedEndQtr}
           />
@@ -138,7 +147,9 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
             width: '40%',
           }}
         >
-          <RadioButton setSelectedOption={setSelectedGradeEntered} />
+          <RadioButton
+            initialOption={storeGradeEntered != null && storeGradeEntered != "" ? storeGradeEntered : undefined}
+            setSelectedOption={setSelectedGradeEntered} />
         </div>
       </div>
       <div style={{ height: '9.8rem' }}></div>
@@ -150,30 +161,38 @@ function WhatYear({ setStartQtr, setEndQtr, setGradeEntered }) {
           justifyContent: 'space-between',
         }}
       >
-        <PageButton page="year" text="Back" size="short" />
+        <PageButton
+          page={"year"}
+          text="Back"
+          size="short"
+          action={handleClick}
+        />
         <PageButton
           page="year"
           text="Next"
           size="short"
-          action={() => {
-            setStartQtr(selectedStartQtr);
-            setEndQtr(selectedEndQtr);
-            setGradeEntered(selectedGradeEntered);
-          }}
+          action={handleClick}
         />
       </div>
     </div>
   );
 }
 
+const mapStateToProps = (store) => {
+  return {
+    storeStartQtr: store.startQtr,
+    storeEndQtr: store.endQtr,
+    storeGradeEntered: store.gradeEntered,
+  }
+};
+
 const mapDispatchToProps = (dispatch) => {
   // Update the store with user's start quarter, end quarter, and grade entered
   return {
     setStartQtr: (newStartQtr) => dispatch(setStartQtr(newStartQtr)),
     setEndQtr: (newEndQtr) => dispatch(setEndQtr(newEndQtr)),
-    setGradeEntered: (newGradeEntered) =>
-      dispatch(setGradeEntered(newGradeEntered)),
-  };
+    setGradeEntered: (newGradeEntered) => dispatch(setGradeEntered(newGradeEntered))
+  }
 };
 
-export default connect(null, mapDispatchToProps)(WhatYear);
+export default connect(mapStateToProps, mapDispatchToProps)(WhatYear);

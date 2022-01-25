@@ -54,18 +54,18 @@ const useStyles = (marginTop) =>
     },
   }));
 
-function EnterCourses({ setCourses }) {
-  const [lengthOfFilteredOptions, setLengthOfFilteredOptions] = useState(5);
-  const marginTop =
-    lengthOfFilteredOptions < 5
-      ? lengthOfFilteredOptions === 0
-        ? 15
-        : lengthOfFilteredOptions * 5 + 10
-      : 35;
-  const classes = useStyles(marginTop)();
-
+function EnterCourses({ storeCoursesTaken, setCourses }) {
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [numRows, setNumRows] = useState(0);
+  const [lengthOfSelectedCourses, setLengthOfSelectedCourses] = useState(5);
+
+  const marginTop =
+    lengthOfSelectedCourses < 5
+      ? lengthOfSelectedCourses === 0
+        ? 15
+        : lengthOfSelectedCourses * 5 + 10
+      : 35;
+  const classes = useStyles(marginTop)();
 
   useEffect(() => {
     setNumRows(parseInt(selectedCourses.length / 4) + 1);
@@ -78,8 +78,10 @@ function EnterCourses({ setCourses }) {
         <span className={classes.subtitle}>One last step....We promise.</span>
       </header>
       <AutoDropdown
-        whichPage={'courses'}
-        setLengthOfFilteredOptions={setLengthOfFilteredOptions}
+        whichPage={"courses"}
+        setLengthOfSelectedCourses={setLengthOfSelectedCourses}
+        initialSelectedOptions={storeCoursesTaken}
+        selectedOptions={selectedCourses}
         setSelectedOptions={setSelectedCourses}
       />
       {/* Logic to display grid of CourseCards based on selections */}
@@ -88,7 +90,12 @@ function EnterCourses({ setCourses }) {
           {Array.from(Array(numRows).keys()).map((i) => (
             <div key={i} className={classes.courseCardContainer}>
               {selectedCourses.slice(i * 4, (i + 1) * 4).map((course, idx) => (
-                <CourseCard key={idx} name={course} />
+                <CourseCard 
+                  key={idx} 
+                  name={course}
+                  selectedCourses={selectedCourses}
+                  setSelectedCourses={setSelectedCourses} 
+                />
               ))}
             </div>
           ))}
@@ -104,7 +111,14 @@ function EnterCourses({ setCourses }) {
           justifyContent: 'space-between',
         }}
       >
-        <PageButton page="courses" text="Back" size="short" />
+        <PageButton
+          page={"courses"}
+          text="Back"
+          size="short"
+          action={() => {
+            setCourses(selectedCourses);
+          }}
+        />
         <PageButton
           page="courses"
           text="Next"
@@ -118,11 +132,17 @@ function EnterCourses({ setCourses }) {
   );
 }
 
+const mapStateToProps = (store) => {
+  return {
+    storeCoursesTaken: store.coursesTaken,
+  }
+};
+
 const mapDispatchToProps = (dispatch) => {
   // Update the store with courses the user has taken
   return {
     setCourses: (newCourses) => dispatch(setCourses(newCourses)),
-  };
+  }
 };
 
-export default connect(null, mapDispatchToProps)(EnterCourses);
+export default connect(mapStateToProps, mapDispatchToProps)(EnterCourses);

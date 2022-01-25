@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import FormControl from '@mui/material/FormControl';
+import React, { useState, useEffect } from "react";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import InputBase from '@mui/material/InputBase';
 import { makeStyles } from '@mui/styles';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 
 const useStyles = (props) =>
   makeStyles((theme) => ({
@@ -76,8 +76,14 @@ function Dropdown({ placeholder, options, setSelectedOption }) {
   }
   const classes = useStyles(props)();
 
-  const [option, setOption] = React.useState('');
   // When an option is selected, update the component to display it, update the store with the option's value, and mark the Dropdown as no longer empty
+  useEffect(() => {
+    if (placeholder != "Select a quarter")
+      setEmpty(false);
+  }, []);
+
+  const [option, setOption] = React.useState("");
+
   const handleChange = (event) => {
     setOption(event.target.value);
     setSelectedOption(event.target.value);

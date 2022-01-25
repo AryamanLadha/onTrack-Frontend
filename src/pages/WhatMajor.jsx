@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function WhatMajor({ majmin, setMajors }) {
+function WhatMajor({ majmin, storeMajors, setMajors }) {
   const classes = useStyles();
 
   // This hook is very important! See AutoDropdown component below...
@@ -74,39 +74,42 @@ function WhatMajor({ majmin, setMajors }) {
         </h1>
         <span className={classes.subtitle}>Insert some subtitle here.</span>
       </header>
-      <div>
-        {majmin === 'majors' ? (
-          selectedMajors.length !== 0 ? (
-            <div className={classes.tagComponentContainer}>
-              {selectedMajors.map((major, idx) => (
-                <TagComponent
-                  key={idx}
-                  major={major}
-                  selectedMajors={selectedMajors}
-                  setSelectedMajors={setSelectedMajors}
-                />
-              ))}
-            </div>
-          ) : (
-            <div></div>
-          )
-        ) : selectedMajors.length !== 0 ? (
-          <div className={classes.tagComponentContainer}>
-            {selectedMajors.map((major, idx) => (
-              <TagComponent key={idx} major={major} />
-            ))}
-          </div>
-        ) : (
-          <div></div>
-        )}
-        <AutoDropdown
-          whichPage={'majors'}
-          // Passing the setSelectedMajors function as an attribute. The logic to update selectedMajors is handled in the component itself.
-          // We follow this structure for all of our components!
-          selectedOptions={selectedMajors}
-          setSelectedOptions={setSelectedMajors}
-        />
-      </div>
+        <div>
+        {
+            majmin === "majors"
+            ? (
+              (selectedMajors.length !== 0)
+              ? (
+                <div className={classes.tagComponentContainer}>
+                  {selectedMajors.map((major, idx) => (
+                    <TagComponent 
+                      key={idx} 
+                      major={major} 
+                      selectedMajors={selectedMajors}
+                      setSelectedMajors={setSelectedMajors}
+                    />
+                  ))}
+                </div>
+              )
+              : <div></div>
+            ) : ( 
+              (selectedMajors.length !== 0)
+              ? (
+                <div className={classes.tagComponentContainer}>
+                  {selectedMajors.map((major, idx) => (
+                    <TagComponent key={idx} major={major} />
+                  ))}
+                </div>
+              ) : <div></div>
+            )
+        }
+          <AutoDropdown 
+            whichPage={"majors"}
+            initialSelectedOptions={storeMajors}
+            selectedOptions={selectedMajors}
+            setSelectedOptions={setSelectedMajors}
+          />
+        </div>
       <footer className={classes.footer}>
         {majmin === 'majors' ? (
           <PageButton
@@ -149,15 +152,30 @@ function WhatMajor({ majmin, setMajors }) {
   );
 }
 
-const mapDispatchToProps = (dispatch, { majmin }) => {
-  // Depending on the value of `majmin`, this page will either update the store with the user's majors or minors
-  return majmin === 'majors'
-    ? {
-        setMajors: (newMajors) => dispatch(setMajors(newMajors)),
+const mapStateToProps = (store, { majmin }) => {
+  return (
+    majmin === 'majors' ?
+      {
+        storeMajors: store.majors,
       }
-    : {
-        setMajors: (newMajors) => dispatch(setMajors(newMajors)), //CHANGE TO MINORS
-      };
+    :
+      {
+        storeMajors: store.majors,  // CHANGE TO MINORS
+      }
+  )
 };
 
-export default connect(null, mapDispatchToProps)(WhatMajor);
+const mapDispatchToProps = (dispatch, {majmin}) => {
+  return (
+    majmin === 'majors' ? 
+      { 
+        setMajors: newMajors => dispatch(setMajors(newMajors))
+      } 
+    : 
+      {
+        setMajors: newMajors => dispatch(setMajors(newMajors)) //CHANGE TO MINORS
+      }
+  )
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WhatMajor);

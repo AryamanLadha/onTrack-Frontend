@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function RadioButton({ setSelectedOption }) {
+function RadioButton({ initialOption, setSelectedOption }) {
   const classes = useStyles();
 
   const handleSelectedOptionChange = (event) => {
@@ -33,6 +33,7 @@ function RadioButton({ setSelectedOption }) {
     <FormControl className={classes.formControl}>
       <RadioGroup
         name="radio-buttons-group"
+        defaultValue={initialOption}
         onChange={handleSelectedOptionChange}
       >
         <FormControlLabel

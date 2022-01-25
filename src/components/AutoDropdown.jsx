@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import Autocomplete from '@mui/material/Autocomplete';
 import Paper from '@mui/material/Paper';
@@ -95,46 +95,43 @@ const useStyles = (props) =>
         borderRadius: '1.5rem',
         overflow: 'true',
       },
-
-      '& li[aria-selected="true"]': {
-        background: theme.color.grey,
+      
+      '& li[aria-disabled="true"]' : {
+        opacity: "1 !important",
+        background: theme.color.lightgrey,
+        font: theme.font.subtitle,
       },
-    },
+
+      '& li[aria-selected="true"]' : {
+        opacity: 1,
+        background: theme.color.lightgrey,
+        font: theme.font.subtitle,
+      },
+    }
   }));
 
-function AutoDropdown({
-  whichPage,
-  setLengthOfFilteredOptions,
-  selectedOptions,
-  setSelectedOptions,
-  data,
-  getData,
-}) {
+function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOptions, selectedOptions, setSelectedOptions, data, getData}) {
   const [open, setOpen] = useState(false);
-  // Make sure to do this check all the time
-  const options =
-    data.length === 0
-      ? []
-      : whichPage === 'courses'
-      ? data.map((course) => course['Short name'])
-      : data.map((major) => major);
-  const props = {
+  const listRef = useRef(null);
+
+  const props = {  
     open: open,
     whichPage: whichPage,
   };
   const classes = useStyles(props)();
 
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
+  const options =
+    data.length === 0 
+    ? [] 
+    : (whichPage === 'courses')
+      ? data.map(course => course["Short name"]) 
+      : data.map(major => major)
 
   useEffect(() => {
     getData();
+    setSelectedOptions(selectedOptions.concat(initialSelectedOptions));
   }, []);
 
-  // force update when selectedOptions changes
-  useEffect(() => {
-    forceUpdate();
-  }, [forceUpdate, selectedOptions]);
 
   const customPopper = (props) => {
     return (
@@ -147,14 +144,15 @@ function AutoDropdown({
   };
   const customPaper = (props) => {
     return (
-      <Paper
-        {...props}
-        className={classes.selectionMenu}
+      <Paper 
+        {...props} 
+        className={classes.selectionMenu} 
         elevation={0}
       />
     );
   };
 
+  // when clicking on triangle, open the menu
   const handleIconClick = () => {
     setOpen(!open);
   };
@@ -169,25 +167,18 @@ function AutoDropdown({
   // when selecting/unselecting options, set and store selected options
   const handleSelectedOptionsChange = (e, value) => {
     setSelectedOptions(value);
-  };
 
-  const handleChange = (params) => {
-    let filteredOptions =
-      options &&
-      options.filter((option) =>
-        option
-          ?.toLowerCase()
-          .split(' ')
-          .join('')
-          .startsWith(params.inputProps.value.toLowerCase().split(' ').join(''))
-      );
-    if (whichPage === 'courses') {
-      setLengthOfFilteredOptions(filteredOptions.length);
+    // On enter-courses page, set length of selected options to make space for course cards
+    if (whichPage === "courses") {
+      setLengthOfSelectedCourses(selectedOptions.length < 5 ? 5 : selectedOptions.length);
       if (!open) {
-        setLengthOfFilteredOptions(-1);
+        setLengthOfSelectedCourses(-1);
       }
     }
-  };
+
+    // when selecting an option, scroll to the very top of the menu
+    listRef.current.scrollIntoView()
+  }
 
   return (
     <>
@@ -204,21 +195,34 @@ function AutoDropdown({
         options={options}
         noOptionsText={'No search result'}
         multiple={true}
+        getOptionDisabled={option => 
+          // disable all the options when more than 3 majors are selected
+          (whichPage !== "courses" && selectedOptions.length >= 3) 
+          ? true 
+          // disable options that are selected
+          : (selectedOptions.includes(option)) 
+            ? true
+            : false
+        }
+
         // pre-set selectedOptions
-        value={selectedOptions}
-        ListboxProps={{ className: classes.dropDownMenu }}
-        renderInput={(params) => (
+        value={selectedOptions} 
+        ListboxProps={{ 
+          className : classes.dropDownMenu,
+          ref: listRef,
+        }}
+        renderInput={(params) => 
+          (
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>
             <input
               onKeyUp={handleKeyUp}
-              onChange={handleChange(params)}
-              type="text"
-              placeholder={
-                whichPage === 'courses'
-                  ? 'What courses have you taken?'
-                  : whichPage === 'majors'
-                  ? 'Enter your major.'
-                  : 'Enter your minor.'
+              type="text" 
+              placeholder={ 
+                whichPage === "courses" 
+                ? "What courses have you taken?"
+                : whichPage === "majors"
+                  ? "Enter your major."
+                  : "Enter your minor."
               }
               {...params.inputProps}
             />

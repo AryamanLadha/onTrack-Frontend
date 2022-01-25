@@ -13,15 +13,15 @@ const theme = createTheme({
     accordionDropdown: 'normal 500 3rem/3rem "Work Sans" !important',
   },
   color: {
-    button: '#C4C4C4',
-    grey: '#C4C4C4 !important',
-    black: '#000000',
-    lightgrey: '#E7E7E7',
-    icongrey: '#A3A3A3',
-    bargrey: '#EDEDED',
-    white: '#000000',
-  },
-});
+    button: "#C4C4C4",
+    grey: "#C4C4C4 !important",
+    black: "#000000",
+    lightgrey: "#E7E7E7 !important",
+    icongrey: "#A3A3A3",
+    bargrey: "#EDEDED",
+    white: "#000000",
+  }
+})
 
 /**
  * bold: 700
