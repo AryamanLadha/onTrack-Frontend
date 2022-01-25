@@ -1,6 +1,5 @@
-import * as React from "react"
-import { makeStyles } from "@mui/styles"
-
+import React from 'react';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles (theme => ({
   card: {
@@ -8,15 +7,15 @@ const useStyles = makeStyles (theme => ({
     width: '17.5rem',
     height: '17.5rem',
     borderRadius: '2.5rem',
-    textAlign: "center",
-    lineHeight: "17.5rem",
+    textAlign: 'center',
+    lineHeight: '17.5rem',
     font: theme.font.courseCard,
   },
 
   cardText: {
-    display: "inline-block",
-    verticalAlign: "middle",
-    lineHeight: "2.346rem",
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    lineHeight: '2.346rem',
   },
 }));
 
@@ -31,6 +30,6 @@ const CourseCard = ({ name, selectedCourses, setSelectedCourses}) => {
       <span className={classes.cardText}>{name}</span>
     </div>
   );
-};
+}
 
 export default CourseCard;

@@ -1,6 +1,7 @@
-import { createGlobalStyle } from "styled-components";
-import reset from "styled-reset";
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
 
+// Resetting CSS before theming
 const GlobalStyle = createGlobalStyle`
   ${reset}
   * {
@@ -43,10 +44,10 @@ const GlobalStyle = createGlobalStyle`
       }
     }
   };
-  a { color: #fff; text-decoration: none; outline: none }
-  a:hover, a:active { text-decoration: none; color:#fff; background-color: transparent; }
-  button{ outline: none; background: none; border: none; cursor: pointer; };
-  input { border: none; outline: none; }
+  a {color: #fff; text-decoration: none; outline: none}
+  a:hover, a:active {text-decoration: none; color:#fff; background-color: transparent;}
+  button{outline: none; background: none; border: none; cursor: pointer;};
+  input {border: none; outline: none;}
 `;
 
 export default GlobalStyle;

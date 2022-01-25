@@ -1,56 +1,56 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@mui/styles";
-import { CourseCard, PageButton, AutoDropdown } from "../components";
-import { connect } from "react-redux";
-import { setCourses } from "../actions/actions";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { makeStyles } from '@mui/styles';
+import { CourseCard, PageButton, AutoDropdown } from '../components';
+import { setCourses } from '../actions/actions';
 
 const useStyles = (marginTop) =>
   makeStyles((theme) => ({
     layout: {
-      display: "flex",
-      alignItems: "center",
-      flexDirection: "column",
-      width: "100vw",
-      marginTop: "20.4rem",
+      display: 'flex',
+      alignItems: 'center',
+      flexDirection: 'column',
+      width: '100vw',
+      marginTop: '20.4rem',
     },
 
     header: {
-      display: "flex",
-      alignItems: "center",
-      flexDirection: "column",
-      width: "100rem",
-      height: "8.5rem",
-      marginTop: "5rem",
-      marginBottom: "4.9rem",
+      display: 'flex',
+      alignItems: 'center',
+      flexDirection: 'column',
+      width: '100rem',
+      height: '8.5rem',
+      marginTop: '5rem',
+      marginBottom: '4.9rem',
     },
 
     title: {
       font: theme.font.title,
       color: theme.color.black,
-      textAlign: "center",
-      margin: "0 0 0 0.9rem",
-      fontWeight: "bold",
+      textAlign: 'center',
+      margin: '0 0 0 0.9rem',
+      fontWeight: 'bold',
     },
 
     subtitle: {
-      textAlign: "center",
+      textAlign: 'center',
       font: theme.font.subtitle,
-      marginTop: "1rem",
+      marginTop: '1rem',
     },
 
     courseCardWrapper: {
-      display: "flex",
-      flexDirection: "column",
+      display: 'flex',
+      flexDirection: 'column',
       marginTop: `${marginTop}rem`,
-      marginBottom: "6rem",
-      width: "87.6rem",
+      marginBottom: '6rem',
+      width: '87.6rem',
       font: theme.font.button,
     },
 
     courseCardContainer: {
-      display: "grid",
-      gridTemplateColumns: "repeat(4, 1fr)",
-      marginTop: "3rem",
+      display: 'grid',
+      gridTemplateColumns: 'repeat(4, 1fr)',
+      marginTop: '3rem',
     },
   }));
 
@@ -84,6 +84,7 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
         selectedOptions={selectedCourses}
         setSelectedOptions={setSelectedCourses}
       />
+      {/* Logic to display grid of CourseCards based on selections */}
       {selectedCourses.length !== 0 ? (
         <div className={classes.courseCardWrapper}>
           {Array.from(Array(numRows).keys()).map((i) => (
@@ -104,10 +105,10 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
       )}
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "99rem",
-          justifyContent: "space-between",
+          display: 'flex',
+          flexDirection: 'row',
+          width: '99rem',
+          justifyContent: 'space-between',
         }}
       >
         <PageButton
@@ -119,9 +120,9 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
           }}
         />
         <PageButton
-          page={"courses"}
-          text={"Next"}
-          size={"short"}
+          page="courses"
+          text="Next"
+          size="short"
           action={() => {
             setCourses(selectedCourses);
           }}
@@ -138,6 +139,7 @@ const mapStateToProps = (store) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
+  // Update the store with courses the user has taken
   return {
     setCourses: (newCourses) => dispatch(setCourses(newCourses)),
   }

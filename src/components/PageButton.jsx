@@ -1,54 +1,46 @@
-import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import ButtonUnstyled from "@mui/core/ButtonUnstyled";
-import { makeStyles } from "@mui/styles"
+import React from 'react';
+import ButtonUnstyled from '@mui/core/ButtonUnstyled';
+import { makeStyles } from '@mui/styles';
+import { useNavigate } from 'react-router-dom';
 
-const useStyles = makeStyles(theme => ({
-  button: {
-    width: props => props.size === "short" ? '13.8rem' : '25.5rem',
-    height: "7.5rem",
-    border: "0rem",
-    marginBottom: "5rem",
-    borderRadius: props => props.size === "short" ? '3.1rem' : '3.75rem',
-    backgroundColor: theme.color.grey,
-    font: theme.font.button,
-  }
-}));
+const useStyles = (props) =>
+  makeStyles((theme) => ({
+    button: {
+      // Two sizes of buttonsm depending on prop passed
+      width: props.size === 'short' ? '13.8rem' : '25.5rem',
+      height: '7.5rem',
+      border: '0rem',
+      marginBottom: '5rem',
+      borderRadius: props.size === 'short' ? '3.1rem' : '3.75rem',
+      backgroundColor: theme.color.grey,
+      font: theme.font.button,
+    },
+  }));
 
-// button props: text, size, page
-export default function PageButton({...props}) {
-  const classes = useStyles(props);
+// Button props: text, size, page
+function PageButton({ page, text, size, action }) {
+  const props = {
+    size: size,
+  };
+  const classes = useStyles(props)();
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (props.page === 'majors') {
-      // skip minors
-      navigate('/year')
-    } 
-    
-    else if (props.page === 'minors') {
-      props.text === "Back" 
-        ? navigate('/')
-        : navigate('/year')
-    } 
-    
-    else if (props.page === 'year') {
-      props.text === "Back"
-      // go back to majors (skip minors)
-        ? navigate('/')
-        : navigate('/courses')
-    } 
-
-    else if (props.page === 'courses') {
-      props.text === "Back"
-        ? navigate('/year')
-        : navigate('/eligible')
-    } 
-    
-    else  { //if (props.page === 'eligible') {
-      props.text === "Back"
-        ? navigate('/courses')
-        : navigate('/done')
+    if (page === 'majors') {
+      // Skip minors
+      navigate('/year');
+    } else if (page === 'minors') {
+      text === 'Back' ? navigate('/') : navigate('/year');
+    } else if (page === 'year') {
+      text === 'Back'
+        ? // Go back to majors (skip minors)
+          navigate('/')
+        : navigate('/courses');
+    } else if (page === 'courses') {
+      text === 'Back' ? navigate('/year') : navigate('/eligible');
+    } else {
+      // i.e., if (props.page === 'eligible') {
+      text === 'Back' ? navigate('/courses') : navigate('/done');
     }
     // props.page === "done"
     // else {
@@ -56,14 +48,16 @@ export default function PageButton({...props}) {
     // }
 
     // VERY IMPORTANT -- DISPATCH ACTION IF AVAILABLE
-    if (props.action != null) {
-      props.action();
+    if (action != null) {
+      action();
     }
   };
 
   return (
     <ButtonUnstyled className={classes.button} onClick={handleClick}>
-      {props.text}
+      {text}
     </ButtonUnstyled>
   );
 }
+
+export default PageButton;
