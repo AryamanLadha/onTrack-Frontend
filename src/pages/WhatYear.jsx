@@ -50,14 +50,42 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
   const [selectedGradeEntered, setSelectedGradeEntered] = useState('');
 
   // Logic to generate list of quarters to be displayed as Dropdown options
-  const year = new Date().getFullYear();
-  const years = [...Array(7).keys()].map((x) => x + year - 2);
+  let currYear = new Date().getFullYear();
+  const currMonth = new Date().getMonth();
   const seasons = ['Winter', 'Spring', 'Summer', 'Fall'];
+  let currSeason = 0;
+  if (currMonth >= 0 && currMonth <= 2)
+    currSeason = 0;
+  else if (currMonth <= 5)
+    currSeason = 1;
+  else if (currMonth <= 8)
+    currSeason = 2;
+  else
+    currSeason = 3;
+  if (currSeason == 3)
+    currYear++;
   const startQuarters = [];
-  startQuarters.push('Fall ' + (year - 3).toString());
-  for (let i = 0; i < years.length; i++) {
-    for (let j = 0; j < seasons.length; j++) {
-      startQuarters.push(seasons[j] + ' ' + years[i].toString());
+  const endQuarters = [];
+  // Push options that combine seasons and years.
+  // startQuarters: 4 years back (always beginning with Fall Qtr) -> current qtr
+  // endQuarters: current qtr -> 4 years forward (always ending with Summer Qtr)
+  let s = 3;
+  let y = currYear - 4;
+  while (!(y == currYear && s == currSeason)) {
+    startQuarters.push(seasons[s] + " " + y);
+    s++
+    if (s > 3) {
+      s = 0;
+      y++;
+    }
+  }
+  startQuarters.push(seasons[s] + " " + y);
+  while (!(y == currYear + 3 && s == 3)) {
+    endQuarters.push(seasons[s] + " " + y);
+    s++
+    if (s > 3) {
+      s = 0;
+      y++;
     }
   }
 
@@ -98,7 +126,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
         >
           <Dropdown
             placeholder={storeStartQtr != null && storeStartQtr != "" ? storeStartQtr : "Select a quarter"}
-            options={startQuarters.slice(0, 12)}
+            options={startQuarters}
             setSelectedOption={setSelectedStartQtr}
           />
         </div>
@@ -124,7 +152,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
         >
           <Dropdown
             placeholder={storeEndQtr != null && storeEndQtr != "" ? storeEndQtr : "Select a quarter"}
-            options={startQuarters}
+            options={endQuarters}
             setSelectedOption={setSelectedEndQtr}
           />
         </div>
