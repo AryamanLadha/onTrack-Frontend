@@ -9,7 +9,7 @@ import { MiniCourseCard } from "./index";
 
 const useStyles = (props) => makeStyles((theme) => ({
   accordionDropdown: {
-    width: "84.8rem",
+    width: "100%",
     height: "7.2rem",
     flexDirection: "row-reverse",
     boxShadow: "none",
@@ -19,41 +19,31 @@ const useStyles = (props) => makeStyles((theme) => ({
   },
 
   typography: {
+    paddingTop: "0.5rem",
     font: theme.font.accordionDropdown,
   },
 
   root: {
     borderRadius: "0rem 0rem 1.5rem 1.5rem !important",
-    margin: "0",
-    width: "85rem",
+    width: "84.8rem",
+    height: "100%",
     
     "& .MuiPaper-root": {
+      height: "7.2rem",
       boxShadow: "none",
     },
 
-    "&. MuiButtonBase-root" : {
-      border: "0.1rem solid",
-      borderColor: theme.color.lightBeige,
-      // position: "relative",
-    },
-
-    "& .MuiCollapse-root": {
-      border: `0.1rem solid ${theme.color.lightBeige} !important`,
-      borderRadius: "0rem 0rem 1.5rem 1.5rem",
-      // position: "absolute",
-      // bottom: "0",
-    },
+    "& .MuiAccordionDetails-root" : {
+      marginBottom: "0rem",
+    }
   },
 
   miniCourseCardWrapper: {
+    "@media (min-width:1024px)": { 
+      marginTop: "2rem"
+    },
     display: "flex",
     flexDirection: "column",
-    paddingTop : "2rem",
-  },
-
-  subject: {
-    font: theme.font.accordionDropdown,
-    marginBottom: "2rem",
   },
 
   miniCourseCardContainer: {
@@ -62,9 +52,12 @@ const useStyles = (props) => makeStyles((theme) => ({
     height: "auto",
     marginBottom: "2rem",
   },
-
+  
   emptyDiv: {
     height: props.height,
+    borderTop: "none !important",
+    border: props.expanded ? `0.1rem solid ${theme.color.lightBeige} !important` : "none",
+    borderRadius: "0rem 0rem 1.5rem 1.5rem",
     marginBottom: "2.7rem",
   }
 }));
@@ -83,12 +76,12 @@ const SelectCourseDropdown = ({ data }) => {
   useEffect(() => {
     const numberOfCourses = data.courses.length;
     console.log(numberOfCourses)
-    // any subjects that have more than 5 courses adds extraRow
+    // // any subjects that have more than 5 courses adds extraRow
     let extraRows = Math.floor(numberOfCourses/5)+1;
 
     // set height of emptyDiv: when accordian dropdown is expanded
     expanded 
-    ? setHeight(`${extraRows*16}rem`)
+    ? setHeight(`${(extraRows-1)*14+17}rem`)
     : setHeight(`0rem`)
 
   }, [expanded]);
@@ -100,6 +93,7 @@ const SelectCourseDropdown = ({ data }) => {
   return (
     <div className={classes.root}>
       <Accordion 
+        disableGutters
         className={classes.accordionDropdown}
         onChange={handleChange}
         TransitionProps={{timeout: 0}}
@@ -122,9 +116,9 @@ const SelectCourseDropdown = ({ data }) => {
         </AccordionSummary>
         <AccordionDetails>
           <div className={classes.miniCourseCardWrapper}>
-            {[...Array(parseInt(data.courses.length/5+1, 10)).keys()].map((i) => (
+            {[...Array(Math.ceil(data.courses.length/5)).keys()].map((i) => (
               <div key={i} className={classes.miniCourseCardContainer}>
-                {data.courses.slice(i, i+5).map((course, idx) => 
+                {data.courses.slice(i*5, i*5+5).map((course, idx) => 
                   <MiniCourseCard key={idx} name={course} />
                 )}
               </div>

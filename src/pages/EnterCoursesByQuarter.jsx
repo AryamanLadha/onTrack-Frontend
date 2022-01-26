@@ -53,7 +53,7 @@ let mockData = [
   {
   "quarter" : "Fall 2018",
   "courses": [
-    "COM SCI 1", "COM SCI 31", "MATH 31A",
+    "COM SCI 1", "COM SCI 31", "MATH 31A", "ENG COMP 3", "PYSCH 7", "COMM 1A",
     ]
   },
   {
