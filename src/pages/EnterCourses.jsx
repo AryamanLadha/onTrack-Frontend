@@ -69,6 +69,7 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
 
   useEffect(() => {
     setNumRows(parseInt(selectedCourses.length / 4) + 1);
+    setLengthOfSelectedCourses(-1);
   }, [selectedCourses]);
 
   return (
