@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
+import CourseCardX from "../assets/icons/CourseCardCross.svg";
 
 const useStyles = (isHovering) =>
   makeStyles((theme) => ({
@@ -11,6 +12,21 @@ const useStyles = (isHovering) =>
       textAlign: "center",
       lineHeight: "17.5rem",
       font: theme.font.courseCard,
+      position: "relative",
+
+      "& .crossContainer": {
+        width: "7.5rem",
+        height: "7.5rem",
+        position: "absolute",
+        top: "0rem",
+        left: "5rem",
+      },
+
+      "& .crossSymbol": {
+        width: "100%",
+        height: "100%",
+        "vertical-align": "middle",
+      },
     },
 
     cardText: {
@@ -41,6 +57,12 @@ const CourseCard = ({ name, selectedCourses, setSelectedCourses }) => {
       onMouseLeave={handleHover}
     >
       <span className={classes.cardText}>{name}</span>
+
+      {isHovering && (
+        <div className="crossContainer">
+          <img src={CourseCardX} className="crossSymbol" alt="deleteIcon" />
+        </div>
+      )}
     </div>
   );
 };
