@@ -5,7 +5,7 @@ import CourseCardX from "../assets/icons/CourseCardCross.svg";
 const useStyles = (isHovering) =>
   makeStyles((theme) => ({
     card: {
-      backgroundColor: isHovering ? "#28313e" : theme.color.grey,
+      backgroundColor: isHovering ? "rgba(40, 49, 62, 0.7)" : theme.color.grey,
       width: "17.5rem",
       height: "17.5rem",
       borderRadius: "2.5rem",
