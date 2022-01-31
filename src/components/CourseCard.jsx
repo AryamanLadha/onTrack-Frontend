@@ -15,17 +15,19 @@ const useStyles = (isHovering) =>
       position: "relative",
 
       "& .crossContainer": {
-        width: "7.5rem",
-        height: "7.5rem",
+        width: "17.5rem",
+        height: "17.5rem",
         position: "absolute",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
         top: "0rem",
-        left: "5rem",
-      },
 
-      "& .crossSymbol": {
-        width: "100%",
-        height: "100%",
-        "vertical-align": "middle",
+        "& .crossSymbol" : {
+          width: "7.5rem",
+          height: "7.5rem",
+          margin: "0 auto",
+        }
       },
     },
 
