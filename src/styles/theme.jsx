@@ -18,7 +18,7 @@ const theme = createTheme({
     lightgrey: "#E7E7E7 !important",
     icongrey: "#A3A3A3",
     bargrey: "#EDEDED",
-    white: "#000000",
+    white: "#FFFFFF",
     lightBeige: "#BAA898",
     darkBrown: "#7B6958",
   }

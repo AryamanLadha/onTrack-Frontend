@@ -63,7 +63,7 @@ const useStyles = (props) => makeStyles((theme) => ({
 }));
 
 
-const SelectCourseDropdown = ({ data }) => {
+const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarterOfOverlay }) => {
   const [ expanded, setExpanded ] = useState(false);
   const [ height, setHeight ] = useState(0);
 
@@ -84,6 +84,7 @@ const SelectCourseDropdown = ({ data }) => {
     ? setHeight(`${(extraRows-1)*14+17}rem`)
     : setHeight(`0rem`)
 
+    setQuarterOfOverlay(data.quarter);
   }, [expanded]);
 
   const handleChange = () => {
@@ -121,7 +122,12 @@ const SelectCourseDropdown = ({ data }) => {
                 {data.courses.slice(i*5, i*5+5).map((course, idx) => 
                   <MiniCourseCard key={idx} name={course} />
                 )}
-                {(i === Math.ceil(data.courses.length/5)-1) && <MiniCourseCard name={""} />}
+                {(i === Math.ceil(data.courses.length/5)-1) && 
+                  <MiniCourseCard 
+                    name={""} 
+                    overlayOpened={overlayOpened}
+                    setOverlayOpened={setOverlayOpened}
+                  />}
               </div>
             ))}
           </div>

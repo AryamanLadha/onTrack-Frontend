@@ -1,5 +1,5 @@
 import React from "react";
-import Plus from "../assets/icons/Plus.svg";
+import PlusIcon from "../assets/icons/Plus.svg";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = (props) =>makeStyles(theme => ({
@@ -11,9 +11,9 @@ const useStyles = (props) =>makeStyles(theme => ({
     textAlign: "center",
     lineHeight: props.plus ? "0rem" : "12rem",
     font: theme.font.miniCourseCard,
-    marginRight: props.plus ? "0rem" : "3rem",
-    display: props.plus && "flex",
-    justifyContent: props.plus && "center",
+    marginRight: props.plusIcon ? "0rem" : "3rem",
+    display: props.plusIcon && "flex",
+    justifyContent: props.plusIcon && "center",
   },
 
   cardText: {
@@ -29,19 +29,35 @@ const useStyles = (props) =>makeStyles(theme => ({
   }
 }));
 
-export default function MiniCourseCard({name}) {
+export default function MiniCourseCard({name, overlayOpened, setOverlayOpened}) {
   const props = {
-    plus: (name === "") ? true : false
+    plusIcon: (name === "") ? true : false
+  }
+
+  const handleClick = () => {
+    setOverlayOpened(!overlayOpened);
+    console.log(overlayOpened);
   }
 
   const classes = useStyles(props)();
+
   return (
     <div className={classes.card}>
       {
         name === "" 
-        ? <img className={classes.icon} src={Plus} alt="addCourses"/>
+        ? <img 
+          className={classes.icon} 
+          src={PlusIcon} 
+          alt="addCourses"
+          onClick={handleClick}
+        />
         : <span className={classes.cardText}>{name}</span>
       }
     </div>
   );
+}
+
+
+MiniCourseCard.defaultProps = {
+  setModalOpened: () => {},
 }

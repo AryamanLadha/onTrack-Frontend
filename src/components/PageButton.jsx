@@ -38,18 +38,22 @@ export default function PageButton({...props}) {
         ? navigate('/')
         : navigate('/courses')
     } 
-
-    else if (props.page === 'courses') {
+    else if (props.page === 'coursesByQuarter') {
       props.text === "Back"
         ? navigate('/year')
         : navigate('/eligible')
     } 
     
-    else  { //if (props.page === 'eligible') {
+    else if (props.page === 'courses')  {
+      props.setOverlayOpened(false);
+    }
+    
+    else if (props.page === 'eligible') {
       props.text === "Back"
         ? navigate('/courses')
         : navigate('/done')
     }
+
     // props.page === "done"
     // else {
     //   nothing for now.
@@ -66,4 +70,8 @@ export default function PageButton({...props}) {
       {props.text}
     </ButtonUnstyled>
   );
+}
+
+PageButton.defaultProps = {
+  setModalOpened: () => {},
 }

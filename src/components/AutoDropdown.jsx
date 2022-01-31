@@ -106,7 +106,7 @@ const useStyles = props => makeStyles(theme =>({
   },
 }));
 
-function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOptions, selectedOptions, setSelectedOptions, data, getData}) {
+function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setSelectedOptions, setIsAutoDropdownOpen, data, getData}) {
   const [open, setOpen] = useState(false);
   const listRef = useRef(null);
 
@@ -125,8 +125,10 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
 
   useEffect(() => {
     getData();
-    setSelectedOptions(selectedOptions.concat(initialSelectedOptions));
-  }, []);
+    // remove duplicates due to error
+    setSelectedOptions([...new Set(selectedOptions.concat(initialSelectedOptions))]);
+    setIsAutoDropdownOpen(open);
+  }, [open]);
 
 
   const customPopper = function(props) {
@@ -163,14 +165,6 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
   // when selecting/unselecting options, set and store selected options
   const handleSelectedOptionsChange = (e, value) => {
     setSelectedOptions(value);
-
-    // On enter-courses page, set length of selected options to make space for course cards
-    if (whichPage === "courses") {
-      setLengthOfSelectedCourses(selectedOptions.length < 5 ? 5 : selectedOptions.length);
-      if (!open) {
-        setLengthOfSelectedCourses(-1);
-      }
-    }
 
     // when selecting an option, scroll to the very top of the menu
     listRef.current.scrollIntoView()

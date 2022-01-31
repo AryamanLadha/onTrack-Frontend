@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-import { CourseCard, PageButton, AutoDropdown } from "../components";
+import { MiniCourseCard, PageButton, AutoDropdown } from "../components";
 import { connect } from "react-redux";
 import { setCourses } from "../actions/actions";
 
-const useStyles = (marginTop) =>
-  makeStyles((theme) => ({
+const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((theme) => ({
     layout: {
-      display: "flex",
+      position: "absolute",
+      justifyContent: "center",
       alignItems: "center",
       flexDirection: "column",
-      width: "100vw",
-      marginTop: "20.4rem",
+      zIndex: "1.6rem",
+      top: "2%",
+      left: "25%",
+      display: "flex",
+      width: "105rem",
+      height: "100.6rem",
+      borderRadius: "5rem",
+      backgroundColor: theme.color.white,
     },
 
     header: {
@@ -39,58 +45,63 @@ const useStyles = (marginTop) =>
     },
 
     courseCardWrapper: {
-      display: "flex",
+      display: lengthOfSelectedCourses === 0 ? "none" : "flex",
       flexDirection: "column",
-      marginTop: `${marginTop}rem`,
-      marginBottom: "6rem",
       width: "87.6rem",
+      height: "50rem",
+      marginTop: isAutoDropdownOpen ? "35rem" : "3rem",
+      marginBottom: "6rem",
+      marginLeft: "4rem",
       font: theme.font.button,
     },
 
     courseCardContainer: {
       display: "grid",
-      gridTemplateColumns: "repeat(4, 1fr)",
+      gridTemplateColumns: "repeat(5, 1fr)",
       marginTop: "3rem",
+    },
+
+    pageButtonWrapper: {
+      display: "flex",
+      width: "80%",
+      justifyContent: "space-between",
+      flexDirection: "row",
+      marginTop: "7.4rem",
     },
   }));
 
-function EnterCourses({ storeCoursesTaken, setCourses }) {
+function EnterCourses({ quarter, setOverlayOpened, storeCoursesTaken, setCourses }) {
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [numRows, setNumRows] = useState(0);
   const [lengthOfSelectedCourses, setLengthOfSelectedCourses] = useState(5);
+  const [ isAutoDropdownOpen, setIsAutoDropdownOpen ] = useState(false);
 
-  const marginTop =
-    lengthOfSelectedCourses < 5
-      ? lengthOfSelectedCourses === 0
-        ? 15
-        : lengthOfSelectedCourses * 5 + 10
-      : 35;
-  const classes = useStyles(marginTop)();
+  const classes = useStyles(lengthOfSelectedCourses, isAutoDropdownOpen)();
 
   useEffect(() => {
-    setNumRows(parseInt(selectedCourses.length / 4) + 1);
-    setLengthOfSelectedCourses(-1);
+    setNumRows(parseInt(selectedCourses.length /5)+1);
+    setLengthOfSelectedCourses(selectedCourses.length);
+    console.log(selectedCourses);
   }, [selectedCourses]);
 
   return (
     <div className={classes.layout}>
       <header className={classes.header}>
-        <h1 className={classes.title}>What Courses Have You Taken?</h1>
-        <span className={classes.subtitle}>One last step....We promise.</span>
+        <h1 className={classes.title}>{quarter}</h1>
       </header>
       <AutoDropdown
         whichPage={"courses"}
-        setLengthOfSelectedCourses={setLengthOfSelectedCourses}
         initialSelectedOptions={storeCoursesTaken}
         selectedOptions={selectedCourses}
         setSelectedOptions={setSelectedCourses}
+        setIsAutoDropdownOpen={setIsAutoDropdownOpen}
       />
       {selectedCourses.length !== 0 ? (
         <div className={classes.courseCardWrapper}>
           {Array.from(Array(numRows).keys()).map((i) => (
             <div key={i} className={classes.courseCardContainer}>
-              {selectedCourses.slice(i * 4, (i + 1) * 4).map((course, idx) => (
-                <CourseCard 
+              {selectedCourses.slice(i*5, (i+1) * 5).map((course, idx) => (
+                <MiniCourseCard 
                   key={idx} 
                   name={course}
                   selectedCourses={selectedCourses}
@@ -103,26 +114,22 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
       ) : (
         <div className={classes.courseCardWrapper}></div>
       )}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "99rem",
-          justifyContent: "space-between",
-        }}
-      >
+      <div className={classes.pageButtonWrapper}>
         <PageButton
           page={"courses"}
           text="Back"
           size="short"
+          setOverlayOpened={setOverlayOpened}
+          onClick={() => setOverlayOpened(false)}
           action={() => {
             setCourses(selectedCourses);
           }}
         />
         <PageButton
           page={"courses"}
-          text={"Next"}
+          text={"Done"}
           size={"short"}
+          setOverlayOpened={setOverlayOpened}
           action={() => {
             setCourses(selectedCourses);
           }}

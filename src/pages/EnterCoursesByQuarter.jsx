@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { SelectCourseDropdown } from "../components";
 import { makeStyles } from "@mui/styles";
 import { PageButton } from "../components";
+import { EnterCourses } from "./index";
 // haven't done connecting with redux yet
 // import { connect } from "react-redux";
 // import { setCourses } from "../actions/actions";
@@ -46,6 +47,22 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "row",
     marginTop: "7.4rem",
   },
+  
+  overlay: {
+    width: "100vw",
+    height: "100vh",
+    position: "fixed",
+    top: "0",
+    left: "0",
+    zIndex: "1.5rem",
+  },
+
+  overlayBackground: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: theme.color.black,
+    opacity: "0.7",
+  }
 }))
 
 // i m using mock data for now
@@ -72,6 +89,8 @@ let mockData = [
 
 function EnterCoursesByQuarter() {
   const classes = useStyles();
+  const [ quarterOfOverlay, setQuarterOfOverlay ] = useState("Fall 2018");
+  const [ overlayOpened, setOverlayOpened ] = useState(false);
   
   
   return (
@@ -91,15 +110,27 @@ function EnterCoursesByQuarter() {
           <SelectCourseDropdown 
               key={idx} 
               data={object}
+              overlayOpened={overlayOpened}
+              setOverlayOpened={setOverlayOpened}
+              setQuarterOfOverlay={setQuarterOfOverlay}
           />
         ))
       :<div className={classes.pageButtonWrapper}></div>
       }
       </div>
       <div className={classes.pageButtonWrapper}>
-          <PageButton text="Back" size="short" page={"eligible"} />
-          <PageButton text="Next" size="short" page={"eligible"} />
+          <PageButton text="Back" size="short" page={"coursesByQuarter"} />
+          <PageButton text="Next" size="short" page={"coursesByQuarter"} />
       </div>
+      {
+        overlayOpened && 
+          (
+            <div className={classes.overlay}>
+              <div className={classes.overlayBackground}></div>
+              <EnterCourses quarter={quarterOfOverlay} setOverlayOpened={setOverlayOpened} />
+            </div>
+          )
+      }
     </div>
   )
 }
