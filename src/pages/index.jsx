@@ -1,4 +1,3 @@
-export { default as EnterCourses } from './EnterCourses';
 export { default as EnterCoursesByQuarter } from './EnterCoursesByQuarter';
 export { default as EligibleCourses } from './EligibleCourses';
 export { default as WhatMajor } from './WhatMajor';

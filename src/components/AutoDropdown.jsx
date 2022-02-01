@@ -127,8 +127,7 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
     getData();
     // remove duplicates due to error
     setSelectedOptions([...new Set(selectedOptions.concat(initialSelectedOptions))]);
-    setIsAutoDropdownOpen(open);
-  }, [open]);
+  }, []);
 
 
   const customPopper = function(props) {
@@ -153,12 +152,14 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
   // when clicking on triangle, open the menu
   const handleIconClick = () => {
     setOpen(!open);
+    setIsAutoDropdownOpen(open)
   }
 
   // when in enter courses page & key up, set autocomplete open
   const handleKeyUp = () => {
     if (whichPage === 'courses') {
       setOpen(true)
+      setIsAutoDropdownOpen(open)
     }
   }
 

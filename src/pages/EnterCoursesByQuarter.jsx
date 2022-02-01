@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { SelectCourseDropdown } from "../components";
+import { SelectCourseDropdown, EnterCourses } from "../components";
 import { makeStyles } from "@mui/styles";
 import { PageButton } from "../components";
-import { EnterCourses } from "./index";
 // haven't done connecting with redux yet
 // import { connect } from "react-redux";
 // import { setCourses } from "../actions/actions";
@@ -14,6 +13,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     width: "100vw",
     marginTop: "10.4rem",
+    backgroundColor: theme.color.lightYellow,
   },
 
   header: {
@@ -83,7 +83,7 @@ let mockData = [
     "quarter" : "Spring 2019",
     "courses": [
       "COM SCI 33", "MATH 32A", "PHYSICS 1B",
-      ]
+    ]
   },
 ]
 

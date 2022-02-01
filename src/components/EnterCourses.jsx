@@ -26,7 +26,7 @@ const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((t
       flexDirection: "column",
       width: "100rem",
       height: "8.5rem",
-      marginTop: "5rem",
+      marginTop: "10rem",
       marginBottom: "4.9rem",
     },
 
@@ -45,10 +45,10 @@ const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((t
     },
 
     courseCardWrapper: {
-      display: lengthOfSelectedCourses === 0 ? "none" : "flex",
+      display: "flex",
       flexDirection: "column",
       width: "87.6rem",
-      height: "50rem",
+      height: "10rem",
       marginTop: isAutoDropdownOpen ? "35rem" : "3rem",
       marginBottom: "6rem",
       marginLeft: "4rem",
@@ -82,7 +82,7 @@ function EnterCourses({ quarter, setOverlayOpened, storeCoursesTaken, setCourses
     setNumRows(parseInt(selectedCourses.length /5)+1);
     setLengthOfSelectedCourses(selectedCourses.length);
     console.log(selectedCourses);
-  }, [selectedCourses]);
+  }, [selectedCourses, isAutoDropdownOpen ]);
 
   return (
     <div className={classes.layout}>
