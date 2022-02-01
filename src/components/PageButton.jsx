@@ -10,8 +10,9 @@ const useStyles = makeStyles(theme => ({
     border: "0rem",
     marginBottom: "5rem",
     borderRadius: props => props.size === "short" ? '3.1rem' : '3.75rem',
-    backgroundColor: theme.color.grey,
+    backgroundColor: theme.color.greyishBlue,
     font: theme.font.button,
+    color: theme.color.white,
   }
 }));
 

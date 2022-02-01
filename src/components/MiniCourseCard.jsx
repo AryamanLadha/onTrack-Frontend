@@ -4,7 +4,7 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = (props) =>makeStyles(theme => ({
   card: {
-    backgroundColor: theme.color.grey,
+    backgroundColor: theme.color.lightBlue,
     width: "12rem",
     height: "12rem",
     borderRadius: "2rem", 
