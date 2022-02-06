@@ -39,13 +39,16 @@ export default function MiniCourseCard({name, overlayOpened, setOverlayOpened, s
   }
 
   const handleClick = (selectedCourses) => {
-    !overlayOpened && setSelectedCourses(selectedCourses.filter(element => element !== name));
+    (!overlayOpened && selectedCourses) && setSelectedCourses(selectedCourses.filter(element => element !== name));
   }
 
   const classes = useStyles(props)();
 
   return (
-    <div className={classes.card}>
+    <div 
+      className={classes.card}
+      onClick={() => handleClick(selectedCourses)}
+    >
       {
         name === "" 
         ? <img 
@@ -56,7 +59,6 @@ export default function MiniCourseCard({name, overlayOpened, setOverlayOpened, s
         />
         : <span 
           className={classes.cardText}
-          onClick={() => handleClick(selectedCourses)}
           >
             {name}
           </span>
