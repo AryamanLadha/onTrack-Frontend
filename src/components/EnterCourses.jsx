@@ -11,8 +11,6 @@ const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((t
       alignItems: "center",
       flexDirection: "column",
       zIndex: "1.6rem",
-      top: "2%",
-      left: "25%",
       display: "flex",
       width: "105rem",
       height: "100.6rem",
@@ -49,7 +47,12 @@ const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((t
       flexDirection: "column",
       width: "87.6rem",
       height: "10rem",
-      marginTop: isAutoDropdownOpen ? "35rem" : "3rem",
+      marginTop: 
+      isAutoDropdownOpen 
+      ? lengthOfSelectedCourses === 0
+        ? "20rem" 
+        : "35rem"
+      : "3rem",
       marginBottom: "6rem",
       marginLeft: "4rem",
       font: theme.font.button,
@@ -81,8 +84,8 @@ function EnterCourses({ quarter, setOverlayOpened, storeCoursesTaken, setCourses
   useEffect(() => {
     setNumRows(parseInt(selectedCourses.length /5)+1);
     setLengthOfSelectedCourses(selectedCourses.length);
-    console.log(selectedCourses);
-  }, [selectedCourses, isAutoDropdownOpen ]);
+    console.log("?")
+  }, [selectedCourses, isAutoDropdownOpen]);
 
   return (
     <div className={classes.layout}>
@@ -94,6 +97,7 @@ function EnterCourses({ quarter, setOverlayOpened, storeCoursesTaken, setCourses
         initialSelectedOptions={storeCoursesTaken}
         selectedOptions={selectedCourses}
         setSelectedOptions={setSelectedCourses}
+        isAutoDropdownOpen={isAutoDropdownOpen}
         setIsAutoDropdownOpen={setIsAutoDropdownOpen}
       />
       {selectedCourses.length !== 0 ? (

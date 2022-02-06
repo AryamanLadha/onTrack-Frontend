@@ -55,6 +55,8 @@ const useStyles = makeStyles(theme => ({
     top: "0",
     left: "0",
     zIndex: "1.5rem",
+    display: "flex",
+    justifyContent: "center",
   },
 
   overlayBackground: {
