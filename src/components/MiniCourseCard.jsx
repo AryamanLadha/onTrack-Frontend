@@ -29,14 +29,17 @@ const useStyles = (props) =>makeStyles(theme => ({
   }
 }));
 
-export default function MiniCourseCard({name, overlayOpened, setOverlayOpened}) {
+export default function MiniCourseCard({name, overlayOpened, setOverlayOpened, selectedCourses, setSelectedCourses}) {
   const props = {
     plusIcon: (name === "") ? true : false
   }
 
-  const handleClick = () => {
+  const handleIconClick = () => {
     setOverlayOpened(!overlayOpened);
-    console.log(overlayOpened);
+  }
+
+  const handleClick = (selectedCourses) => {
+    !overlayOpened && setSelectedCourses(selectedCourses.filter(element => element !== name));
   }
 
   const classes = useStyles(props)();
@@ -49,9 +52,14 @@ export default function MiniCourseCard({name, overlayOpened, setOverlayOpened}) 
           className={classes.icon} 
           src={PlusIcon} 
           alt="addCourses"
-          onClick={handleClick}
+          onClick={handleIconClick}
         />
-        : <span className={classes.cardText}>{name}</span>
+        : <span 
+          className={classes.cardText}
+          onClick={() => handleClick(selectedCourses)}
+          >
+            {name}
+          </span>
       }
     </div>
   );
