@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 
 function WhatMajor({ majmin, storeMajors, setMajors }) {
   const [selectedMajors, setSelectedMajors] = useState([]);
+  const [ isAutoDropdownOpen, setIsAutoDropdownOpen ] = useState(false);
   const classes = useStyles();
 
   return (
@@ -110,6 +111,8 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
             initialSelectedOptions={storeMajors}
             selectedOptions={selectedMajors}
             setSelectedOptions={setSelectedMajors}
+            isAutoDropdownOpen={isAutoDropdownOpen}
+            setIsAutoDropdownOpen={setIsAutoDropdownOpen}
           />
         </div>
       <footer className={classes.footer}>

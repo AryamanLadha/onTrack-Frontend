@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import SearchIcon from "../assets/icons/SearchIcon.svg";
 import TriangleUp from "../assets/icons/TriangleUp.svg";
 import TriangleDown from "../assets/icons/TriangleDown.svg";
@@ -65,7 +65,7 @@ const useStyles = props => makeStyles(theme =>({
       backgroundColor: theme.color.lightgrey,
       height: "8rem",
       borderRadius: "0rem 0rem 2rem 2rem",
-    }, 
+    },   
 
     '& .MuiAutocomplete-noOptions': {
       padding: "2.7rem 4rem !important",
@@ -106,12 +106,11 @@ const useStyles = props => makeStyles(theme =>({
   },
 }));
 
-function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setSelectedOptions, setIsAutoDropdownOpen, data, getData}) {
-  const [open, setOpen] = useState(false);
+function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setSelectedOptions, isAutoDropdownOpen, setIsAutoDropdownOpen, data, getData}) {
   const listRef = useRef(null);
 
   const props = {  
-    open: open,
+    open: isAutoDropdownOpen,
     whichPage: whichPage,
   }
   const classes = useStyles(props)();
@@ -128,7 +127,6 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
     // remove duplicates due to error
     setSelectedOptions([...new Set(selectedOptions.concat(initialSelectedOptions))]);
   }, []);
-
 
   const customPopper = function(props) {
     return (
@@ -151,15 +149,13 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
 
   // when clicking on triangle, open the menu
   const handleIconClick = () => {
-    setOpen(!open);
-    setIsAutoDropdownOpen(open)
+    setIsAutoDropdownOpen(!isAutoDropdownOpen);
   }
 
   // when in enter courses page & key up, set autocomplete open
   const handleKeyUp = () => {
     if (whichPage === 'courses') {
-      setOpen(true)
-      setIsAutoDropdownOpen(open)
+      setIsAutoDropdownOpen(true);
     }
   }
 
@@ -179,11 +175,11 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
           option: classes.option
         }}
         id="dropdown"
-        open={open}
         onChange={handleSelectedOptionsChange}
         PopperComponent={customPopper}
         PaperComponent={customPaper}
         options={options}
+        open={isAutoDropdownOpen}
         noOptionsText={"No search result"}
         multiple={true}
         getOptionDisabled={option => 
@@ -197,7 +193,7 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
         }
 
         // pre-set selectedOptions
-        value={selectedOptions} 
+        value={selectedOptions ?? null} 
         ListboxProps={{ 
           className : classes.dropDownMenu,
           ref: listRef,
@@ -206,7 +202,7 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
           (
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>
             <input
-              onKeyUp={handleKeyUp}
+              onKeyUp={handleKeyUp.bind(this)}
               type="text" 
               placeholder={ 
                 whichPage === "courses" 
@@ -221,23 +217,24 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
             ? (
               <img 
                 src={SearchIcon} 
+                onClick={handleIconClick.bind(this)}
                 className="searchIcon"
                 alt="searchIcon" 
               />
             ) : (
-              open 
+              isAutoDropdownOpen 
               ? 
                 <img 
                   src={TriangleUp}
                   className="triangle" 
-                  onClick={handleIconClick}
+                  onClick={handleIconClick.bind(this)}
                   alt="searchIcon" 
                 />
               : 
                 <img 
                   src={TriangleDown}
                   className="triangle" 
-                  onClick={handleIconClick}
+                  onClick={handleIconClick.bind(this)}
                   alt="searchIcon" 
                 />
             )}
