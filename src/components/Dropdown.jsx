@@ -116,8 +116,8 @@ function Dropdown({ placeholder, options, setSelectedOption }) {
             },
           }}
         >
-          {options.map((optionName,index) => {
-            return <MenuItem key = {index} value={optionName}>{optionName}</MenuItem>;
+          {options.map((optionName) => {
+            return <MenuItem value={optionName}>{optionName}</MenuItem>;
           })}
         </Select>
       </FormControl>
