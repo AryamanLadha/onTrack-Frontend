@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { SelectCourseDropdown, EnterCourses } from "../components";
 import { makeStyles } from "@mui/styles";
 import { PageButton } from "../components";
-// haven't done connecting with redux yet
-// import { connect } from "react-redux";
-// import { setCourses } from "../actions/actions";
+import { connect } from "react-redux";
+import { setCourses } from "../actions/actions";
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -90,11 +89,10 @@ let mockData = [
   },
 ]
 
-function EnterCoursesByQuarter() {
+function EnterCoursesByQuarter(storeStartQtr, storeEndQtr) {
   const classes = useStyles();
   const [ quarterOfOverlay, setQuarterOfOverlay ] = useState("Fall 2018");
   const [ overlayOpened, setOverlayOpened ] = useState(false);
-  
   
   return (
     <div className={classes.layout}>
@@ -138,4 +136,17 @@ function EnterCoursesByQuarter() {
   )
 }
 
-export default EnterCoursesByQuarter;
+const mapStateToProps = (store) => {
+  return {
+    storeStartQtr: store.startQtr,
+    storeEndQtr: store.endQtr,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCourses: (newCourses) => dispatch(setCourses(newCourses)),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EnterCoursesByQuarter);
