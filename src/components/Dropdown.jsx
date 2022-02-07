@@ -80,7 +80,7 @@ function Dropdown({ placeholder, options, setSelectedOption }) {
   useEffect(() => {
     if (placeholder != "Select a quarter")
       setEmpty(false);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [option, setOption] = React.useState("");
 
