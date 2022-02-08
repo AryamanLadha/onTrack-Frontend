@@ -89,10 +89,35 @@ let mockData = [
   },
 ]
 
-function EnterCoursesByQuarter(storeStartQtr, storeEndQtr) {
+function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr }) {
   const classes = useStyles();
   const [ quarterOfOverlay, setQuarterOfOverlay ] = useState("Fall 2018");
   const [ overlayOpened, setOverlayOpened ] = useState(false);
+
+  // Parse start/end season and year using store data
+  let startSeason, endSeason;
+  const seasons = ['Winter', 'Spring', 'Summer', 'Fall'];
+  for (let i = 0; i < seasons.length; i++) {
+    if (seasons[i] == storeStartQtr.substring(0, storeStartQtr.length - 5))
+      startSeason = i;
+    if (seasons[i] == storeEndQtr.substring(0, storeEndQtr.length - 5))
+      endSeason = i;
+  }
+  let startYear = Number(storeStartQtr.substring(storeStartQtr.length - 4));
+  let endYear = Number(storeEndQtr.substring(storeEndQtr.length - 4));
+
+  // Generate array of empty course objects
+  let coursesTaken = [];
+  let s = startSeason, y = startYear;
+  while (!(y == endYear && s == endSeason)) {
+    coursesTaken.push({"quarter": seasons[s] + " " + y, "courses": []});
+    s++;
+    if (s == seasons.length) {
+      s = 0;
+      y++;
+    }
+  }
+  coursesTaken.push({"quarter": seasons[s] + " " + y, "courses": []});
   
   return (
     <div className={classes.layout}>
@@ -105,9 +130,9 @@ function EnterCoursesByQuarter(storeStartQtr, storeEndQtr) {
           </span>
       </header>
       <div>
-      {(mockData.length !== 0)
+      {(coursesTaken.length !== 0)
       ?
-        mockData.map((object, idx) => (
+        coursesTaken.map((object, idx) => (
           <SelectCourseDropdown 
               key={idx} 
               data={object}
@@ -140,6 +165,7 @@ const mapStateToProps = (store) => {
   return {
     storeStartQtr: store.startQtr,
     storeEndQtr: store.endQtr,
+    storeGradeEntered: store.gradeEntered,
   }
 };
 
