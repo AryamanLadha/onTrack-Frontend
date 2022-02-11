@@ -91,8 +91,9 @@ let mockData = [
 
 function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr }) {
   const classes = useStyles();
-  const [ quarterOfOverlay, setQuarterOfOverlay ] = useState("Fall 2018");
+  const [selectedCourses, setSelectedCourses] = useState([]);
   const [ overlayOpened, setOverlayOpened ] = useState(false);
+  const [ quarterOfOverlay, setQuarterOfOverlay ] = useState("");
 
   // Parse start/end season and year using store data
   let startSeason, endSeason;
@@ -110,14 +111,14 @@ function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr }) {
   let coursesTaken = [];
   let s = startSeason, y = startYear;
   while (!(y == endYear && s == endSeason)) {
-    coursesTaken.push({"quarter": seasons[s] + " " + y, "courses": []});
+    coursesTaken.push({"quarter": seasons[s] + " " + y, "courses": [""]});
     s++;
     if (s == seasons.length) {
       s = 0;
       y++;
     }
   }
-  coursesTaken.push({"quarter": seasons[s] + " " + y, "courses": []});
+  coursesTaken.push({"quarter": seasons[s] + " " + y, "courses": [""]});
   
   return (
     <div className={classes.layout}>
@@ -134,11 +135,11 @@ function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr }) {
       ?
         coursesTaken.map((object, idx) => (
           <SelectCourseDropdown 
-              key={idx} 
-              data={object}
-              overlayOpened={overlayOpened}
-              setOverlayOpened={setOverlayOpened}
-              setQuarterOfOverlay={setQuarterOfOverlay}
+            key={idx} 
+            data={object}
+            overlayOpened={overlayOpened}
+            setOverlayOpened={setOverlayOpened}
+            setQuarterOfOverlay={setQuarterOfOverlay}
           />
         ))
       :<div className={classes.pageButtonWrapper}></div>
@@ -153,7 +154,11 @@ function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr }) {
           (
             <div className={classes.overlay}>
               <div className={classes.overlayBackground}></div>
-              <EnterCourses quarter={quarterOfOverlay} setOverlayOpened={setOverlayOpened} />
+              <EnterCourses
+                quarter={quarterOfOverlay}
+                setSelectedCourses={setSelectedCourses}
+                setOverlayOpened={setOverlayOpened}
+              />
             </div>
           )
       }
