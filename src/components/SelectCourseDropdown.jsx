@@ -44,6 +44,7 @@ const useStyles = (props) => makeStyles((theme) => ({
     },
     display: "flex",
     flexDirection: "column",
+    justifyContent: "center",
   },
 
   miniCourseCardContainer: {
@@ -81,7 +82,7 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
     setNumRows(Math.floor(numberOfCourses/5)+1);
 
     // set height of emptyDiv: when accordian dropdown is expanded
-    expanded 
+    expanded
     ? setHeight(`${(numRows-1)*14+17}rem`)
     : setHeight(`0rem`)
 
@@ -123,7 +124,11 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
                 {data.courses.slice(i*5, i*5+5).map((course, idx) => 
                   <MiniCourseCard key={idx} name={course} />
                 )}
+<<<<<<< HEAD
                 {((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
+=======
+                {(i === numRows-1 || data.courses.length === 0) && 
+>>>>>>> 7dfe13aa1e5830e58436a23c50213715301ed95a
                   <MiniCourseCard 
                     overlayOpened={overlayOpened}
                     setOverlayOpened={setOverlayOpened}
