@@ -50,7 +50,7 @@ export default function MiniCourseCard({name, overlayOpened, setOverlayOpened, s
       onClick={() => handleClick(selectedCourses)}
     >
       {
-        name === "" 
+        name === "plus"
         ? <img 
           className={classes.icon} 
           src={PlusIcon} 
@@ -69,5 +69,6 @@ export default function MiniCourseCard({name, overlayOpened, setOverlayOpened, s
 
 
 MiniCourseCard.defaultProps = {
+  name: "plus",
   setModalOpened: () => {},
 }
