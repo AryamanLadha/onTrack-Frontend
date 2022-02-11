@@ -133,7 +133,7 @@ function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr }) {
       <div>
       {(coursesTaken.length !== 0)
       ?
-        coursesTaken.map((object, idx) => (
+        mockData.map((object, idx) => (
           <SelectCourseDropdown 
             key={idx} 
             data={object}
