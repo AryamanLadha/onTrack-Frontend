@@ -12,8 +12,6 @@ const useStyles = (props) =>makeStyles(theme => ({
     lineHeight: props.plus ? "0rem" : "12rem",
     font: theme.font.miniCourseCard,
     marginRight: props.plusIcon ? "0rem" : "3rem",
-    display: props.plusIcon && "flex",
-    justifyContent: props.plusIcon && "center",
   },
 
   cardText: {
@@ -26,6 +24,8 @@ const useStyles = (props) =>makeStyles(theme => ({
     margin: "auto 0",
     width: "4.8rem",
     height: "4.8rem",
+    display: "inline-block",
+    verticalAlign: "middle",
   }
 }));
 
