@@ -3,7 +3,6 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputBase from '@mui/material/InputBase';
-import DropdownArrow from '../assets/icons/DropdownArrow.svg';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = (props) =>
@@ -18,7 +17,7 @@ const useStyles = (props) =>
       background: theme.color.white,
       boxSizing: 'border-box',
       border: "0.1rem solid",
-      borderColor: theme.color.beige,
+      borderColor: theme.color.darkBeige,
       // Disable border radius on bottom corners of Dropdown box if open
       borderRadius: props.open ? '1.5rem 1.5rem 0rem 0rem' : '1.5rem',
 
@@ -33,7 +32,7 @@ const useStyles = (props) =>
       },
 
       '& .MuiSelect-icon': {
-        color: theme.color.beige,
+        color: theme.color.darkBeige,
         fontSize: '6rem',
       },
     },
@@ -54,9 +53,7 @@ const useStyles = (props) =>
       background: theme.color.white,
       borderRadius: '0rem',
       boxShadow: 'none !important',
-      // border: "0.1rem solid",
       borderTop: "none",
-      // borderColor: theme.color.beige,
 
       '& li': {
         height: '5rem',
