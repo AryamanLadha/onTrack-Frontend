@@ -59,18 +59,18 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [numRows, setNumRows] = useState(0);
   const [lengthOfSelectedCourses, setLengthOfSelectedCourses] = useState(5);
+  const [marginTop, setMarginTop] = useState(0);
 
-  const marginTop =
-    lengthOfSelectedCourses < 5
-      ? lengthOfSelectedCourses === 0
-        ? 15
-        : lengthOfSelectedCourses * 5 + 10
-      : 35;
   const classes = useStyles(marginTop)();
 
   useEffect(() => {
     setNumRows(parseInt(selectedCourses.length / 4) + 1);
-  }, [selectedCourses]);
+    lengthOfSelectedCourses <= 0
+      ? lengthOfSelectedCourses === 0
+        ? setMarginTop(35)
+        : setMarginTop(lengthOfSelectedCourses * 5 + 10)
+      : setMarginTop(35);
+  }, [selectedCourses, lengthOfSelectedCourses]);
 
   return (
     <div className={classes.layout}>

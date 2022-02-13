@@ -14,6 +14,7 @@ const theme = createTheme({
   },
   color: {
     button: "#A5B6BC",
+    hoveredButton: "#78929B",
     background: "#FDFCF8",
     grey: "#C4C4C4 !important",
     black: "#000000",

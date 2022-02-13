@@ -12,7 +12,7 @@ const useStyles = (props) =>
       border: '0rem',
       marginBottom: '5rem',
       borderRadius: props.size === 'short' ? '3.1rem' : '3.75rem',
-      backgroundColor: theme.color.button,
+      backgroundColor: props.isHovered ? theme.color.hoveredButton : theme.color.button,
       font: theme.font.button,
       color: theme.color.white,
     },
@@ -20,11 +20,18 @@ const useStyles = (props) =>
 
 // Button props: text, size, page
 function PageButton({ page, text, size, action }) {
+  const [ isHovered, setIsHovered ] = React.useState(false);
+
   const props = {
+    isHovered: isHovered,
     size: size,
   };
   const classes = useStyles(props)();
   const navigate = useNavigate();
+
+  const handleHover = () => {
+    setIsHovered(!isHovered);
+  };
 
   const handleClick = () => {
     if (page === 'majors') {
@@ -55,7 +62,12 @@ function PageButton({ page, text, size, action }) {
   };
 
   return (
-    <ButtonUnstyled className={classes.button} onClick={handleClick}>
+    <ButtonUnstyled 
+      className={classes.button} 
+      onClick={handleClick}
+      onMouseEnter={handleHover}
+      onMouseLeave={handleHover}
+    >
       {text}
     </ButtonUnstyled>
   );
