@@ -1,6 +1,13 @@
 import axios from 'axios';
 
+const config = {
+  headers: {
+      'Content-type': "application-json"
+  },
+  baseURL: 'http://127.0.0.1:8000',
+}
 // When you make an API call, or anything asynchronous, the action creator returns a function
+
 
 // API call to get list of all courses
 export const getCourses = () => {
@@ -9,7 +16,7 @@ export const getCourses = () => {
     // 1. Make asynchronous call to database
     // 2. Dispatch the action after you have the result
     axios
-      .get('http://127.0.0.1:8000/api/courses', {
+      .get(`${config.baseURL}/api/courses`, {
         crossdomain: true,
       })
       .then((res) => {
@@ -28,7 +35,7 @@ export const getCourses = () => {
 export const getEligible = (studentData) => {
   return (dispatch) => {
     axios
-      .get('https://ontrack-backend.herokuapp.com/api/courses/eligible', {
+      .get(`${config.baseURL}/api/courses/eligible`, {
         crossdomain: true,
         params: {
           studentData,
@@ -68,7 +75,7 @@ export const setMinors = (newMinors) => {
 export const getMajors = () => {
   return (dispatch) => {
     axios
-      .get('https://ontrack-backend.herokuapp.com/api/majors', {
+      .get(`${config.baseURL}/api/majors`, {
         crossdomain: true,
       })
       .then((res) => {
