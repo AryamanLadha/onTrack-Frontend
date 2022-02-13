@@ -5,7 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import { makeStyles } from '@mui/styles';
 import Typography from '@mui/material/Typography';
 import { MiniCourseCard } from './index';
-import DropdownArrow from '../assets/icons/DropdownArrow.svg';
+import DropdownArrowDown from '../assets/icons/DropdownArrowDown.svg';
 
 const useStyles = (props) =>
   makeStyles((theme) => ({
@@ -100,7 +100,7 @@ function AccordionDropdown({ quarter, subjectAndcourses }) {
       >
         <AccordionSummary
           expandIcon={
-            <img src={DropdownArrow} className="triangle" alt="triangle" />
+            <img src={DropdownArrowDown} className="triangle" alt="triangle" />
           }
           aria-controls="panel1a-content"
           id="panel1a-header"

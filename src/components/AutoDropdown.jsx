@@ -6,8 +6,8 @@ import Popper from '@mui/core/Popper';
 import { makeStyles } from '@mui/styles';
 import { getCourses, getMajors } from '../actions/actions';
 import SearchIcon from '../assets/icons/SearchIcon.svg';
-import TriangleDown from '../assets/icons/TriangleDown.svg';
-import TriangleUp from '../assets/icons/TriangleUp.svg';
+import DropdownArrowDown from '../assets/icons/DropdownArrowDown.svg';
+import DropdownArrowUp from '../assets/icons/DropdownArrowUp.svg';
 
 const useStyles = (props) =>
   makeStyles((theme) => ({
@@ -23,7 +23,10 @@ const useStyles = (props) =>
       width: props.whichPage === 'courses' ? '85rem' : '64.7rem',
       height: '7.5rem',
       paddingRight: '3rem',
-      background: theme.color.lightgrey,
+      border: '0.1rem solid',
+      borderColor: theme.color.darkBeige,
+      background: theme.color.white,
+      
       borderRadius:
         props.whichPage === 'courses'
           ? props.open
@@ -36,7 +39,7 @@ const useStyles = (props) =>
       '& input': {
         width: props.whichPage === 'courses' ? '70rem' : '49.7rem',
         paddingLeft: '4rem',
-        background: theme.color.lightgrey,
+        background: theme.color.white,
         borderRadius: 'inherit',
         font: theme.font.searchBar,
 
@@ -59,14 +62,15 @@ const useStyles = (props) =>
 
     selectionMenu: {
       width: props.whichPage === 'courses' ? '85rem' : '64.7rem',
-      borderTop: '0.1rem solid white',
       borderRadius: '2rem 2rem 2rem 2rem',
-      backgroundColor: theme.color.lightgrey,
+      backgroundColor: theme.color.white,
       boxShadow: 'none !important',
 
       '&.MuiPaper-root': {
         font: theme.font.subtitle,
-        backgroundColor: theme.color.lightgrey,
+        backgroundColor: theme.color.white,
+        border: '0.1rem solid',
+        borderColor: theme.color.darkBeige,
         height: '8rem',
         borderRadius: '0rem 0rem 2rem 2rem',
       },
@@ -75,7 +79,7 @@ const useStyles = (props) =>
         padding: '2.7rem 4rem !important',
         font: theme.font.subtitle,
         borderRadius: '0rem 0rem 2rem 2rem',
-        backgroundColor: theme.color.lightgrey,
+        backgroundColor: theme.color.white,
       },
     },
 
@@ -83,9 +87,12 @@ const useStyles = (props) =>
       width: props.whichPage === 'courses' ? '85rem' : '64.7rem',
       maxHeight: '28.5rem !important',
       overflow: 'auto',
-      backgroundColor: theme.color.lightgrey,
+      backgroundColor: theme.color.white,
       font: theme.font.subtitle,
       borderRadius: '0rem 0rem 2rem 2rem',
+      borderTop: 'none',
+      border: '0.1rem solid',
+      borderColor: theme.color.darkBeige,
       boxShadow: 'none !important',
 
       '& li': {
@@ -98,13 +105,13 @@ const useStyles = (props) =>
       
       '& li[aria-disabled="true"]' : {
         opacity: "1 !important",
-        background: theme.color.lightgrey,
+        background: theme.color.beige,
         font: theme.font.subtitle,
       },
 
       '& li[aria-selected="true"]' : {
         opacity: 1,
-        background: theme.color.lightgrey,
+        background: theme.color.beige,
         font: theme.font.subtitle,
       },
     }
@@ -226,18 +233,21 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
               }
               {...params.inputProps}
             />
-            {whichPage === 'courses' ? (
+            {whichPage === 'courses' 
+            ? (
               <img src={SearchIcon} className="searchIcon" alt="searchIcon" />
-            ) : open ? (
+            ) 
+            : open 
+            ? (
               <img
-                src={TriangleUp}
+                src={DropdownArrowUp}
                 className="triangle"
                 onClick={handleIconClick}
                 alt="searchIcon"
               />
             ) : (
               <img
-                src={TriangleDown}
+                src={DropdownArrowDown}
                 className="triangle"
                 onClick={handleIconClick}
                 alt="searchIcon"

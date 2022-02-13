@@ -116,9 +116,6 @@ function Dropdown({ placeholder, options, setSelectedOption }) {
           renderValue={
             option !== '' ? undefined : () => <span>{placeholder}</span>
           }
-          classes={{
-            icon: classes.icon,
-          }}
           onOpen={handleClick}
           onClose={handleClick}
           onChange={handleChange}
