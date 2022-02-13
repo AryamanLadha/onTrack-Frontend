@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 // Styled slightly smaller than regular CourseCard, for use on EligibleCourses page
 const useStyles = makeStyles((theme) => ({
   card: {
-    backgroundColor: theme.color.grey,
+    backgroundColor: theme.color.skyblue,
     width: '12rem',
     height: '12rem',
     borderRadius: '2rem',

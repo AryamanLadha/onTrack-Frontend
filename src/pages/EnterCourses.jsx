@@ -11,7 +11,8 @@ const useStyles = (marginTop) =>
       alignItems: 'center',
       flexDirection: 'column',
       width: '100vw',
-      marginTop: '20.4rem',
+      height: 'auto',
+      backgroundColor: theme.color.background,
     },
 
     header: {
@@ -19,9 +20,9 @@ const useStyles = (marginTop) =>
       alignItems: 'center',
       flexDirection: 'column',
       width: '100rem',
-      height: '8.5rem',
-      marginTop: '5rem',
-      marginBottom: '4.9rem',
+      height: '9.4rem',
+      marginTop: '20.4rem',
+      marginBottom: '12.4rem',
     },
 
     title: {

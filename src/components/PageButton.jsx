@@ -12,8 +12,9 @@ const useStyles = (props) =>
       border: '0rem',
       marginBottom: '5rem',
       borderRadius: props.size === 'short' ? '3.1rem' : '3.75rem',
-      backgroundColor: theme.color.grey,
+      backgroundColor: theme.color.button,
       font: theme.font.button,
+      color: theme.color.white,
     },
   }));
 

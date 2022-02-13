@@ -7,17 +7,20 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
-  html{
+  html {
     font-size: 10px;
+    background-color: "#FDFCF8",
   }
   @media screen and (max-width: 1440px) {
     html {
       font-size: 8px;
+      background-color: "#FDFCF8",
     }
   }
   @media screen and (max-width: 1024px) {
     html {
       font-size: 6px;
+      background-color: "#FDFCF8",
     }
   }
   body {

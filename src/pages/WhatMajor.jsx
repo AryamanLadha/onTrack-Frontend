@@ -11,6 +11,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     width: '100vw',
+    height: 'auto',
+    backgroundColor: theme.color.background,
   },
 
   header: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100rem',
     height: '9.4rem',
     marginTop: '20.4rem',
-    marginBottom: '12.4rem',
+    marginBottom: '7.4rem',
   },
 
   title: {
@@ -72,7 +74,7 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
           Enter Your
           {majmin === 'majors' ? ' Major(s)' : ' Minor(s)'}
         </h1>
-        <span className={classes.subtitle}>Insert some subtitle here.</span>
+        <span className={classes.subtitle}>North campus, South Campus... we don’t judge.</span>
       </header>
         <div>
         {
@@ -114,7 +116,7 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
         {majmin === 'majors' ? (
           <PageButton
             text={'next'}
-            size={'short'}
+            size={'long'}
             page={'majors'}
             action={() => {
               setMajors(selectedMajors);

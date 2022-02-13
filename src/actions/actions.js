@@ -9,7 +9,7 @@ export const getCourses = () => {
     // 1. Make asynchronous call to database
     // 2. Dispatch the action after you have the result
     axios
-      .get('https://ontrack-backend.herokuapp.com/api/courses', {
+      .get('http://127.0.0.1:8000/api/courses', {
         crossdomain: true,
       })
       .then((res) => {

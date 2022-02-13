@@ -13,13 +13,16 @@ const theme = createTheme({
     accordionDropdown: 'normal 500 3rem/3rem "Work Sans" !important',
   },
   color: {
-    button: "#C4C4C4",
+    button: "#A5B6BC",
+    background: "#FDFCF8",
     grey: "#C4C4C4 !important",
     black: "#000000",
     lightgrey: "#E7E7E7 !important",
+    lightbeige: "#BAA898",
+    skyblue: "#BFD7EA",
     icongrey: "#A3A3A3",
     bargrey: "#EDEDED",
-    white: "#000000",
+    white: "#FFFFFF",
   }
 })
 
