@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme) => ({
   tagComponent: {
     display: 'flex, inline-block',
-    backgroundColor: theme.color.lightbeige,
+    backgroundColor: theme.color.beige,
     height: '5.4rem',
     lineHeight: '5.4rem',
     font: theme.font.subtitle,
