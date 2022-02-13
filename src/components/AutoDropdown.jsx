@@ -69,13 +69,16 @@ const useStyles = (props) =>
       '&.MuiPaper-root': {
         font: theme.font.subtitle,
         backgroundColor: theme.color.white,
-        border: '0.1rem solid',
+        borderTop: '0.1rem solid',
         borderColor: theme.color.darkBeige,
         height: '8rem',
         borderRadius: '0rem 0rem 2rem 2rem',
       },
 
       '& .MuiAutocomplete-noOptions': {
+        border: '0.1rem solid',
+        borderTop: 'none',
+        borderColor: theme.color.darkBeige,
         padding: '2.7rem 4rem !important',
         font: theme.font.subtitle,
         borderRadius: '0rem 0rem 2rem 2rem',
