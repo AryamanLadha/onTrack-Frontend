@@ -112,7 +112,9 @@ function AccordionDropdown({ quarter, subjectAndcourses }) {
                 <div className={classes.subject}>{key}</div>
                 <div className={classes.miniCourseCardContainer}>
                   {value.map((course, idx) => (
-                    <MiniCourseCard key={idx} name={course} />
+                    <MiniCourseCard key={idx} name={course.Name} />
+                    // YAN: Here, to get the data you need for the course info popup, just do `course.` followed by the key of the data you want.
+                    // e.g., `course.Name`, `course.Units`, etc. See the API reference for more properties you can get.
                   ))}
                 </div>
               </div>
