@@ -83,6 +83,7 @@ function AccordionDropdown({ quarter, subjectAndcourses }) {
     expanded
       ? setHeight(`${numberOfSubjects * 22.7 + extraRows * 14}rem`)
       : setHeight(`0rem`);
+      // eslint-disable-next-line
   }, [expanded,subjectAndcourses]);
 
   const handleChange = () => {
