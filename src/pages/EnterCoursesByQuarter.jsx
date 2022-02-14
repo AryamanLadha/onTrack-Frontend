@@ -122,9 +122,44 @@ function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr, storeCoursesTaken, 
 
   const [coursesTaken, setCoursesTaken] = useState(emptyCoursesTaken);
 
+  // Regenerate coursesTaken based on existing store object and changes to start/end qtr
   useEffect(() => {
     if (storeCoursesTaken.length != 0)
-      setCoursesTaken(storeCoursesTaken);
+    {
+      let startSeason, endSeason;
+      const seasons = ["Winter", "Spring", "Summer", "Fall"];
+      for (let i = 0; i < seasons.length; i++) {
+        if (seasons[i] == storeStartQtr.substring(0, storeStartQtr.length - 5))
+          startSeason = i;
+        if (seasons[i] == storeEndQtr.substring(0, storeEndQtr.length - 5))
+          endSeason = i;
+      }
+      let startYear = Number(storeStartQtr.substring(storeStartQtr.length - 4));
+      let endYear = Number(storeEndQtr.substring(storeEndQtr.length - 4));
+      let s = startSeason, y = startYear;
+      let newCoursesTaken = [];
+      let existing = undefined;
+      while (!(y == endYear && s == endSeason)) {
+        existing = storeCoursesTaken.find(object => object.quarter == (seasons[s] + " " + y));
+        if (existing != undefined && existing.courses.length > 0)
+        {
+          newCoursesTaken.push(existing);
+        }
+        else
+          newCoursesTaken.push({ quarter: seasons[s] + " " + y, courses: [] });
+        s++;
+        if (s == seasons.length) {
+          s = 0;
+          y++;
+        }
+      }
+      existing = storeCoursesTaken.find(object => object.quarter == s + " " + y);
+      if (existing != undefined && existing.courses.length > 0)
+        newCoursesTaken.push(existing);
+      else
+        newCoursesTaken.push({ quarter: seasons[s] + " " + y, courses: [] });
+      setCoursesTaken(newCoursesTaken);
+    }
   }, []);
 
   return (

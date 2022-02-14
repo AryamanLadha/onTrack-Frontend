@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Dropdown, RadioButton, PageButton } from "../components";
 import { connect } from "react-redux";
@@ -39,22 +40,30 @@ const useStyles = makeStyles((theme) => ({
   spacer: {
     height: "4.5rem",
   },
+
+  emptyError: {
+    fontFamily: "Work Sans",
+    fontSize: "1.8rem",
+    color: "#FF0000",
+    lineHeight: "7.5rem",
+  },
+
+  beforeError: {
+    fontFamily: "Work Sans",
+    fontSize: "1.8rem",
+    color: "#FF0000",
+    textAlign: "center",
+  },
 }));
 
 function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, setEndQtr, setGradeEntered }) {
   const classes = useStyles();
+  const navigate = useNavigate();
   const [selectedStartQtr, setSelectedStartQtr] = useState("");
   const [selectedEndQtr, setSelectedEndQtr] = useState("");
   const [selectedGradeEntered, setSelectedGradeEntered] = useState("");
-
-  const handleClick = () => {
-    if (selectedStartQtr != "")
-      setStartQtr(selectedStartQtr);
-    if (selectedEndQtr != "")
-      setEndQtr(selectedEndQtr);
-    if (selectedGradeEntered != "")
-      setGradeEntered(selectedGradeEntered);
-  }
+  const [beforeError, setBeforeError] = useState(false);
+  const [emptyError, setEmptyError] = useState(false);
 
   return (
     <div className={classes.layout}>
@@ -64,63 +73,63 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
           We're all counting down the days till graduation.
         </div>
       </header>
-      <div>
-        <div
-          className={classes.subtitle}
-          style={{
-            float: "left",
-            width: "30%",
-            padding: "1rem 2rem 0rem 3rem",
-            marginLeft: "-6rem",
-          }}
-        >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+      >
+        <div className={classes.subtitle} style={{ marginRight: '2rem' }} >
           Start
         </div>
-        <div
-          style={{
-            float: "left",
-            width: "70%",
-          }}
-        >
-          <Dropdown
-            placeholder={storeStartQtr != null && storeStartQtr != "" ? storeStartQtr : "Select a quarter"}
-            options={["Fall 2018", "Winter 2019", "Spring 2019", "Summer 2019", "Fall 2019", "Winter 2020", "Spring 2020", "Summer 2020", "Fall 2020", "Winter 2021", "Spring 2021", "Summer 2021", "Fall 2021"]}
-            setSelectedOption={setSelectedStartQtr}
-          />
-        </div>
+        <Dropdown
+          placeholder={storeStartQtr != null && storeStartQtr != "" ? storeStartQtr : "Select a quarter"}
+          options={["Fall 2018", "Winter 2019", "Spring 2019", "Summer 2019", "Fall 2019", "Winter 2020", "Spring 2020", "Summer 2020", "Fall 2020", "Winter 2021", "Spring 2021", "Summer 2021", "Fall 2021"]}
+          initialOption={storeStartQtr}
+          setSelectedOption={setSelectedStartQtr}
+        />
       </div>
       <div style={{ height: "4.5rem" }}></div>
-      <div>
-        <div
-          className={classes.subtitle}
-          style={{
-            float: "left",
-            width: "30%",
-            padding: "1rem 2rem 0rem 3rem",
-            marginLeft: "-6rem",
-          }}
-        >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+      >
+        {
+          beforeError ? (<div style={{ width:'27rem' }}></div>) : (<div></div>)
+        }
+        <div className={classes.subtitle} style={{ marginRight: '3rem' }}>
           End
         </div>
-        <div
-          style={{
-            float: "left",
-            width: "70%",
-          }}
-        >
-          <Dropdown
-            placeholder={storeEndQtr != null && storeEndQtr != "" ? storeEndQtr : "Select a quarter"}
-            options={["Fall 2018", "Winter 2019", "Spring 2019", 
-            "Summer 2019", "Fall 2019", "Winter 2020", "Spring 2020", 
-            "Summer 2020", "Fall 2020", "Winter 2021", "Spring 2021", 
-            "Summer 2021", "Fall 2021", "Winter 2022", "Spring 2022", 
-            "Summer 2022", "Fall 2022", "Winter 2023", "Spring 2023", 
-            "Summer 2023", "Fall 2023", "Winter 2024", "Spring 2024", 
-            "Summer 2024", "Fall 2024", "Winter 2025", "Spring 2025", 
-            "Summer 2025"]}
-            setSelectedOption={setSelectedEndQtr}
-          />
-        </div>
+        <Dropdown
+          placeholder={storeEndQtr != null && storeEndQtr != "" ? storeEndQtr : "Select a quarter"}
+          options={["Fall 2018", "Winter 2019", "Spring 2019", 
+          "Summer 2019", "Fall 2019", "Winter 2020", "Spring 2020", 
+          "Summer 2020", "Fall 2020", "Winter 2021", "Spring 2021", 
+          "Summer 2021", "Fall 2021", "Winter 2022", "Spring 2022", 
+          "Summer 2022", "Fall 2022", "Winter 2023", "Spring 2023", 
+          "Summer 2023", "Fall 2023", "Winter 2024", "Spring 2024", 
+          "Summer 2024", "Fall 2024", "Winter 2025", "Spring 2025", 
+          "Summer 2025"]}
+          initialOption={storeEndQtr}
+          setSelectedOption={setSelectedEndQtr}
+        />
+        {
+          beforeError ? (
+            <div className={classes.beforeError} style={{ marginLeft: '2.8rem' }}>
+              <div>
+                Your end quarter cannot be
+              </div>
+              <div>
+                before your start quarter.
+              </div>
+            </div>
+          ) : (<div></div>)
+        }
+        
       </div>
       <div style={{ height: "6.4rem" }}></div>
       <div style={{ marginLeft: "-28rem" }}>
@@ -137,7 +146,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
         <div
           style={{
             float: "left",
-            width: "40%",
+            width: "10%",
           }}
         >
           <RadioButton
@@ -158,13 +167,40 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
           page={"year"}
           text="Back"
           size="short"
-          action={handleClick}
+          action={() => {
+            if (selectedStartQtr != "")
+              setStartQtr(selectedStartQtr);
+            if (selectedEndQtr != "")
+              setEndQtr(selectedEndQtr);
+            if (selectedGradeEntered != "")
+              setGradeEntered(selectedGradeEntered);
+          }}
         />
+        {
+          emptyError ? (<div className={classes.emptyError}>Sorry, you can't move on without entering this information.</div>) : (<div></div>)
+        }
         <PageButton
           page={"year"}
           text="Next"
           size="short"
-          action={handleClick}
+          action={() => {
+            if (selectedStartQtr == "" || selectedEndQtr == "" || selectedGradeEntered == "") {
+              navigate('/year');
+              setEmptyError(true);
+            }
+            // Will work after merging main...
+            // else if (allQuarters.findIndex((qtr) => qtr == selectedEndQtr) < allQuarters.findIndex((qtr) => qtr == selectedStartQtr)) {
+            //   navigate('year');
+            //   setBeforeError(true);
+            // }
+            else {
+              setStartQtr(selectedStartQtr);
+              setEndQtr(selectedEndQtr);
+              setGradeEntered(selectedGradeEntered);
+              setBeforeError(false);
+              setEmptyError(false);
+            }
+          }}
         />
       </div>
     </div>

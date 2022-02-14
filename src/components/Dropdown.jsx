@@ -63,14 +63,16 @@ const useStyles = (open, empty) => makeStyles(theme =>({
   },
 }));
 
-export default function Dropdown({ placeholder, options, setSelectedOption }) {
+export default function Dropdown({ placeholder, options, initialOption, setSelectedOption }) {
   const [open, setOpen] = useState(false);
   const [empty, setEmpty] = useState(true);
   const classes = useStyles(open, empty)();
 
   useEffect(() => {
-    if (placeholder != "Select a quarter")
+    if (initialOption != null) {
       setEmpty(false);
+      setSelectedOption(initialOption);
+    }
   }, []);
 
   const [option, setOption] = React.useState("");
