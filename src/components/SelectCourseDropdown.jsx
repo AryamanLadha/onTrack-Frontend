@@ -124,11 +124,7 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
                 {data.courses.slice(i*5, i*5+5).map((course, idx) => 
                   <MiniCourseCard key={idx} name={course} />
                 )}
-<<<<<<< HEAD
                 {((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
-=======
-                {(i === numRows-1 || data.courses.length === 0) && 
->>>>>>> 7dfe13aa1e5830e58436a23c50213715301ed95a
                   <MiniCourseCard 
                     overlayOpened={overlayOpened}
                     setOverlayOpened={setOverlayOpened}

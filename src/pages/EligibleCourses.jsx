@@ -78,9 +78,13 @@ function EligibleCourses({ getEligible, eligibleCoursesData, storeMajors, storeC
   const classes = useStyles();
 
   useEffect(() => {
+    let completed = [];
+    storeCoursesTaken.map(object => {
+      completed.push(object.courses);
+    });
     const studentData = {
       major: storeMajors,
-      completedClasses: storeCoursesTaken,
+      completedClasses: completed,
       currentClasses: [],
     }
     studentData && getEligible(JSON.stringify(studentData));

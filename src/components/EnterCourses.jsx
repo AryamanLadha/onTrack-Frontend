@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { MiniCourseCard, PageButton, AutoDropdown } from "../components";
-import { connect } from "react-redux";
-import { setCourses } from "../actions/actions";
 
 const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((theme) => ({
     layout: {
@@ -73,7 +71,7 @@ const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((t
     },
   }));
 
-function EnterCourses({ quarter, setOverlayOpened, storeCoursesTaken, setCourses }) {
+function EnterCourses({ quarter, allCourses, setAllCourses, setOverlayOpened }) {
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [numRows, setNumRows] = useState(0);
   const [lengthOfSelectedCourses, setLengthOfSelectedCourses] = useState(5);
@@ -81,11 +79,22 @@ function EnterCourses({ quarter, setOverlayOpened, storeCoursesTaken, setCourses
 
   const classes = useStyles(lengthOfSelectedCourses, isAutoDropdownOpen)();
 
+  let initialCoursesTaken = allCourses.find(object => object.quarter == quarter).courses;
+
   useEffect(() => {
     setNumRows(parseInt(selectedCourses.length /5)+1);
     setLengthOfSelectedCourses(selectedCourses.length);
     console.log("?")
   }, [selectedCourses, isAutoDropdownOpen]);
+
+  const updateQuarterCourses = () => {
+    for (let i = 0; i < allCourses.length; i++) {
+      if (allCourses[i].quarter == quarter) {
+        allCourses[i].courses = selectedCourses
+        setAllCourses(allCourses);
+      }
+    }
+  }
 
   return (
     <div className={classes.layout}>
@@ -94,7 +103,7 @@ function EnterCourses({ quarter, setOverlayOpened, storeCoursesTaken, setCourses
       </header>
       <AutoDropdown
         whichPage={"courses"}
-        initialSelectedOptions={storeCoursesTaken}
+        initialSelectedOptions={initialCoursesTaken}
         selectedOptions={selectedCourses}
         setSelectedOptions={setSelectedCourses}
         isAutoDropdownOpen={isAutoDropdownOpen}
@@ -125,9 +134,6 @@ function EnterCourses({ quarter, setOverlayOpened, storeCoursesTaken, setCourses
           size="short"
           setOverlayOpened={setOverlayOpened}
           onClick={() => setOverlayOpened(false)}
-          action={() => {
-            setCourses(selectedCourses);
-          }}
         />
         <PageButton
           page={"courses"}
@@ -135,7 +141,7 @@ function EnterCourses({ quarter, setOverlayOpened, storeCoursesTaken, setCourses
           size={"short"}
           setOverlayOpened={setOverlayOpened}
           action={() => {
-            setCourses(selectedCourses);
+            updateQuarterCourses();
           }}
         />
       </div>
@@ -143,16 +149,4 @@ function EnterCourses({ quarter, setOverlayOpened, storeCoursesTaken, setCourses
   );
 }
 
-const mapStateToProps = (store) => {
-  return {
-    storeCoursesTaken: store.coursesTaken,
-  }
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCourses: (newCourses) => dispatch(setCourses(newCourses)),
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EnterCourses);
+export default EnterCourses;
