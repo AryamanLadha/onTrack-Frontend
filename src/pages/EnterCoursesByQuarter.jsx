@@ -153,7 +153,7 @@ function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr, storeCoursesTaken, 
           y++;
         }
       }
-      existing = storeCoursesTaken.find(object => object.quarter == s + " " + y);
+      existing = storeCoursesTaken.find(object => object.quarter == seasons[s] + " " + y);
       if (existing != undefined && existing.courses.length > 0)
         newCoursesTaken.push(existing);
       else
