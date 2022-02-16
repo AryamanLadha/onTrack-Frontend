@@ -130,6 +130,7 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
   useEffect(() => {
     getData();
     setSelectedOptions(selectedOptions.concat(initialSelectedOptions));
+    // eslint-disable-next-line
   }, []);
 
 

@@ -78,9 +78,10 @@ function Dropdown({ placeholder, options, setSelectedOption }) {
 
   // When an option is selected, update the component to display it, update the store with the option's value, and mark the Dropdown as no longer empty
   useEffect(() => {
-    if (placeholder != "Select a quarter")
+    if (placeholder !== "Select a quarter")
       setEmpty(false);
-  }, []);
+      // eslint-disable-next-line
+  }, []); 
 
   const [option, setOption] = React.useState("");
 
@@ -116,8 +117,8 @@ function Dropdown({ placeholder, options, setSelectedOption }) {
             },
           }}
         >
-          {options.map((optionName) => {
-            return <MenuItem value={optionName}>{optionName}</MenuItem>;
+          {options.map((optionName,index) => {
+            return <MenuItem key = {index} value={optionName}>{optionName}</MenuItem>;
           })}
         </Select>
       </FormControl>
