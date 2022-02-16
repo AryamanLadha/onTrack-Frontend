@@ -166,9 +166,11 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
   };
 
   // when selecting/unselecting options, set and store selected options
-  const handleSelectedOptionsChange = (e, value) => {
-    setSelectedOptions(value);
-
+  const handleSelectedOptionsChange = (e, value, reason) => {
+    // disable deleting values with backspace key
+    if (e.key !== "Backspace" && reason !== "removeOption") {
+      setSelectedOptions(value);
+    }
     // On enter-courses page, set length of selected options to make space for course cards
     if (whichPage === "courses") {
       setLengthOfSelectedCourses(selectedOptions.length < 5 ? 5 : selectedOptions.length);
@@ -190,6 +192,7 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
         }}
         id="dropdown"
         open={open}
+        disableClearable
         onChange={handleSelectedOptionsChange}
         PopperComponent={customPopper}
         PaperComponent={customPaper}
