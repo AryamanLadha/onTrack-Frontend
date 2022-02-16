@@ -86,7 +86,7 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
     ? setHeight(`${(numRows-1)*14+17}rem`)
     : setHeight(`0rem`)
 
-    setQuarterOfOverlay(data.quarter);
+    console.log(data.quarter);
   }, [expanded]);
 
   const handleChange = () => {
@@ -126,8 +126,10 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
                 )}
                 {((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
                   <MiniCourseCard 
+                    quarter={data.quarter}
                     overlayOpened={overlayOpened}
                     setOverlayOpened={setOverlayOpened}
+                    setQuarterOfOverlay={setQuarterOfOverlay}
                   />}
               </div>
             ))}

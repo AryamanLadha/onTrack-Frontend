@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PlusIcon from "../assets/icons/Plus.svg";
 import { makeStyles } from "@mui/styles";
 
@@ -29,17 +29,19 @@ const useStyles = (props) =>makeStyles(theme => ({
   }
 }));
 
-export default function MiniCourseCard({name, overlayOpened, setOverlayOpened, selectedCourses, setSelectedCourses}) {
+export default function MiniCourseCard({name, quarter, overlayOpened, setOverlayOpened, selectedCourses, setSelectedCourses, setQuarterOfOverlay}) {
   const props = {
     plusIcon: (name === "") ? true : false
   }
 
-  const handleIconClick = () => {
-    setOverlayOpened(!overlayOpened);
-  }
-
   const handleClick = (selectedCourses) => {
     (!overlayOpened && selectedCourses) && setSelectedCourses(selectedCourses.filter(element => element !== name));
+  }
+
+  const handleIconClick = () => {
+    setOverlayOpened(!overlayOpened);
+    overlayOpened = !overlayOpened;
+    overlayOpened && setQuarterOfOverlay(quarter);
   }
 
   const classes = useStyles(props)();
@@ -67,8 +69,9 @@ export default function MiniCourseCard({name, overlayOpened, setOverlayOpened, s
   );
 }
 
-
 MiniCourseCard.defaultProps = {
   name: "plus",
-  setModalOpened: () => {},
+  quarter: "",
+  setOverlayOpened: () => {},
+  setQuarterOfOverlay: () => {},
 }

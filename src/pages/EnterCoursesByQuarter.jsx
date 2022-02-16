@@ -162,6 +162,10 @@ function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr, storeCoursesTaken, 
     }
   }, []);
 
+  useEffect(() => {
+    console.log(quarterOfOverlay);
+  }, [quarterOfOverlay]);
+
   return (
     <div className={classes.layout}>
       <header className={classes.header}>
