@@ -29,15 +29,15 @@ const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((t
     title: {
       font: theme.font.title,
       color: theme.color.black,
-      textAlign: "center",
-      margin: "0 0 0 0.9rem",
-      fontWeight: "bold",
+      textAlign: 'center',
+      margin: '0 0 0 0.9rem',
+      fontWeight: 'bold',
     },
 
     subtitle: {
-      textAlign: "center",
+      textAlign: 'center',
       font: theme.font.subtitle,
-      marginTop: "1rem",
+      marginTop: '1rem',
     },
 
     courseCardWrapper: {
@@ -109,6 +109,7 @@ function EnterCourses({ quarter, allCourses, setAllCourses, setOverlayOpened }) 
         isAutoDropdownOpen={isAutoDropdownOpen}
         setIsAutoDropdownOpen={setIsAutoDropdownOpen}
       />
+      {/* Logic to display grid of CourseCards based on selections */}
       {selectedCourses.length !== 0 ? (
         <div className={classes.courseCardWrapper}>
           {Array.from(Array(numRows).keys()).map((i) => (
@@ -129,14 +130,13 @@ function EnterCourses({ quarter, allCourses, setAllCourses, setOverlayOpened }) 
       )}
       <div className={classes.pageButtonWrapper}>
         <PageButton
-          page={"courses"}
+          page={"coursesOverlay"}
           text="Back"
           size="short"
           setOverlayOpened={setOverlayOpened}
-          onClick={() => setOverlayOpened(false)}
         />
         <PageButton
-          page={"courses"}
+          page={"coursesOverlay"}
           text={"Done"}
           size={"short"}
           setOverlayOpened={setOverlayOpened}

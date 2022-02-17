@@ -15,9 +15,9 @@ const useStyles = (props) =>makeStyles(theme => ({
   },
 
   cardText: {
-    display: "inline-block",
-    verticalAlign: "middle",
-    lineHeight: "2.346rem",
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    lineHeight: '2.346rem',
   },
 
   icon: {
@@ -29,7 +29,7 @@ const useStyles = (props) =>makeStyles(theme => ({
   }
 }));
 
-export default function MiniCourseCard({name, quarter, overlayOpened, setOverlayOpened, selectedCourses, setSelectedCourses, setQuarterOfOverlay}) {
+function MiniCourseCard({name, quarter, overlayOpened, setOverlayOpened, selectedCourses, setSelectedCourses, setQuarterOfOverlay}) {
   const props = {
     plusIcon: (name === "") ? true : false
   }
@@ -75,3 +75,5 @@ MiniCourseCard.defaultProps = {
   setOverlayOpened: () => {},
   setQuarterOfOverlay: () => {},
 }
+
+export default MiniCourseCard;

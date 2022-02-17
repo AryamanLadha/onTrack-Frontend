@@ -189,20 +189,17 @@ function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr, storeCoursesTaken, 
       </div>
       <div className={classes.pageButtonWrapper}>
         <PageButton
-          page={"coursesByQuarter"}
+          page={"courses"}
           text="Back"
           size="short"
-          setOverlayOpened={setOverlayOpened}
-          onClick={() => setOverlayOpened(false)}
           action={() => {
             setCourses(coursesTaken);
           }}
         />
         <PageButton
-          page={"coursesByQuarter"}
+          page={"courses"}
           text={"Next"}
           size={"short"}
-          setOverlayOpened={setOverlayOpened}
           action={() => {
             setCourses(coursesTaken);
           }}
