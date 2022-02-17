@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import { AccordionDropdown, PageButton } from '../components';
 import { getEligible } from '../actions/actions';
-import EligibleCoursesOverlay from '../components/EligibleCoursesOverlay';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -95,8 +94,6 @@ function EligibleCourses({
           <PageButton text="Next" size="short" page="eligible" />
         </div>
       </div>
-
-      <EligibleCoursesOverlay />
     </>
   );
 }
