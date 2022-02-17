@@ -128,8 +128,8 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
 
   useEffect(() => {
     getData();
-    // remove duplicates due to error
-    setSelectedOptions([...new Set(selectedOptions.concat(initialSelectedOptions))]);
+    setSelectedOptions(selectedOptions.concat(initialSelectedOptions));
+    // eslint-disable-next-line
   }, []);
 
   const customPopper = (props) => {

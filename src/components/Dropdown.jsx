@@ -81,6 +81,7 @@ function Dropdown({ initialOption, placeholder, options, setSelectedOption }) {
     if (initialOption != null) {
       setEmpty(false);
       setSelectedOption(initialOption);
+      // eslint-disable-next-line
     }
   }, []);
 
@@ -118,8 +119,8 @@ function Dropdown({ initialOption, placeholder, options, setSelectedOption }) {
             },
           }}
         >
-          {options.map((optionName) => {
-            return <MenuItem value={optionName}>{optionName}</MenuItem>;
+          {options.map((optionName,index) => {
+            return <MenuItem key = {index} value={optionName}>{optionName}</MenuItem>;
           })}
         </Select>
       </FormControl>

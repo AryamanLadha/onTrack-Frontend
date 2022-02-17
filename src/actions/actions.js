@@ -4,18 +4,25 @@ import axios from 'axios';
 
 // API call to get list of all courses
 export const getCourses = () => {
-    //Return a function that takes in a dispatch object, which dispatches an action to the reducer.
-    return (
-        (dispatch) => {
-            // 1. Make asynchronous call to database
-            // 2. Dispatch the action after you have the result
-            axios.get("http://localhost:8000/api/courses", { crossdomain: true })
-            .then(res => {
-                dispatch({ type: "GET_COURSES_SUCCESS", payload: {courses: res.data}})
-            }).catch(error => {console.log(error)})
-        }
-    );
-}
+  // Return a function that takes in a dispatch object, which dispatches an action to the reducer
+  return (dispatch) => {
+    // 1. Make asynchronous call to database
+    // 2. Dispatch the action after you have the result
+    axios
+      .get('http://localhost:8000/api/courses', {
+        crossdomain: true,
+      })
+      .then((res) => {
+        dispatch({
+          type: 'GET_COURSES_SUCCESS',
+          payload: { courses: res.data },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 
 // API call to get eligible courses based on majors/prerequisites
 export const getEligible = (studentData) => {
@@ -61,7 +68,7 @@ export const setMinors = (newMinors) => {
 export const getMajors = () => {
   return (dispatch) => {
     axios
-      .get('https://ontrack-backend.herokuapp.com/api/majors', {
+      .get('http://localhost:8000/api/majors', {
         crossdomain: true,
       })
       .then((res) => {
