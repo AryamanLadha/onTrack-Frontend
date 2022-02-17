@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Dropdown, RadioButton, PageButton } from "../components";
@@ -82,8 +82,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
     currSeason = 3;
   if (currSeason == 3)
     currYear++;
-  const startQuarters = [];
-  const endQuarters = [];
+  const startQuarters = [], endQuarters = [], allQuarters = [];
   // Push options that combine seasons and years.
   // startQuarters: 4 years back (always beginning with Fall Qtr) -> current qtr
   // endQuarters: current qtr -> 4 years forward (always ending with Summer Qtr)
@@ -91,6 +90,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
   let y = currYear - 4;
   while (!(y == currYear && s == currSeason)) {
     startQuarters.push(seasons[s] + " " + y);
+    allQuarters.push(seasons[s] + " " + y);
     s++
     if (s > 3) {
       s = 0;
@@ -100,12 +100,15 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
   startQuarters.push(seasons[s] + " " + y);
   while (!(y == currYear + 3 && s == 3)) {
     endQuarters.push(seasons[s] + " " + y);
+    allQuarters.push(seasons[s] + " " + y);
     s++
     if (s > 3) {
       s = 0;
       y++;
     }
   }
+
+  useEffect(() => console.log(allQuarters), []);
 
   const handleClick = () => {
     if (selectedStartQtr != "")
@@ -161,7 +164,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
           initialOption={storeEndQtr}
           setSelectedOption={setSelectedEndQtr}
         />
-        {
+        {/* {
           beforeError ? (
             <div className={classes.beforeError} style={{ marginLeft: '2.8rem' }}>
               <div>
@@ -172,8 +175,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
               </div>
             </div>
           ) : (<div></div>)
-        }
-        
+        } */}
       </div>
       <div style={{ height: '6.4rem' }}></div>
       <div style={{ marginLeft: '-28rem' }}>
@@ -232,9 +234,8 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
               navigate('/year');
               setEmptyError(true);
             }
-            // Will work after merging main...
             // else if (allQuarters.findIndex((qtr) => qtr == selectedEndQtr) < allQuarters.findIndex((qtr) => qtr == selectedStartQtr)) {
-            //   navigate('year');
+            //   navigate('/year');
             //   setBeforeError(true);
             // }
             else {
