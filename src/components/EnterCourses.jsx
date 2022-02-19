@@ -84,7 +84,6 @@ function EnterCourses({ quarter, allCourses, setAllCourses, setOverlayOpened }) 
   useEffect(() => {
     setNumRows(parseInt(selectedCourses.length /5)+1);
     setLengthOfSelectedCourses(selectedCourses.length);
-    console.log("?")
   }, [selectedCourses, isAutoDropdownOpen]);
 
   const updateQuarterCourses = () => {

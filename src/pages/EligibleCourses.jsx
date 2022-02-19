@@ -70,11 +70,7 @@ function EligibleCourses({
     studentData && getEligible(JSON.stringify(studentData));
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    console.log(eligibleCoursesData);
-  }, [eligibleCoursesData])
-
+  
   return (
     <>
       <div className={classes.layout}>

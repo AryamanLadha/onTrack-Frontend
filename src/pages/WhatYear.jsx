@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Dropdown, RadioButton, PageButton } from "../components";
@@ -107,8 +107,6 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
       y++;
     }
   }
-
-  useEffect(() => console.log(allQuarters), []);
 
   const handleClick = () => {
     if (selectedStartQtr !== "")
