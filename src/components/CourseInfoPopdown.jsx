@@ -85,7 +85,7 @@ const CourseInfoPopdown = () => {
 
   const EnrollmentInfoTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} arrow />
-  ))(({ isCoreqTooltip = false }) => ({
+  ))(({ theme, isCoreqTooltip = false }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
       backgroundColor: '#EDEDED',
       color: 'rgba(0, 0, 0, 1)',
@@ -100,7 +100,11 @@ const CourseInfoPopdown = () => {
       alignItems: 'center',
     },
     [`& .${tooltipClasses.arrow}`]: {
-      color: '#EDEDED',
+      color: theme.color.bargrey,
+      width: '3rem',
+      height: '3rem',
+      overflow: 'visible',
+      top: '-2.5rem !important',
     },
   }));
 
