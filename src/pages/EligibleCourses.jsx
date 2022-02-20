@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import { AccordionDropdown, PageButton } from '../components';
 import { getEligible } from '../actions/actions';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -44,6 +47,16 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     marginTop: '7.4rem',
   },
+
+  courseDescriptionHeader: {
+    font: theme.font.eligibleCourseDescriptionText,
+    marginBottom: '0.25rem',
+  },
+
+  courseDescriptionBody: {
+    font: theme.font.eligibleCourseDescriptionText,
+    marginBottom: '2rem',
+  },
 }));
 
 function EligibleCourses({
@@ -53,6 +66,41 @@ function EligibleCourses({
   storeCoursesTaken,
 }) {
   const classes = useStyles();
+
+  const [open, setOpen] = useState(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
+
+  const EligibleCoursesTooltip = styled(({ className, ...props }) => (
+    <Tooltip
+      {...props}
+      classes={{ popper: className }}
+      // Remove PopperProps if doesn't break code when done
+      PopperProps={{
+        disablePortal: true,
+      }}
+      onClose={handleTooltipClose}
+      open={open}
+      disableFocusListener
+      disableHoverListener
+      disableTouchListener
+      placement="bottom"
+    />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: '#D4D4D4',
+      color: 'rgba(0, 0, 0, 1)',
+      maxWidth: '117.5rem',
+      borderRadius: '5.5rem',
+      padding: '5rem 3.75rem',
+    },
+  }));
 
   // 1. When page renders, create an object to hold display data, uses data pulled from the store (majors and coursesTaken). See mapStateToProps below.
   // 2. Then dispatch getEligible action to get the list of courses to display on this page (which will be stored in currentClasses portion of studentData object)
@@ -89,6 +137,36 @@ function EligibleCourses({
             <div className={classes.pageButtonWrapper}></div>
           )}
         </div>
+        <div className={classes.pageButtonWrapper}>
+          <PageButton text="Back" size="short" page="eligible" />
+          <PageButton text="Next" size="short" page="eligible" />
+        </div>
+
+        <ClickAwayListener onClickAway={handleTooltipClose}>
+          <div>
+            <EligibleCoursesTooltip
+              title={
+                <>
+                  <div className={classes.courseDescriptionHeader}>
+                    Course Description
+                  </div>
+
+                  <div className={classes.courseDescriptionBody}>
+                    Lecture, three hours. Exploration of computer metaphor of
+                    mind as an information-processing system, focusing
+                    especially on perception, knowledge representation, and
+                    thought based on research in cognitive psychology,
+                    neuropsychology, and artificial intelligence. Many examples
+                    from visual information processing.
+                  </div>
+                </>
+              }
+            >
+              <div onClick={handleTooltipOpen}>Button</div>
+            </EligibleCoursesTooltip>
+          </div>
+        </ClickAwayListener>
+
         <div className={classes.pageButtonWrapper}>
           <PageButton text="Back" size="short" page="eligible" />
           <PageButton text="Next" size="short" page="eligible" />
