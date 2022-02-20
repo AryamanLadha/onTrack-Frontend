@@ -12,11 +12,8 @@ const theme = createTheme({
     radioButton: 'normal 400 2rem/2rem "Work Sans" !important',
     accordionDropdown: 'normal 500 3rem/3rem "Work Sans" !important',
     eligibleCourseOverlayHeader: 'normal 500 3.75rem/4.39rem "Work Sans"',
-    eligibleCourseOverlaySubheader: 'normal 500 4.40rem/3.75rem "Work Sans"',
     eligibleCourseTagText: 'normal 400 2.25rem/2.94rem "Work Sans"',
     eligibleCourseDescriptionText: 'normal 400 2.25rem/2.64rem "Work Sans"',
-    eligibleCourseTableHeaderText: 'normal 500 2.5rem/2.93rem "Work Sans"',
-    eligibleCourseTableRowText: 'normal 400 2.5rem/2.93rem "Work Sans"',
   },
   color: {
     button: '#C4C4C4',
