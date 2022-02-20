@@ -65,6 +65,7 @@ function EligibleCourses({
       currentClasses: [],
     };
     studentData && getEligible(JSON.stringify(studentData));
+    // eslint-disable-next-line
   }, []);
 
   return (
