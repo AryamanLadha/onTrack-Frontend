@@ -13,6 +13,9 @@ const theme = createTheme({
     accordionDropdown: 'normal 500 3rem/3rem "Work Sans" !important',
     eligibleCourseOverlayHeader: 'normal 500 3.75rem/4.39rem "Work Sans"',
     eligibleCourseTagText: 'normal 400 2.25rem/2.94rem "Work Sans"',
+    tooltipEnrollmentRestrictionsText: 'normal 400 2rem/2.35rem "Work Sans"',
+    corequisitesGridHeaderText: 'normal 400 1.75rem/2.05rem "Work Sans"',
+    corequisitesGridCourseName: 'normal 500 2.5rem/2.94rem "Work Sans"',
     eligibleCourseDescriptionText: 'normal 400 2.25rem/2.64rem "Work Sans"',
   },
   color: {
