@@ -92,7 +92,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
   const startQuarters = [], endQuarters = [], allQuarters = [];
   // Push options that combine seasons and years.
   // startQuarters: 4 years back (always beginning with Fall Qtr) -> current qtr
-  // endQuarters: current qtr -> 4 years forward (always ending with Summer Qtr)
+  // endQuarters: current qtr -> 5 years forward (always ending with Summer Qtr)
   let s = 3;
   let y = currYear - 4;
   while (!(y === currYear && s === currSeason)) {
