@@ -130,16 +130,16 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
                   <MiniCourseCard 
                     key={idx} 
                     name={course} 
-                    deleteAble={false}
+                    canBeDeleted={false}
                   />
                 )}
                 {((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
                   <MiniCourseCard 
-                    deleteAble={false}
                     quarter={data.quarter}
                     overlayOpened={overlayOpened}
                     setOverlayOpened={setOverlayOpened}
                     setQuarterOfOverlay={setQuarterOfOverlay}
+                    canBeDeleted={false}
                   />}
               </div>
             ))}

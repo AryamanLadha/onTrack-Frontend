@@ -51,7 +51,7 @@ const useStyles = (props) =>makeStyles(theme => ({
   }
 }));
 
-function MiniCourseCard({ name, quarter, overlayOpened, setOverlayOpened, selectedCourses, setSelectedCourses, setQuarterOfOverlay, deleteAble}) {
+function MiniCourseCard({ name, quarter, overlayOpened, setOverlayOpened, selectedCourses, setSelectedCourses, setQuarterOfOverlay, canBeDeleted}) {
   const [isHovering, setIsHovering] = useState(false);
 
   const props = {
@@ -70,11 +70,11 @@ function MiniCourseCard({ name, quarter, overlayOpened, setOverlayOpened, select
   }
 
   const handleMouseEnter = () => {
-    deleteAble && setIsHovering(true);
+    canBeDeleted && setIsHovering(true);
   };
 
   const handleMouseLeave = () => {
-    deleteAble && setIsHovering(false);
+    canBeDeleted && setIsHovering(false);
   };
 
 
@@ -118,7 +118,7 @@ MiniCourseCard.defaultProps = {
   setOverlayOpened: () => {},
   setQuarterOfOverlay: () => {},
   setSelectedCourses: () => {},
-  deleteAble: true,
+  canBeDeleted: true,
 }
 
 export default MiniCourseCard;
