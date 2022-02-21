@@ -105,7 +105,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
     }
   }
   startQuarters.push(seasons[s] + " " + y);
-  while (!(y === currYear + 4 && s === 3)) {
+  while (!(y === currYear + 5 && s === 3)) {
     endQuarters.push(seasons[s] + " " + y);
     allQuarters.push(seasons[s] + " " + y);
     s++
