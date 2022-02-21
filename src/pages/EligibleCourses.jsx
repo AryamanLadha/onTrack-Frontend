@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     width: '100vw',
-    marginTop: '10.4rem',
+    height: '120vh',
+    backgroundColor: theme.color.background,
   },
 
   header: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '100rem',
     height: '8.5rem',
-    marginTop: '5rem',
+    marginTop: '20.4rem',
     marginBottom: '4.9rem',
   },
 

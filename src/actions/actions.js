@@ -1,6 +1,13 @@
 import axios from 'axios';
 
+const config = {
+  headers: {
+      'Content-type': "application-json"
+  },
+  baseURL: 'http://127.0.0.1:8000',
+}
 // When you make an API call, or anything asynchronous, the action creator returns a function
+
 
 // API call to get list of all courses
 export const getCourses = () => {
@@ -9,37 +16,43 @@ export const getCourses = () => {
     // 1. Make asynchronous call to database
     // 2. Dispatch the action after you have the result
     axios
-    .get('http://localhost:8000/api/courses', {
-    crossdomain: true,
-    })
-    .then((res) => {
-    dispatch({
-        type: 'GET_COURSES_SUCCESS',
-        payload: { courses: res.data },
-    });
-    })
-    .catch((error) => {
-    console.log(error);
-    });
+      .get(`${config.baseURL}/api/courses`, {
+        crossdomain: true,
+      })
+      .then((res) => {
+        dispatch({
+          type: 'GET_COURSES_SUCCESS',
+          payload: { courses: res.data },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };
 
 // API call to get eligible courses based on majors/prerequisites
 export const getEligible = (studentData) => {
-    return (
-        (dispatch) => {
-            axios.get("http://localhost:8000/api/courses/eligible", { 
-                crossdomain: true, 
-                params: {
-                    studentData
-                }
-            })
-            .then(res => {
-                dispatch({ type: "GET_ELIGIBLE_SUCCESS", payload: {eligibleCourses: res.data}})
-            }).catch(error => {console.log(error)})
-        }
-    );
-}
+  return (dispatch) => {
+    axios
+      .get(`${config.baseURL}/api/courses/eligible`, {
+        crossdomain: true,
+        params: {
+          studentData,
+        },
+      })
+      .then((res) => {
+        dispatch({
+          type: 'GET_ELIGIBLE_SUCCESS',
+          payload: { eligibleCourses: res.data },
+        });
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 
 // Regular action creator returns an object, i.e an action
 
@@ -61,13 +74,22 @@ export const setMinors = (newMinors) => {
 
 // API call to get list of major names
 export const getMajors = () => {
-    return (dispatch) => {
-        axios.get("http://localhost:8000/api/majors/", { crossdomain: true })
-        .then(res => {
-            dispatch({type: 'GET_MAJORS_SUCCESS', payload: {allMajors: res.data}})
-        }).catch(error => {console.log(error)})
-    }
-}
+  return (dispatch) => {
+    axios
+      .get(`${config.baseURL}/api/majors`, {
+        crossdomain: true,
+      })
+      .then((res) => {
+        dispatch({
+          type: 'GET_MAJORS_SUCCESS',
+          payload: { allMajors: res.data },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 
 // Update store with selected start quarter when next/back button is pressed
 export const setStartQtr = (newStartQtr) => {
