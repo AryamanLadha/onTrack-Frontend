@@ -17,7 +17,7 @@ const useStyles = (props) => makeStyles(theme => ({
 }));
 
 // Button props: text, size, page
-function PageButton({ page, text, size, action, setOverlayOpened }) {
+function PageButton({ page, text, size, action, setOverlayOpened, emptyError, setEmptyError }) {
   const props = {
     size: size,
   };
@@ -27,19 +27,27 @@ function PageButton({ page, text, size, action, setOverlayOpened }) {
   const handleClick = () => {
     if (page === 'majors') {
       // Skip minors
-      navigate('/year');
+      setEmptyError(emptyError);
+      if (emptyError === false) {
+        navigate('/year');
+      }
+      
     } else if (page === 'minors') {
       text === 'Back' ? navigate('/') : navigate('/year');
+
     } else if (page === 'year') {
       text === 'Back'
         ? // Go back to majors (skip minors)
           navigate('/')
         : navigate('/courses');
+
     } else if (page === 'courses') {
       text === 'Back' ? navigate('/year') : navigate('/eligible');
+
     } else if (page === 'coursesOverlay') {
       setOverlayOpened(false);
     }
+
     else if (page === 'eligible') {
       text === 'Back' ? navigate('/courses') : navigate('/done');
     }
@@ -64,6 +72,8 @@ function PageButton({ page, text, size, action, setOverlayOpened }) {
 
 PageButton.defaultProps = {
   setOverlayOpened: () => {},
+  emptyError: false,
+  setEmptyError: () => {},
 }
 
 export default PageButton;

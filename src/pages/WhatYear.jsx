@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Dropdown, RadioButton, PageButton } from "../components";
@@ -54,6 +54,13 @@ const useStyles = makeStyles((theme) => ({
     color: "#FF0000",
     textAlign: "center",
   },
+
+  pageButtonWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '99rem',
+    justifyContent: 'space-between',
+  }
 }));
 
 function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, setEndQtr, setGradeEntered }) {
@@ -98,7 +105,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
     }
   }
   startQuarters.push(seasons[s] + " " + y);
-  while (!(y === currYear + 3 && s === 3)) {
+  while (!(y === currYear + 4 && s === 3)) {
     endQuarters.push(seasons[s] + " " + y);
     allQuarters.push(seasons[s] + " " + y);
     s++
@@ -107,8 +114,6 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
       y++;
     }
   }
-
-  useEffect(() => console.log(allQuarters), []);
 
   const handleClick = () => {
     if (selectedStartQtr !== "")
@@ -201,14 +206,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
         </div>
       </div>
       <div style={{ height: '9.8rem' }}></div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          width: '99rem',
-          justifyContent: 'space-between',
-        }}
-      >
+      <div className={classes.pageButtonWrapper}>
         <PageButton
           page={"year"}
           text="Back"

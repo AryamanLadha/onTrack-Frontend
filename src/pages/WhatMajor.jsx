@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import AutoDropdown from '../components/AutoDropdown';
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'row',
+    flexDirection: 'column',
     marginTop: '34.6rem',
   },
 
@@ -57,13 +57,32 @@ const useStyles = makeStyles((theme) => ({
     width: '64.7rem',
     marginBottom: '2rem',
   },
+
+  pageButtonWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '99rem',
+    justifyContent: 'space-between',
+  },
+
+  emptyError: {
+    fontFamily: "Work Sans",
+    fontSize: "1.8rem",
+    color: "#FF0000",
+    lineHeight: "7.5rem",
+  },
 }));
 
 function WhatMajor({ majmin, storeMajors, setMajors }) {
   // This hook is very important! See AutoDropdown component below...
   const [selectedMajors, setSelectedMajors] = useState([]);
   const [isAutoDropdownOpen, setIsAutoDropdownOpen] = useState(false);
+  const [emptyError, setEmptyError] = useState(false);
   const classes = useStyles();
+
+  // useEffect(() => {
+  //   setEmptyError(selectedMajors.length === 0 ? true : false)
+  // }, [emptyError, selectedMajors])
 
   return (
     <div className={classes.layout}>
@@ -113,24 +132,22 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
           />
         </div>
       <footer className={classes.footer}>
+        {
+          emptyError ? (<div className={classes.emptyError}>Sorry, you can't move on without entering this information.</div>) : (<div></div>)
+        }
         {majmin === 'majors' ? (
-          <PageButton
-            text={'next'}
-            size={'short'}
-            page={'majors'}
-            action={() => {
-              setMajors(selectedMajors);
-            }}
-          />
+            <PageButton
+              text={'next'}
+              size={'short'}
+              page={'majors'}
+              emptyError={selectedMajors.length === 0 ? true : false}
+              setEmptyError={setEmptyError}
+              action={() => {
+                setMajors(selectedMajors);
+              }}
+            />
         ) : (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: '99rem',
-              justifyContent: 'space-between',
-            }}
-          >
+          <div className={classes.pageButtonWrapper}>
             <PageButton
               text="Back"
               size="short"
