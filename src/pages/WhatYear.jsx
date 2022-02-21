@@ -54,6 +54,13 @@ const useStyles = makeStyles((theme) => ({
     color: "#FF0000",
     textAlign: "center",
   },
+
+  pageButtonWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '99rem',
+    justifyContent: 'space-between',
+  }
 }));
 
 function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, setEndQtr, setGradeEntered }) {
@@ -199,14 +206,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
         </div>
       </div>
       <div style={{ height: '9.8rem' }}></div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          width: '99rem',
-          justifyContent: 'space-between',
-        }}
-      >
+      <div classes={classes.pageButtonWrapper}>
         <PageButton
           page={"year"}
           text="Back"
