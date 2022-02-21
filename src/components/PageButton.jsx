@@ -3,22 +3,21 @@ import ButtonUnstyled from '@mui/core/ButtonUnstyled';
 import { makeStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
 
-const useStyles = (props) =>
-  makeStyles((theme) => ({
-    button: {
-      // Two sizes of buttonsm depending on prop passed
-      width: props.size === 'short' ? '13.8rem' : '25.5rem',
-      height: '7.5rem',
-      border: '0rem',
-      marginBottom: '5rem',
-      borderRadius: props.size === 'short' ? '3.1rem' : '3.75rem',
-      backgroundColor: theme.color.grey,
-      font: theme.font.button,
-    },
-  }));
+const useStyles = (props) => makeStyles(theme => ({
+  button: {
+    width: props.size === "short" ? '13.8rem' : '25.5rem',
+    height: "7.5rem",
+    border: "0rem",
+    marginBottom: "5rem",
+    borderRadius: props.size === "short" ? '3.1rem' : '3.75rem',
+    backgroundColor: theme.color.greyishBlue,
+    font: theme.font.button,
+    color: theme.color.white,
+  }
+}));
 
 // Button props: text, size, page
-function PageButton({ page, text, size, action }) {
+function PageButton({ page, text, size, action, setOverlayOpened, emptyError, setEmptyError }) {
   const props = {
     size: size,
   };
@@ -28,20 +27,31 @@ function PageButton({ page, text, size, action }) {
   const handleClick = () => {
     if (page === 'majors') {
       // Skip minors
-      navigate('/year');
+      setEmptyError(emptyError);
+      if (emptyError === false) {
+        navigate('/year');
+      }
+      
     } else if (page === 'minors') {
       text === 'Back' ? navigate('/') : navigate('/year');
+
     } else if (page === 'year') {
       text === 'Back'
         ? // Go back to majors (skip minors)
           navigate('/')
         : navigate('/courses');
+
     } else if (page === 'courses') {
       text === 'Back' ? navigate('/year') : navigate('/eligible');
-    } else {
-      // i.e., if (props.page === 'eligible') {
+
+    } else if (page === 'coursesOverlay') {
+      setOverlayOpened(false);
+    }
+
+    else if (page === 'eligible') {
       text === 'Back' ? navigate('/courses') : navigate('/done');
     }
+
     // props.page === "done"
     // else {
     //   nothing for now.
@@ -58,6 +68,12 @@ function PageButton({ page, text, size, action }) {
       {text}
     </ButtonUnstyled>
   );
+}
+
+PageButton.defaultProps = {
+  setOverlayOpened: () => {},
+  emptyError: false,
+  setEmptyError: () => {},
 }
 
 export default PageButton;

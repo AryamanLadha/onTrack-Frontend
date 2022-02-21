@@ -67,7 +67,7 @@ const useStyles = (props) =>
   }));
 
 // `placeholder` prop is the Dropdown's default value
-function Dropdown({ placeholder, options, setSelectedOption }) {
+function Dropdown({ initialOption, placeholder, options, setSelectedOption }) {
   const [open, setOpen] = useState(false);
   const [empty, setEmpty] = useState(true);
   const props = {
@@ -78,10 +78,12 @@ function Dropdown({ placeholder, options, setSelectedOption }) {
 
   // When an option is selected, update the component to display it, update the store with the option's value, and mark the Dropdown as no longer empty
   useEffect(() => {
-    if (placeholder !== "Select a quarter")
+    if (initialOption != null) {
       setEmpty(false);
+      setSelectedOption(initialOption);
       // eslint-disable-next-line
-  }, []); 
+    }
+  }, []);
 
   const [option, setOption] = React.useState("");
 

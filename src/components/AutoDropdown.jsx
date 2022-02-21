@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import Autocomplete from '@mui/material/Autocomplete';
 import Paper from '@mui/material/Paper';
@@ -110,12 +110,11 @@ const useStyles = (props) =>
     }
   }));
 
-function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOptions, selectedOptions, setSelectedOptions, data, getData}) {
-  const [open, setOpen] = useState(false);
+function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setSelectedOptions, isAutoDropdownOpen, setIsAutoDropdownOpen, data, getData}) {
   const listRef = useRef(null);
 
   const props = {  
-    open: open,
+    open: isAutoDropdownOpen,
     whichPage: whichPage,
   };
   const classes = useStyles(props)();
@@ -132,7 +131,6 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
     setSelectedOptions(selectedOptions.concat(initialSelectedOptions));
     // eslint-disable-next-line
   }, []);
-
 
   const customPopper = (props) => {
     return (
@@ -155,13 +153,13 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
 
   // when clicking on triangle, open the menu
   const handleIconClick = () => {
-    setOpen(!open);
-  };
+    setIsAutoDropdownOpen(!isAutoDropdownOpen);
+  }
 
   // when in enter courses page & key up, set autocomplete open
   const handleKeyUp = () => {
     if (whichPage === 'courses') {
-      setOpen(true);
+      setIsAutoDropdownOpen(true);
     }
   };
 
@@ -170,13 +168,6 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
     // disable deleting values with backspace key
     if (e.key !== "Backspace" && reason !== "removeOption") {
       setSelectedOptions(value);
-    }
-    // On enter-courses page, set length of selected options to make space for course cards
-    if (whichPage === "courses") {
-      setLengthOfSelectedCourses(selectedOptions.length < 5 ? 5 : selectedOptions.length);
-      if (!open) {
-        setLengthOfSelectedCourses(-1);
-      }
     }
 
     // when selecting an option, scroll to the very top of the menu
@@ -191,7 +182,7 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
           option: classes.option,
         }}
         id="dropdown"
-        open={open}
+        open={isAutoDropdownOpen}
         disableClearable
         onChange={handleSelectedOptionsChange}
         PopperComponent={customPopper}
@@ -210,7 +201,7 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
         }
 
         // pre-set selectedOptions
-        value={selectedOptions} 
+        value={selectedOptions ?? null} 
         ListboxProps={{ 
           className : classes.dropDownMenu,
           ref: listRef,
@@ -219,7 +210,7 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
           (
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>
             <input
-              onKeyUp={handleKeyUp}
+              onKeyUp={handleKeyUp.bind(this)}
               type="text" 
               placeholder={ 
                 whichPage === "courses" 
@@ -230,22 +221,30 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
               }
               {...params.inputProps}
             />
-            {whichPage === 'courses' ? (
-              <img src={SearchIcon} className="searchIcon" alt="searchIcon" />
-            ) : open ? (
-              <img
-                src={TriangleUp}
-                className="triangle"
-                onClick={handleIconClick}
-                alt="searchIcon"
+            {whichPage === "courses"
+            ? (
+              <img 
+                src={SearchIcon} 
+                onClick={handleIconClick.bind(this)}
+                className="searchIcon"
+                alt="searchIcon" 
               />
             ) : (
-              <img
-                src={TriangleDown}
-                className="triangle"
-                onClick={handleIconClick}
-                alt="searchIcon"
-              />
+              isAutoDropdownOpen 
+              ? 
+                <img 
+                  src={TriangleUp}
+                  className="triangle" 
+                  onClick={handleIconClick.bind(this)}
+                  alt="searchIcon" 
+                />
+              : 
+                <img 
+                  src={TriangleDown}
+                  className="triangle" 
+                  onClick={handleIconClick.bind(this)}
+                  alt="searchIcon" 
+                />
             )}
           </div>
         )}

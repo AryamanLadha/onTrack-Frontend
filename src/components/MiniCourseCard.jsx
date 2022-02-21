@@ -1,17 +1,17 @@
-import React from 'react';
-import { makeStyles } from '@mui/styles';
+import React from "react";
+import PlusIcon from "../assets/icons/Plus.svg";
+import { makeStyles } from "@mui/styles";
 
-// Styled slightly smaller than regular CourseCard, for use on EligibleCourses page
-const useStyles = makeStyles((theme) => ({
+const useStyles = (props) =>makeStyles(theme => ({
   card: {
-    backgroundColor: theme.color.grey,
-    width: '12rem',
-    height: '12rem',
-    borderRadius: '2rem',
-    textAlign: 'center',
-    lineHeight: '12rem',
+    backgroundColor: theme.color.lightBlue,
+    width: "12rem",
+    height: "12rem",
+    borderRadius: "2rem", 
+    textAlign: "center",
+    lineHeight: props.plus ? "0rem" : "12rem",
     font: theme.font.miniCourseCard,
-    marginRight: '3rem',
+    marginRight: props.plusIcon ? "0rem" : "3rem",
   },
 
   cardText: {
@@ -19,15 +19,61 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: 'middle',
     lineHeight: '2.346rem',
   },
+
+  icon: {
+    margin: "auto 0",
+    width: "4.8rem",
+    height: "4.8rem",
+    display: "inline-block",
+    verticalAlign: "middle",
+  }
 }));
 
-function MiniCourseCard({ name }) {
-  const classes = useStyles();
+function MiniCourseCard({name, quarter, overlayOpened, setOverlayOpened, selectedCourses, setSelectedCourses, setQuarterOfOverlay}) {
+  const props = {
+    plusIcon: (name === "") ? true : false
+  }
+
+  const handleClick = (selectedCourses) => {
+    (!overlayOpened && selectedCourses) && setSelectedCourses(selectedCourses.filter(element => element !== name));
+  }
+
+  const handleIconClick = () => {
+    setOverlayOpened(!overlayOpened);
+    overlayOpened = !overlayOpened;
+    overlayOpened && setQuarterOfOverlay(quarter);
+  }
+
+  const classes = useStyles(props)();
+
   return (
-    <div className={classes.card}>
-      <span className={classes.cardText}>{name}</span>
+    <div 
+      className={classes.card}
+      onClick={() => handleClick(selectedCourses)}
+    >
+      {
+        name === "plus"
+        ? <img 
+          className={classes.icon} 
+          src={PlusIcon} 
+          alt="addCourses"
+          onClick={handleIconClick}
+        />
+        : <span 
+          className={classes.cardText}
+          >
+            {name}
+          </span>
+      }
     </div>
   );
+}
+
+MiniCourseCard.defaultProps = {
+  name: "plus",
+  quarter: "",
+  setOverlayOpened: () => {},
+  setQuarterOfOverlay: () => {},
 }
 
 export default MiniCourseCard;
