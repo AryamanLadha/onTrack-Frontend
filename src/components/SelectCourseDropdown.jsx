@@ -126,17 +126,22 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
           <div className={classes.miniCourseCardWrapper}>
             {[...Array(numRows).keys()].map((i) => (
               <div key={i} className={classes.miniCourseCardContainer}>
-              {data.courses.slice(i*5, i*5+5).map((course, idx) => 
-                <MiniCourseCard key={idx} name={course} />
-              )}
-              {((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
-                <MiniCourseCard 
-                  quarter={data.quarter}
-                  overlayOpened={overlayOpened}
-                  setOverlayOpened={setOverlayOpened}
-                  setQuarterOfOverlay={setQuarterOfOverlay}
-                />}
-            </div>
+                {data.courses.slice(i*5, i*5+5).map((course, idx) => 
+                  <MiniCourseCard 
+                    key={idx} 
+                    name={course} 
+                    deleteAble={false}
+                  />
+                )}
+                {((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
+                  <MiniCourseCard 
+                    deleteAble={false}
+                    quarter={data.quarter}
+                    overlayOpened={overlayOpened}
+                    setOverlayOpened={setOverlayOpened}
+                    setQuarterOfOverlay={setQuarterOfOverlay}
+                  />}
+              </div>
             ))}
           </div>
         </AccordionDetails> 

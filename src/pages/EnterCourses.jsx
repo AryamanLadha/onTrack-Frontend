@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
-import { CourseCard, PageButton, AutoDropdown } from '../components';
+import { MiniCourseCard, PageButton, AutoDropdown } from '../components';
 import { setCourses } from '../actions/actions';
 
 const useStyles = (marginTop) =>
@@ -91,11 +91,12 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
           {Array.from(Array(numRows).keys()).map((i) => (
             <div key={i} className={classes.courseCardContainer}>
               {selectedCourses.slice(i * 4, (i + 1) * 4).map((course, idx) => (
-                <CourseCard 
+                <MiniCourseCard 
                   key={idx} 
                   name={course}
                   selectedCourses={selectedCourses}
                   setSelectedCourses={setSelectedCourses} 
+                  deleteAble={true}
                 />
               ))}
             </div>
