@@ -19,13 +19,20 @@ const theme = createTheme({
     eligibleCourseDescriptionText: 'normal 400 2.25rem/2.64rem "Work Sans"',
   },
   color: {
-    button: '#C4C4C4',
+    button: '#A5B6BC',
+    hoveredButton: '#78929B',
+    background: '#FDFCF8',
     grey: '#C4C4C4 !important',
     black: '#000000',
     lightgrey: '#E7E7E7 !important',
-    icongrey: '#A3A3A3',
+    lightBeige: '#EFE9E4 !important',
+    beige: '#DBD3C9 !important',
+    darkBeige: '#BAA898',
+    skyblue: '#BFD7EA',
     bargrey: '#EDEDED',
     white: '#FFFFFF',
+    darkBrown: '#7B6958',
+    lightYellow: '#FDFCF8',
   },
 });
 

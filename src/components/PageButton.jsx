@@ -12,36 +12,55 @@ const useStyles = (props) =>
       border: '0rem',
       marginBottom: '5rem',
       borderRadius: props.size === 'short' ? '3.1rem' : '3.75rem',
-      backgroundColor: theme.color.grey,
+      backgroundColor: props.isHovered ? theme.color.hoveredButton : theme.color.button,
       font: theme.font.button,
+      color: theme.color.white,
     },
   }));
 
 // Button props: text, size, page
-function PageButton({ page, text, size, action }) {
+function PageButton({ page, text, size, action, setOverlayOpened, emptyError, setEmptyError }) {
+  const [ isHovered, setIsHovered ] = React.useState(false);
+
   const props = {
+    isHovered: isHovered,
     size: size,
   };
   const classes = useStyles(props)();
   const navigate = useNavigate();
 
+  const handleHover = () => {
+    setIsHovered(!isHovered);
+  };
+
   const handleClick = () => {
     if (page === 'majors') {
       // Skip minors
-      navigate('/year');
+      setEmptyError(emptyError);
+      if (emptyError === false) {
+        navigate('/year');
+      }
+      
     } else if (page === 'minors') {
       text === 'Back' ? navigate('/') : navigate('/year');
+
     } else if (page === 'year') {
       text === 'Back'
         ? // Go back to majors (skip minors)
           navigate('/')
         : navigate('/courses');
+
     } else if (page === 'courses') {
       text === 'Back' ? navigate('/year') : navigate('/eligible');
-    } else {
-      // i.e., if (props.page === 'eligible') {
+
+    } else if (page === 'coursesOverlay') {
+      setOverlayOpened(false);
+    }
+
+    else if (page === 'eligible') {
       text === 'Back' ? navigate('/courses') : navigate('/done');
     }
+
     // props.page === "done"
     // else {
     //   nothing for now.
@@ -54,10 +73,21 @@ function PageButton({ page, text, size, action }) {
   };
 
   return (
-    <ButtonUnstyled className={classes.button} onClick={handleClick}>
+    <ButtonUnstyled 
+      className={classes.button} 
+      onClick={handleClick}
+      onMouseEnter={handleHover}
+      onMouseLeave={handleHover}
+    >
       {text}
     </ButtonUnstyled>
   );
+}
+
+PageButton.defaultProps = {
+  setOverlayOpened: () => {},
+  emptyError: false,
+  setEmptyError: () => {},
 }
 
 export default PageButton;

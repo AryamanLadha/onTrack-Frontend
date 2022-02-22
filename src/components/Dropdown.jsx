@@ -14,8 +14,10 @@ const useStyles = (props) =>
       width: '29rem',
       height: '6rem',
       padding: '1rem 2rem 0rem 2rem',
-      background: theme.color.lightgrey,
+      background: theme.color.white,
       boxSizing: 'border-box',
+      border: "0.1rem solid",
+      borderColor: theme.color.darkBeige,
       // Disable border radius on bottom corners of Dropdown box if open
       borderRadius: props.open ? '1.5rem 1.5rem 0rem 0rem' : '1.5rem',
 
@@ -25,32 +27,33 @@ const useStyles = (props) =>
 
         '&:focus': {
           outline: 'none',
-          background: theme.color.lightgrey,
+          background: theme.color.white,
         },
       },
 
       '& .MuiSelect-icon': {
-        color: theme.color.icongrey,
+        color: theme.color.darkBeige,
         fontSize: '6rem',
       },
     },
 
     selectionMenu: {
-      offset: '0rem, 0rem, 0rem, 0rem',
       width: '29rem',
       marginTop: '.5rem',
-      borderTop: '0.5rem solid white',
-      borderRadius: '2rem 2rem 0rem 0rem',
+      borderRadius: '0 0 2rem 2rem !important',
       boxShadow: 'none !important',
+      border: "0.1rem solid",
+      borderColor: theme.color.darkBeige,
       font: theme.font.subtitle,
     },
 
     dropdownMenu: {
       maxHeight: '18rem',
       overflow: 'auto',
-      background: theme.color.lightgrey,
-      borderRadius: '0rem 0rem 2rem 2rem',
+      background: theme.color.white,
+      borderRadius: '0rem',
       boxShadow: 'none !important',
+      borderTop: "none",
 
       '& li': {
         height: '5rem',
@@ -61,13 +64,21 @@ const useStyles = (props) =>
       },
 
       '& li[aria-selected="true"]': {
-        background: theme.color.grey,
+        background: theme.color.lightBeige,
+      },
+
+      '&. Mui-selected:hover': {
+        background: theme.color.lightBeige,
+      },
+
+      '& li[hover]': {
+        background: theme.color.lightBeige,
       },
     },
   }));
 
 // `placeholder` prop is the Dropdown's default value
-function Dropdown({ placeholder, options, setSelectedOption }) {
+function Dropdown({ initialOption, placeholder, options, setSelectedOption }) {
   const [open, setOpen] = useState(false);
   const [empty, setEmpty] = useState(true);
   const props = {
@@ -78,10 +89,12 @@ function Dropdown({ placeholder, options, setSelectedOption }) {
 
   // When an option is selected, update the component to display it, update the store with the option's value, and mark the Dropdown as no longer empty
   useEffect(() => {
-    if (placeholder !== "Select a quarter")
+    if (initialOption != null) {
       setEmpty(false);
+      setSelectedOption(initialOption);
       // eslint-disable-next-line
-  }, []); 
+    }
+  }, []);
 
   const [option, setOption] = React.useState("");
 

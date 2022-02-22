@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     width: '100vw',
-    marginTop: '10.4rem',
+    height: '120vh',
+    backgroundColor: theme.color.background,
   },
 
   header: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '100rem',
     height: '8.5rem',
-    marginTop: '5rem',
+    marginTop: '20.4rem',
     marginBottom: '4.9rem',
   },
 
@@ -59,15 +60,19 @@ function EligibleCourses({
   // 2. Then dispatch getEligible action to get the list of courses to display on this page (which will be stored in currentClasses portion of studentData object)
   useEffect(() => {
     // See API Docs for more detail about course object structure: https://docs.google.com/document/d/1K_EwdJnraRhgYYT1dDU4aiw_GFCbMcqSNi7-EAOIdJA/edit?usp=sharing
+    let completed = [];
+    storeCoursesTaken.map(object => {
+      completed.push(...object.courses);
+    });
     const studentData = {
       major: storeMajors,
-      completedClasses: storeCoursesTaken,
+      completedClasses: completed,
       currentClasses: [],
     };
     studentData && getEligible(JSON.stringify(studentData));
     // eslint-disable-next-line
   }, []);
-
+  
   return (
     <>
       <div className={classes.layout}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import Autocomplete from '@mui/material/Autocomplete';
 import Paper from '@mui/material/Paper';
@@ -6,8 +6,8 @@ import Popper from '@mui/core/Popper';
 import { makeStyles } from '@mui/styles';
 import { getCourses, getMajors } from '../actions/actions';
 import SearchIcon from '../assets/icons/SearchIcon.svg';
-import TriangleDown from '../assets/icons/TriangleDown.svg';
-import TriangleUp from '../assets/icons/TriangleUp.svg';
+import DropdownArrowDown from '../assets/icons/DropdownArrowDown.svg';
+import DropdownArrowUp from '../assets/icons/DropdownArrowUp.svg';
 
 const useStyles = (props) =>
   makeStyles((theme) => ({
@@ -23,7 +23,10 @@ const useStyles = (props) =>
       width: props.whichPage === 'courses' ? '85rem' : '64.7rem',
       height: '7.5rem',
       paddingRight: '3rem',
-      background: theme.color.lightgrey,
+      border: '0.1rem solid',
+      borderColor: theme.color.darkBeige,
+      background: theme.color.white,
+      
       borderRadius:
         props.whichPage === 'courses'
           ? props.open
@@ -36,7 +39,7 @@ const useStyles = (props) =>
       '& input': {
         width: props.whichPage === 'courses' ? '70rem' : '49.7rem',
         paddingLeft: '4rem',
-        background: theme.color.lightgrey,
+        background: theme.color.white,
         borderRadius: 'inherit',
         font: theme.font.searchBar,
 
@@ -59,23 +62,27 @@ const useStyles = (props) =>
 
     selectionMenu: {
       width: props.whichPage === 'courses' ? '85rem' : '64.7rem',
-      borderTop: '0.1rem solid white',
       borderRadius: '2rem 2rem 2rem 2rem',
-      backgroundColor: theme.color.lightgrey,
+      backgroundColor: theme.color.white,
       boxShadow: 'none !important',
 
       '&.MuiPaper-root': {
         font: theme.font.subtitle,
-        backgroundColor: theme.color.lightgrey,
+        backgroundColor: theme.color.white,
+        borderTop: '0.1rem solid',
+        borderColor: theme.color.darkBeige,
         height: '8rem',
         borderRadius: '0rem 0rem 2rem 2rem',
       },
 
       '& .MuiAutocomplete-noOptions': {
+        border: '0.1rem solid',
+        borderTop: 'none',
+        borderColor: theme.color.darkBeige,
         padding: '2.7rem 4rem !important',
         font: theme.font.subtitle,
         borderRadius: '0rem 0rem 2rem 2rem',
-        backgroundColor: theme.color.lightgrey,
+        backgroundColor: theme.color.white,
       },
     },
 
@@ -83,9 +90,12 @@ const useStyles = (props) =>
       width: props.whichPage === 'courses' ? '85rem' : '64.7rem',
       maxHeight: '28.5rem !important',
       overflow: 'auto',
-      backgroundColor: theme.color.lightgrey,
+      backgroundColor: theme.color.white,
       font: theme.font.subtitle,
       borderRadius: '0rem 0rem 2rem 2rem',
+      borderTop: 'none',
+      border: '0.1rem solid',
+      borderColor: theme.color.darkBeige,
       boxShadow: 'none !important',
 
       '& li': {
@@ -98,24 +108,23 @@ const useStyles = (props) =>
       
       '& li[aria-disabled="true"]' : {
         opacity: "1 !important",
-        background: theme.color.lightgrey,
+        background: theme.color.beige,
         font: theme.font.subtitle,
       },
 
       '& li[aria-selected="true"]' : {
         opacity: 1,
-        background: theme.color.lightgrey,
+        background: theme.color.beige,
         font: theme.font.subtitle,
       },
     }
   }));
 
-function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOptions, selectedOptions, setSelectedOptions, data, getData}) {
-  const [open, setOpen] = useState(false);
+function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setSelectedOptions, isAutoDropdownOpen, setIsAutoDropdownOpen, data, getData}) {
   const listRef = useRef(null);
 
   const props = {  
-    open: open,
+    open: isAutoDropdownOpen,
     whichPage: whichPage,
   };
   const classes = useStyles(props)();
@@ -132,7 +141,6 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
     setSelectedOptions(selectedOptions.concat(initialSelectedOptions));
     // eslint-disable-next-line
   }, []);
-
 
   const customPopper = (props) => {
     return (
@@ -155,13 +163,13 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
 
   // when clicking on triangle, open the menu
   const handleIconClick = () => {
-    setOpen(!open);
-  };
+    setIsAutoDropdownOpen(!isAutoDropdownOpen);
+  }
 
   // when in enter courses page & key up, set autocomplete open
   const handleKeyUp = () => {
     if (whichPage === 'courses') {
-      setOpen(true);
+      setIsAutoDropdownOpen(true);
     }
   };
 
@@ -170,13 +178,6 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
     // disable deleting values with backspace key
     if (e.key !== "Backspace" && reason !== "removeOption") {
       setSelectedOptions(value);
-    }
-    // On enter-courses page, set length of selected options to make space for course cards
-    if (whichPage === "courses") {
-      setLengthOfSelectedCourses(selectedOptions.length < 5 ? 5 : selectedOptions.length);
-      if (!open) {
-        setLengthOfSelectedCourses(-1);
-      }
     }
 
     // when selecting an option, scroll to the very top of the menu
@@ -191,7 +192,7 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
           option: classes.option,
         }}
         id="dropdown"
-        open={open}
+        open={isAutoDropdownOpen}
         disableClearable
         onChange={handleSelectedOptionsChange}
         PopperComponent={customPopper}
@@ -210,7 +211,7 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
         }
 
         // pre-set selectedOptions
-        value={selectedOptions} 
+        value={selectedOptions ?? null} 
         ListboxProps={{ 
           className : classes.dropDownMenu,
           ref: listRef,
@@ -219,7 +220,7 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
           (
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>
             <input
-              onKeyUp={handleKeyUp}
+              onKeyUp={handleKeyUp.bind(this)}
               type="text" 
               placeholder={ 
                 whichPage === "courses" 
@@ -230,18 +231,21 @@ function AutoDropdown({ whichPage, setLengthOfSelectedCourses, initialSelectedOp
               }
               {...params.inputProps}
             />
-            {whichPage === 'courses' ? (
+            {whichPage === 'courses' 
+            ? (
               <img src={SearchIcon} className="searchIcon" alt="searchIcon" />
-            ) : open ? (
+            ) 
+            : isAutoDropdownOpen 
+            ? (
               <img
-                src={TriangleUp}
+                src={DropdownArrowUp}
                 className="triangle"
                 onClick={handleIconClick}
                 alt="searchIcon"
               />
             ) : (
               <img
-                src={TriangleDown}
+                src={DropdownArrowDown}
                 className="triangle"
                 onClick={handleIconClick}
                 alt="searchIcon"

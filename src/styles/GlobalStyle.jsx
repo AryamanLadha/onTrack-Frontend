@@ -7,23 +7,26 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
-  html{
+  html {
     font-size: 10px;
+    background-color: "#FDFCF8",
   }
   @media screen and (max-width: 1440px) {
     html {
       font-size: 8px;
+      background-color: "#FDFCF8",
     }
   }
   @media screen and (max-width: 1024px) {
     html {
       font-size: 6px;
+      background-color: "#FDFCF8",
     }
   }
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    
+    background-color: #FDFCF8;
     font-family: "Noto Sans kr", "Spoqa Han Sans Neo",
       -apple-system, BlinkMacSystemFont, "Roboto",
     padding: 0;

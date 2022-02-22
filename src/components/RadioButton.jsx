@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { makeStyles } from '@mui/styles';
@@ -23,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
 
 function RadioButton({ initialOption, setSelectedOption }) {
   const classes = useStyles();
+
+  useEffect(() => {
+    if (initialOption != undefined)
+      setSelectedOption(initialOption);
+  }, []);
 
   const handleSelectedOptionChange = (event) => {
     setSelectedOption(event.target.value);

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { makeStyles } from '@mui/styles';
-import { Dropdown, RadioButton, PageButton } from '../components';
-import { setStartQtr, setEndQtr, setGradeEntered } from '../actions/actions';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
+import { Dropdown, RadioButton, PageButton } from "../components";
+import { connect } from "react-redux";
+import { setStartQtr, setEndQtr, setGradeEntered } from "../actions/actions";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -10,6 +11,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     width: '100vw',
+    height: 'auto',
+    backgroundColor: theme.color.background,
   },
 
   header: {
@@ -39,10 +42,34 @@ const useStyles = makeStyles((theme) => ({
   spacer: {
     height: '4.5rem',
   },
+
+  emptyError: {
+    fontFamily: "Work Sans",
+    fontSize: "1.8rem",
+    color: "#FF0000",
+    lineHeight: "7.5rem",
+  },
+
+  beforeError: {
+    fontFamily: "Work Sans",
+    fontSize: "1.8rem",
+    color: "#FF0000",
+    textAlign: "center",
+  },
+
+  pageButtonWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '99rem',
+    justifyContent: 'space-between',
+  }
 }));
 
 function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, setEndQtr, setGradeEntered }) {
   const classes = useStyles();
+  const navigate = useNavigate();
+  const [beforeError, setBeforeError] = useState(false);
+  const [emptyError, setEmptyError] = useState(false);
 
   // Hooks to store selections for this page
   const [selectedStartQtr, setSelectedStartQtr] = useState('');
@@ -64,8 +91,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
     currSeason = 3;
   if (currSeason === 3)
     currYear++;
-  const startQuarters = [];
-  const endQuarters = [];
+  const startQuarters = [], endQuarters = [], allQuarters = [];
   // Push options that combine seasons and years.
   // startQuarters: 4 years back (always beginning with Fall Qtr) -> current qtr
   // endQuarters: current qtr -> 4 years forward (always ending with Summer Qtr)
@@ -73,6 +99,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
   let y = currYear - 4;
   while (!(y === currYear && s === currSeason)) {
     startQuarters.push(seasons[s] + " " + y);
+    allQuarters.push(seasons[s] + " " + y);
     s++
     if (s > 3) {
       s = 0;
@@ -80,8 +107,9 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
     }
   }
   startQuarters.push(seasons[s] + " " + y);
-  while (!(y === currYear + 3 && s === 3)) {
+  while (!(y === currYear + 4 && s === 3)) {
     endQuarters.push(seasons[s] + " " + y);
+    allQuarters.push(seasons[s] + " " + y);
     s++
     if (s > 3) {
       s = 0;
@@ -106,56 +134,55 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
           We're all counting down the days till graduation.
         </div>
       </header>
-      <div>
-        <div
-          className={classes.subtitle}
-          style={{
-            float: 'left',
-            width: '30%',
-            padding: '1rem 2rem 0rem 3rem',
-            marginLeft: '-6rem',
-          }}
-        >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+      >
+        <div className={classes.subtitle} style={{ marginRight: '2rem' }} >
           Start
         </div>
-        <div
-          style={{
-            float: 'left',
-            width: '70%',
-          }}
-        >
-          <Dropdown
-            placeholder={storeStartQtr !== null && storeStartQtr !== "" ? storeStartQtr : "Select a quarter"}
-            options={startQuarters}
-            setSelectedOption={setSelectedStartQtr}
-          />
-        </div>
+        <Dropdown
+          placeholder={storeStartQtr != null && storeStartQtr != "" ? storeStartQtr : "Select a quarter"}
+          options={startQuarters}
+          initialOption={storeStartQtr}
+          setSelectedOption={setSelectedStartQtr}
+        />
       </div>
-      <div style={{ height: '4.5rem' }}></div>
-      <div>
-        <div
-          className={classes.subtitle}
-          style={{
-            float: 'left',
-            width: '30%',
-            padding: '1rem 2rem 0rem 3rem',
-            marginLeft: '-6rem',
-          }}
-        >
+      <div style={{ height: "4.5rem" }}></div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+      >
+        {
+          beforeError ? (<div style={{ width:'27rem' }}></div>) : (<div></div>)
+        }
+        <div className={classes.subtitle} style={{ marginRight: '3rem' }}>
           End
         </div>
-        <div
-          style={{
-            float: 'left',
-            width: '70%',
-          }}
-        >
-          <Dropdown
-            placeholder={storeEndQtr !== null && storeEndQtr !== "" ? storeEndQtr : "Select a quarter"}
-            options={endQuarters}
-            setSelectedOption={setSelectedEndQtr}
-          />
-        </div>
+        <Dropdown
+          placeholder={storeEndQtr != null && storeEndQtr != "" ? storeEndQtr : "Select a quarter"}
+          options={endQuarters}
+          initialOption={storeEndQtr}
+          setSelectedOption={setSelectedEndQtr}
+        />
+        {/* {
+          beforeError ? (
+            <div className={classes.beforeError} style={{ marginLeft: '2.8rem' }}>
+              <div>
+                Your end quarter cannot be
+              </div>
+              <div>
+                before your start quarter.
+              </div>
+            </div>
+          ) : (<div></div>)
+        } */}
       </div>
       <div style={{ height: '6.4rem' }}></div>
       <div style={{ marginLeft: '-28rem' }}>
@@ -171,8 +198,8 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
         </div>
         <div
           style={{
-            float: 'left',
-            width: '40%',
+            float: "left",
+            width: "10%",
           }}
         >
           <RadioButton
@@ -181,25 +208,44 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
         </div>
       </div>
       <div style={{ height: '9.8rem' }}></div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          width: '99rem',
-          justifyContent: 'space-between',
-        }}
-      >
+      <div className={classes.pageButtonWrapper}>
         <PageButton
           page={"year"}
           text="Back"
           size="short"
-          action={handleClick}
+          action={() => {
+            if (selectedStartQtr != "")
+              setStartQtr(selectedStartQtr);
+            if (selectedEndQtr != "")
+              setEndQtr(selectedEndQtr);
+            if (selectedGradeEntered != "")
+              setGradeEntered(selectedGradeEntered);
+          }}
         />
+        {
+          emptyError ? (<div className={classes.emptyError}>Sorry, you can't move on without entering this information.</div>) : (<div></div>)
+        }
         <PageButton
           page="year"
           text="Next"
           size="short"
-          action={handleClick}
+          action={() => {
+            if (selectedStartQtr == "" || selectedEndQtr == "" || selectedGradeEntered == "") {
+              navigate('/year');
+              setEmptyError(true);
+            }
+            // else if (allQuarters.findIndex((qtr) => qtr == selectedEndQtr) < allQuarters.findIndex((qtr) => qtr == selectedStartQtr)) {
+            //   navigate('/year');
+            //   setBeforeError(true);
+            // }
+            else {
+              setStartQtr(selectedStartQtr);
+              setEndQtr(selectedEndQtr);
+              setGradeEntered(selectedGradeEntered);
+              setBeforeError(false);
+              setEmptyError(false);
+            }
+          }}
         />
       </div>
     </div>

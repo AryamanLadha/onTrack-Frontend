@@ -11,6 +11,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     width: '100vw',
+    height: 'auto',
+    backgroundColor: theme.color.background,
   },
 
   header: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100rem',
     height: '9.4rem',
     marginTop: '20.4rem',
-    marginBottom: '12.4rem',
+    marginBottom: '7.4rem',
   },
 
   title: {
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'row',
+    flexDirection: 'column',
     marginTop: '34.6rem',
   },
 
@@ -57,13 +59,28 @@ const useStyles = makeStyles((theme) => ({
     width: '64.7rem',
     marginBottom: '2rem',
   },
+
+  pageButtonWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '99rem',
+    justifyContent: 'space-between',
+  },
+
+  emptyError: {
+    fontFamily: "Work Sans",
+    fontSize: "1.8rem",
+    color: "#FF0000",
+    lineHeight: "7.5rem",
+  },
 }));
 
 function WhatMajor({ majmin, storeMajors, setMajors }) {
-  const classes = useStyles();
-
   // This hook is very important! See AutoDropdown component below...
   const [selectedMajors, setSelectedMajors] = useState([]);
+  const [isAutoDropdownOpen, setIsAutoDropdownOpen] = useState(false);
+  const [emptyError, setEmptyError] = useState(false);
+  const classes = useStyles();
 
   return (
     <div className={classes.layout}>
@@ -72,7 +89,7 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
           Enter Your
           {majmin === 'majors' ? ' Major(s)' : ' Minor(s)'}
         </h1>
-        <span className={classes.subtitle}>Insert some subtitle here.</span>
+        <span className={classes.subtitle}>North campus, South Campus... we don’t judge.</span>
       </header>
         <div>
         {
@@ -108,27 +125,27 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
             initialSelectedOptions={storeMajors}
             selectedOptions={selectedMajors}
             setSelectedOptions={setSelectedMajors}
+            isAutoDropdownOpen={isAutoDropdownOpen}
+            setIsAutoDropdownOpen={setIsAutoDropdownOpen}
           />
         </div>
       <footer className={classes.footer}>
+        {
+          emptyError ? (<div className={classes.emptyError}>Sorry, you can't move on without entering this information.</div>) : (<div></div>)
+        }
         {majmin === 'majors' ? (
-          <PageButton
-            text={'next'}
-            size={'short'}
-            page={'majors'}
-            action={() => {
-              setMajors(selectedMajors);
-            }}
-          />
+            <PageButton
+              text={'next'}
+              size={'short'}
+              page={'majors'}
+              emptyError={selectedMajors.length === 0 ? true : false}
+              setEmptyError={setEmptyError}
+              action={() => {
+                setMajors(selectedMajors);
+              }}
+            />
         ) : (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: '99rem',
-              justifyContent: 'space-between',
-            }}
-          >
+          <div className={classes.pageButtonWrapper}>
             <PageButton
               text="Back"
               size="short"
