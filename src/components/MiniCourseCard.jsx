@@ -4,12 +4,12 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = (props) =>makeStyles(theme => ({
   card: {
-    backgroundColor: theme.color.lightBlue,
-    width: "12rem",
-    height: "12rem",
-    borderRadius: "2rem", 
-    textAlign: "center",
-    lineHeight: props.plus ? "0rem" : "12rem",
+    backgroundColor: theme.color.skyblue,
+    width: '12rem',
+    height: '12rem',
+    borderRadius: '2rem',
+    textAlign: 'center',
+    lineHeight: '12rem',
     font: theme.font.miniCourseCard,
     marginRight: props.plusIcon ? "0rem" : "3rem",
   },

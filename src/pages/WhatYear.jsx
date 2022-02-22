@@ -11,6 +11,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     width: '100vw',
+    height: 'auto',
+    backgroundColor: theme.color.background,
   },
 
   header: {
