@@ -19,7 +19,7 @@ const useStyles = (props) =>
   }));
 
 // Button props: text, size, page
-function PageButton({ page, text, size, action, setOverlayOpened, emptyError, setEmptyError }) {
+function PageButton({ page, text, size, action, setOverlayOpened, }) {
   const [ isHovered, setIsHovered ] = React.useState(false);
 
   const props = {
@@ -36,10 +36,7 @@ function PageButton({ page, text, size, action, setOverlayOpened, emptyError, se
   const handleClick = () => {
     if (page === 'majors') {
       // Skip minors
-      setEmptyError(emptyError);
-      if (emptyError === false) {
         navigate('/year');
-      }
       
     } else if (page === 'minors') {
       text === 'Back' ? navigate('/') : navigate('/year');
@@ -86,8 +83,6 @@ function PageButton({ page, text, size, action, setOverlayOpened, emptyError, se
 
 PageButton.defaultProps = {
   setOverlayOpened: () => {},
-  emptyError: false,
-  setEmptyError: () => {},
 }
 
 export default PageButton;

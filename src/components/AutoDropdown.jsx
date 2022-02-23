@@ -168,9 +168,7 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
 
   // when in enter courses page & key up, set autocomplete open
   const handleKeyUp = () => {
-    if (whichPage === 'courses') {
-      setIsAutoDropdownOpen(true);
-    }
+    setIsAutoDropdownOpen(true);
   };
 
   // when selecting/unselecting options, set and store selected options
@@ -220,7 +218,7 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
           (
           <div ref={params.InputProps.ref} className={classes.inputWrapper}>
             <input
-              onKeyUp={handleKeyUp.bind(this)}
+              onKeyUp={handleKeyUp}
               type="text" 
               placeholder={ 
                 whichPage === "courses" 
