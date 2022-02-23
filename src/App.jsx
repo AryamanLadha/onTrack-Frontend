@@ -1,7 +1,7 @@
 import React from "react";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { EnterCoursesByQuarter, WhatMajor, WhatYear, EligibleCourses } from "./pages";
+import { EligibleCourses, EnterCoursesByQuarter, Login, WhatMajor, WhatYear } from "./pages";
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
       <Router>
         <Routes>
           {/* Default path goes to WhatMajor page */}
+          <Route exact path="/" element={<Login />} />
           <Route exact path="/" element={<WhatMajor majmin={'majors'} />} />
           {/* <Route exact path="/minors" element={<WhatMajor majmin={"minors"} />} /> */}
           <Route exact path="/year" element={<WhatYear majmin={"year"} />} />
