@@ -45,7 +45,6 @@ export const getEligible = (studentData) => {
           type: 'GET_ELIGIBLE_SUCCESS',
           payload: { eligibleCourses: res.data },
         });
-        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
