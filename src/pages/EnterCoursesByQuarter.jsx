@@ -4,6 +4,7 @@ import { makeStyles } from "@mui/styles";
 import { PageButton } from "../components";
 import { connect } from "react-redux";
 import { setCourses } from "../actions/actions";
+import { getCurrQtr } from "../utils/utils";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -90,7 +91,7 @@ let mockData = [
   },
 ];
 
-function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr, storeCoursesTaken, setCourses }) {
+function EnterCoursesByQuarter({ storeStartQtr, storeCoursesTaken, setCourses }) {
   const classes = useStyles();
   const [overlayOpened, setOverlayOpened] = useState(false);
   const [quarterOfOverlay, setQuarterOfOverlay] = useState("");
@@ -99,15 +100,16 @@ function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr, storeCoursesTaken, 
   let startSeason, endSeason;
   let newCoursesTaken = [];
   const seasons = ["Winter", "Spring", "Summer", "Fall"];
-  if (storeStartQtr && storeEndQtr) {
+
+  if (storeStartQtr) {
     for (let i = 0; i < seasons.length; i++) {
       if (seasons[i] === storeStartQtr.substring(0, storeStartQtr.length - 5))
         startSeason = i;
-      if (seasons[i] === storeEndQtr.substring(0, storeEndQtr.length - 5))
+      if (seasons[i] === getCurrQtr().substring(0, getCurrQtr().length - 5))
         endSeason = i;
     }
     let startYear = Number(storeStartQtr.substring(storeStartQtr.length - 4));
-    let endYear = Number(storeEndQtr.substring(storeEndQtr.length - 4));
+    let endYear = Number(getCurrQtr().substring(getCurrQtr().length - 4));
 
     // Generate array of empty course objects
     let s = startSeason, y = startYear;
@@ -188,7 +190,6 @@ function EnterCoursesByQuarter({ storeStartQtr, storeEndQtr, storeCoursesTaken, 
 const mapStateToProps = (store) => {
   return {
     storeStartQtr: store.startQtr,
-    storeEndQtr: store.endQtr,
     storeCoursesTaken: store.coursesTaken,
   };
 };
