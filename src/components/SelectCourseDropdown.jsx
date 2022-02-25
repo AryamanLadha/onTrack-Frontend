@@ -10,12 +10,12 @@ import { MiniCourseCard } from "./index";
 const useStyles = (props) => makeStyles((theme) => ({
   accordionDropdown: {
     width: "100%",
-    height: "7.2rem",
+    height: "6rem",
     flexDirection: "row-reverse",
     boxShadow: "none",
     border: "0.1rem solid",
     borderRadius: props.expanded ? "1.5rem 1.5rem 0rem 0rem !important" : "1.5rem !important",
-    borderColor: theme.color.lightBeige,
+    borderColor: theme.color.darkBeige,
   },
 
   typography: {
@@ -34,7 +34,15 @@ const useStyles = (props) => makeStyles((theme) => ({
     },
 
     "& .MuiAccordionDetails-root" : {
+      position: "absolute",
+      width: "84.8rem",
+      top: "7rem",
+      left: "-0.1rem",
       marginBottom: "0rem",
+      border: "0.1rem solid",
+      borderRadius: "0rem 0rem 1.5rem 1.5rem",
+      borderColor: theme.color.darkBeige,
+      background: theme.color.white,
     }
   },
 
@@ -119,7 +127,11 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
             {[...Array(numRows).keys()].map((i) => (
               <div key={i} className={classes.miniCourseCardContainer}>
                 {data.courses.slice(i*5, i*5+5).map((course, idx) => 
-                  <MiniCourseCard key={idx} name={course} />
+                  <MiniCourseCard 
+                    key={idx} 
+                    name={course} 
+                    canBeDeleted={false}
+                  />
                 )}
                 {((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
                   <MiniCourseCard 
@@ -127,6 +139,7 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
                     overlayOpened={overlayOpened}
                     setOverlayOpened={setOverlayOpened}
                     setQuarterOfOverlay={setQuarterOfOverlay}
+                    canBeDeleted={false}
                   />}
               </div>
             ))}
