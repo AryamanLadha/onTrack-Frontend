@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
-import { MiniCourseCard, PageButton } from '../components';
+import { PageButton } from '../components';
 import { getEligible } from '../actions/actions';
-import CourseInfoPopdown from '../components/CourseInfoPopdown';
+
+import EligibleCoursesBySubject from '../components/EligibleCoursesBySubject';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -54,26 +55,6 @@ const useStyles = makeStyles((theme) => ({
   miniCourseCardWrapper: {
     display: 'flex',
     flexDirection: 'column',
-  },
-
-  miniCourseCardsBySubject: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '117.2rem',
-    margin: '2.6rem 0rem',
-  },
-
-  subject: {
-    font: theme.font.selectCourseDropdown,
-    marginBottom: '2rem',
-  },
-
-  miniCourseCardContainer: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(8, 1fr)',
-    rowGap: '2rem',
-    width: '117rem',
-    height: 'auto',
   },
 }));
 
@@ -128,14 +109,11 @@ function EligibleCourses({
             eligibleCoursesData.map((eligibleCourse, idx) => (
               <div className={classes.miniCourseCardWrapper}>
                 {Object.entries(eligibleCourse.subjects).map(([key, value]) => (
-                  <div key={idx} className={classes.miniCourseCardsBySubject}>
-                    <div className={classes.subject}>{key}</div>
-                    <div className={classes.miniCourseCardContainer}>
-                      {value.map((course, idx) => (
-                        <MiniCourseCard key={idx} name={course.name} />
-                      ))}
-                    </div>
-                  </div>
+                  <EligibleCoursesBySubject
+                    key={idx}
+                    subject={key}
+                    courses={value}
+                  />
                 ))}
               </div>
             ))
@@ -147,8 +125,6 @@ function EligibleCourses({
           <PageButton text="Back" size="short" page="eligible" />
           <PageButton text="Next" size="short" page="eligible" />
         </div>
-
-        {/* <CourseInfoPopdown /> */}
       </div>
     </>
   );
