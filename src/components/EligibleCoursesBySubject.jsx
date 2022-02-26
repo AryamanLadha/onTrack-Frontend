@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 import CourseInfoPopdown from '../components/CourseInfoPopdown';
-import EligibleCoursesPageCard from './EligibleCoursesPageCard';
 
 const useStyles = makeStyles((theme) => ({
   miniCourseCardsBySubject: {
@@ -23,6 +22,22 @@ const useStyles = makeStyles((theme) => ({
     width: '117rem',
     height: 'auto',
   },
+
+  card: {
+    backgroundColor: theme.color.skyblue,
+    width: '12rem',
+    height: '12rem',
+    borderRadius: '2rem',
+    textAlign: 'center',
+    lineHeight: '12rem',
+    font: theme.font.miniCourseCard,
+  },
+
+  cardText: {
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    lineHeight: '2.346rem',
+  },
 }));
 
 const EligibleCoursesBySubject = ({ key, subject, courses }) => {
@@ -34,7 +49,9 @@ const EligibleCoursesBySubject = ({ key, subject, courses }) => {
 
       <div className={classes.miniCourseCardContainer}>
         {courses.map((course, idx) => (
-          <EligibleCoursesPageCard key={idx} name={course.name} />
+          <div key={idx} className={classes.card}>
+            <span className={classes.cardText}> {course.name} </span>
+          </div>
         ))}
       </div>
 
