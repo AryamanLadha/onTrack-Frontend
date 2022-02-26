@@ -81,33 +81,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const EnrollmentInfoTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} arrow />
+))(({ theme, isCoreqTooltip = false }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#EDEDED',
+    color: 'rgba(0, 0, 0, 1)',
+    maxWidth: 'none',
+    width: isCoreqTooltip ? '42.625rem !important' : '36.875rem',
+    height: isCoreqTooltip ? '15rem' : '5.625rem',
+    padding: '0',
+    marginTop: '2.5rem !important',
+    borderRadius: '1.875rem',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  [`& .${tooltipClasses.arrow}`]: {
+    color: theme.color.bargrey,
+    width: '3rem',
+    height: '3rem',
+    overflow: 'visible',
+    top: '-2.5rem !important',
+  },
+}));
+
 const CourseInfoPopdown = () => {
   const classes = useStyles();
-
-  const EnrollmentInfoTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} classes={{ popper: className }} arrow />
-  ))(({ theme, isCoreqTooltip = false }) => ({
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: '#EDEDED',
-      color: 'rgba(0, 0, 0, 1)',
-      maxWidth: 'none',
-      width: isCoreqTooltip ? '42.625rem !important' : '36.875rem',
-      height: isCoreqTooltip ? '15rem' : '5.625rem',
-      padding: '0',
-      marginTop: '2.5rem !important',
-      borderRadius: '1.875rem',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    [`& .${tooltipClasses.arrow}`]: {
-      color: theme.color.bargrey,
-      width: '3rem',
-      height: '3rem',
-      overflow: 'visible',
-      top: '-2.5rem !important',
-    },
-  }));
 
   return (
     <div className={classes.popDown}>
