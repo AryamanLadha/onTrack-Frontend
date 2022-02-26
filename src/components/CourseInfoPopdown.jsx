@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#D4D4D4',
     borderRadius: '5.5rem',
     padding: '6.25rem 3.75rem',
+    margin: '3.75rem 0',
   },
 
   courseTitle: {

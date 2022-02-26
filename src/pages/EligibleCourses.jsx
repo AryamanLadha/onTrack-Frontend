@@ -68,6 +68,8 @@ function EligibleCourses({
 
   const [nextQuarter, setNextQuarter] = useState('');
 
+  const [activeSubject, setActiveSubject] = useState('');
+
   // 1. When page renders, create an object to hold display data, uses data pulled from the store (majors and coursesTaken). See mapStateToProps below.
   // 2. Then dispatch getEligible action to get the list of courses to display on this page (which will be stored in currentClasses portion of studentData object)
   useEffect(() => {
@@ -110,9 +112,11 @@ function EligibleCourses({
               <div className={classes.miniCourseCardWrapper}>
                 {Object.entries(eligibleCourse.subjects).map(([key, value]) => (
                   <EligibleCoursesBySubject
-                    key={idx}
+                    key={key}
                     subject={key}
                     courses={value}
+                    activeSubject={activeSubject}
+                    setActiveSubject={setActiveSubject}
                   />
                 ))}
               </div>
