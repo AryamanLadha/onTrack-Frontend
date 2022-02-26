@@ -51,7 +51,7 @@ const useStyles = (props) =>makeStyles(theme => ({
   }
 }));
 
-function MiniCourseCard({ name, quarter, overlayOpened, setOverlayOpened, selectedCourses, setSelectedCourses, setQuarterOfOverlay, canBeDeleted}) {
+function EnterCoursesPageCard({ name, quarter, overlayOpened, setOverlayOpened, selectedCourses, setSelectedCourses, setQuarterOfOverlay, canBeDeleted}) {
   const [isHovering, setIsHovering] = useState(false);
 
   const props = {
@@ -110,7 +110,7 @@ function MiniCourseCard({ name, quarter, overlayOpened, setOverlayOpened, select
   );
 }
 
-MiniCourseCard.defaultProps = {
+EnterCoursesPageCard.defaultProps = {
   name: "plus",
   quarter: "",
   selectedCourses: null,
@@ -121,4 +121,4 @@ MiniCourseCard.defaultProps = {
   canBeDeleted: true,
 }
 
-export default MiniCourseCard;
+export default EnterCoursesPageCard;
