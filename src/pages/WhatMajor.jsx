@@ -4,6 +4,7 @@ import { makeStyles } from '@mui/styles';
 import AutoDropdown from '../components/AutoDropdown';
 import { PageButton, TagComponent } from '../components';
 import { setMajors } from '../actions/actions';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -81,6 +82,7 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
   const [isAutoDropdownOpen, setIsAutoDropdownOpen] = useState(false);
   const [emptyError, setEmptyError] = useState(false);
   const classes = useStyles();
+  const navigate = useNavigate();
 
   return (
     <div className={classes.layout}>
@@ -138,11 +140,14 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
               text={'next'}
               size={'short'}
               page={'majors'}
-              emptyError={selectedMajors.length === 0 ? true : false}
-              setEmptyError={setEmptyError}
               action={() => {
-                setMajors(selectedMajors);
-              }}
+                if (selectedMajors.length === 0) {
+                  setEmptyError(true);
+                  navigate('/majors');
+                } else {
+                  setMajors(selectedMajors);
+                  setEmptyError(false);
+                }}}
             />
         ) : (
           <div className={classes.pageButtonWrapper}>
@@ -159,6 +164,12 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
               size="short"
               page="minors"
               action={() => {
+                // MINORS LOGIC
+                // if (selectedMinors.length === 0) {
+                //   setEmptyError(emptyError);
+                // } else {
+                //   setMinors(selectedMinors);
+                // }}}
                 setMajors(selectedMajors);
               }}
             />

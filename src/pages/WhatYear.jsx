@@ -4,6 +4,7 @@ import { makeStyles } from "@mui/styles";
 import { Dropdown, RadioButton, PageButton } from "../components";
 import { connect } from "react-redux";
 import { setStartQtr, setEndQtr, setGradeEntered } from "../actions/actions";
+import { getCurrQtr } from "../utils/utils";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -77,29 +78,22 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
   const [selectedGradeEntered, setSelectedGradeEntered] = useState('');
 
   // Logic to generate list of quarters to be displayed as Dropdown options
-  let currYear = new Date().getFullYear();
-  const currMonth = new Date().getMonth();
+  let currSeason;
   const seasons = ['Winter', 'Spring', 'Summer', 'Fall'];
-  let currSeason = 0;
-  if (currMonth >= 0 && currMonth <= 2)
-    currSeason = 0;
-  else if (currMonth <= 5)
-    currSeason = 1;
-  else if (currMonth <= 8)
-    currSeason = 2;
-  else
-    currSeason = 3;
-  if (currSeason === 3)
-    currYear++;
-  const startQuarters = [], endQuarters = [], allQuarters = [];
+  for (let i = 0; i < seasons.length; i++) {
+    if (seasons[i] === getCurrQtr().substring(0, getCurrQtr().length - 5))
+        currSeason = i;
+  }
+  let currYear = Number(getCurrQtr().substring(getCurrQtr().length - 4));
+  
   // Push options that combine seasons and years.
   // startQuarters: 4 years back (always beginning with Fall Qtr) -> current qtr
-  // endQuarters: current qtr -> 4 years forward (always ending with Summer Qtr)
+  // endQuarters: current qtr -> 5 years forward (always ending with Summer Qtr)
+  const startQuarters = [], endQuarters = [];
   let s = 3;
   let y = currYear - 4;
   while (!(y === currYear && s === currSeason)) {
     startQuarters.push(seasons[s] + " " + y);
-    allQuarters.push(seasons[s] + " " + y);
     s++
     if (s > 3) {
       s = 0;
@@ -107,9 +101,8 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
     }
   }
   startQuarters.push(seasons[s] + " " + y);
-  while (!(y === currYear + 4 && s === 3)) {
+  while (!(y === currYear + 5 && s === 3)) {
     endQuarters.push(seasons[s] + " " + y);
-    allQuarters.push(seasons[s] + " " + y);
     s++
     if (s > 3) {
       s = 0;
@@ -234,10 +227,6 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
               navigate('/year');
               setEmptyError(true);
             }
-            // else if (allQuarters.findIndex((qtr) => qtr == selectedEndQtr) < allQuarters.findIndex((qtr) => qtr == selectedStartQtr)) {
-            //   navigate('/year');
-            //   setBeforeError(true);
-            // }
             else {
               setStartQtr(selectedStartQtr);
               setEndQtr(selectedEndQtr);
