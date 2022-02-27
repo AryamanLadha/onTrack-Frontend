@@ -10,6 +10,7 @@ const initState = {
   startQtr: null,
   endQtr: null,
   gradeEntered: null,
+  data: null,
 };
 
 // Reducers to append action payloads to the current store.
@@ -75,6 +76,13 @@ const reducer = (state = initState, action) => {
     return {
       ...state,
       eligibleCourses: action.payload.eligibleCourses,
+    };
+  }
+
+  if (action.type === 'GET_DATA_SUCCESS') {
+    return {
+      ...state,
+      data: action.payload.data,
     };
   }
 

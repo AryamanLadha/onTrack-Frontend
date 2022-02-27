@@ -54,6 +54,25 @@ export const getEligible = (studentData) => {
   };
 };
 
+// Get the user’s data represented as an object
+export const getData = () => {
+  return (dispatch) => {
+    axios
+      .get(`${config.baseURL}/api/auth/data`, {
+        crossdomain: true,
+      })
+      .then((res) => {
+        dispatch({
+          type: 'GET_DATA_SUCCESS',
+          payload: { data: res.data },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+}
+
 // Regular action creator returns an object, i.e an action
 
 // Update store with array of selected majors when next/back button is pressed
