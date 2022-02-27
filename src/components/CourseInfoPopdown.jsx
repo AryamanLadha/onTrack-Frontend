@@ -3,7 +3,6 @@ import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import TriangleWarning from '../assets/icons/TriangleWarning.svg';
-import TickIcon from '../assets/icons/TickIcon.svg';
 
 const useStyles = makeStyles((theme) => ({
   popDown: {
@@ -49,25 +48,8 @@ const useStyles = makeStyles((theme) => ({
     font: theme.font.tooltipEnrollmentRestrictionsText,
   },
 
-  tooltipCorequisitesGrid: {
-    display: 'grid',
-    gridTemplateColumns: '32.5rem 5rem',
-    rowGap: '2.25rem',
-  },
-
-  corequisitesGridHeaderText: {
-    font: theme.font.corequisitesGridHeaderText,
-  },
-
-  corequisitesGridCourseName: {
-    font: theme.font.corequisitesGridCourseName,
-    display: 'flex',
-    alignItems: 'center',
-  },
-
-  corequisitesGridIconContainer: {
-    display: 'flex',
-    justifyContent: 'center',
+  corequisitesTooltip: {
+    font: theme.font.corequisitesTooltipCourseName,
   },
 
   courseDescriptionHeader: {
@@ -88,8 +70,8 @@ const EnrollmentInfoTooltip = styled(({ className, ...props }) => (
     backgroundColor: '#EDEDED',
     color: 'rgba(0, 0, 0, 1)',
     maxWidth: 'none',
-    width: isCoreqTooltip ? '42.625rem !important' : '36.875rem',
-    minHeight: isCoreqTooltip ? '15rem' : '5.625rem',
+    width: isCoreqTooltip ? 'none !important' : '36.875rem',
+    minHeight: isCoreqTooltip ? 'none' : '5.625rem',
     padding: '3.75rem 2.5rem',
     marginTop: '2.5rem !important',
     borderRadius: '1.875rem',
@@ -152,23 +134,7 @@ const CourseInfoPopdown = ({ course }) => {
             <EnrollmentInfoTooltip
               isCoreqTooltip
               title={
-                <div className={classes.tooltipCorequisitesGrid}>
-                  <div className={classes.corequisitesGridHeaderText}>
-                    Corequisites
-                  </div>
-
-                  <div className={classes.corequisitesGridHeaderText}>
-                    Taken
-                  </div>
-
-                  <div className={classes.corequisitesGridCourseName}>
-                    ETHMUS M6A
-                  </div>
-
-                  <div className={classes.corequisitesGridIconContainer}>
-                    <img src={TickIcon} alt="corequisiteTakenIcon" />
-                  </div>
-                </div>
+                <div className={classes.corequisitesTooltip}>Corequisites</div>
               }
             >
               <div className={classes.tag}>
