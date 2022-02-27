@@ -154,6 +154,7 @@ function Profile() {
             overlayOpened={overlayOpened}
             setOverlayOpened={setOverlayOpened}
             setQuarterOfOverlay={setQuarterOfOverlay}
+            canEdit={false}
           />
         ))}
       </div>

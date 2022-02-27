@@ -72,7 +72,7 @@ const useStyles = (props) => makeStyles((theme) => ({
 }));
 
 
-const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarterOfOverlay }) => {
+const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarterOfOverlay, canEdit }) => {
   const [ expanded, setExpanded ] = useState(false);
   const [ height, setHeight ] = useState(0);
   const [ numRows, setNumRows ] = useState(0);
@@ -134,14 +134,18 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
                     canBeDeleted={false}
                   />
                 )}
-                {((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
+                {canEdit 
+                  ? (((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
                   <MiniCourseCard 
                     quarter={data.quarter}
                     overlayOpened={overlayOpened}
                     setOverlayOpened={setOverlayOpened}
                     setQuarterOfOverlay={setQuarterOfOverlay}
                     canBeDeleted={false}
-                  />}
+                  />)
+                  : 
+                  (<></>)
+                }
               </div>
             ))}
           </div>
@@ -151,5 +155,9 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
     </div>
   );
 };
+
+SelectCourseDropdown.defaultProps = {
+  canEdit: true,
+}
 
 export default SelectCourseDropdown;
