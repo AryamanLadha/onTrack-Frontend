@@ -2,6 +2,7 @@ import React from 'react';
 import ButtonUnstyled from '@mui/core/ButtonUnstyled';
 import { makeStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
+import { config } from '../actions/actions';
 
 const useStyles = (props) =>
   makeStyles((theme) => ({
@@ -34,7 +35,10 @@ function PageButton({ page, text, size, action, setOverlayOpened, emptyError, se
   };
 
   const handleClick = () => {
-    if (page === 'majors') {
+    if (page === 'login') {
+      window.open(`${config.baseURL}/api/auth/google`);
+    }
+    else if (page === 'majors') {
       // Skip minors
       setEmptyError(emptyError);
       if (emptyError === false) {

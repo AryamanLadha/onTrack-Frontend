@@ -1,8 +1,15 @@
 import React from 'react'
+import { PageButton } from '../components';
 
 function Login() {
   return (
-    <div>Login</div>
+    <div>
+      <PageButton
+        page="login"
+        text="Next"
+        size="short"
+      />
+    </div>
   )
 }
 

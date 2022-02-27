@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const config = {
+export const config = {
   headers: {
       'Content-type': "application-json"
   },
