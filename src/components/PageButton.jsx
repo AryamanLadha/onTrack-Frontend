@@ -36,7 +36,7 @@ function PageButton({ page, text, size, action, setOverlayOpened, }) {
 
   const handleClick = () => {
     if (page === 'login')
-      window.open(`${config.baseURL}/api/auth/google`);
+      window.open(`${config.baseURL}/api/auth/google`, '_self');
 
     else if (page === 'profile')
       text === 'Edit' && navigate('/edit');
