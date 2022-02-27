@@ -35,35 +35,39 @@ function PageButton({ page, text, size, action, setOverlayOpened, emptyError, se
   };
 
   const handleClick = () => {
-    if (page === 'login') {
+    if (page === 'login')
       window.open(`${config.baseURL}/api/auth/google`);
-    }
+
+    else if (page === 'profile')
+      text === 'Edit' && navigate('/edit');
+
     else if (page === 'majors') {
       // Skip minors
       setEmptyError(emptyError);
       if (emptyError === false) {
         navigate('/year');
       }
-      
-    } else if (page === 'minors') {
-      text === 'Back' ? navigate('/') : navigate('/year');
+    }
 
-    } else if (page === 'year') {
+    else if (page === 'minors')
+      text === 'Back' ? navigate('/') : navigate('/year');
+      
+    else if (page === 'year') {
       text === 'Back'
         ? // Go back to majors (skip minors)
           navigate('/')
         : navigate('/courses');
 
-    } else if (page === 'courses') {
+    }
+    
+    else if (page === 'courses')
       text === 'Back' ? navigate('/year') : navigate('/eligible');
 
-    } else if (page === 'coursesOverlay') {
+    else if (page === 'coursesOverlay')
       setOverlayOpened(false);
-    }
 
-    else if (page === 'eligible') {
+    else if (page === 'eligible')
       text === 'Back' ? navigate('/courses') : navigate('/done');
-    }
 
     // props.page === "done"
     // else {

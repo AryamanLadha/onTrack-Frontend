@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { getData } from '../actions/actions';
+import { PageButton } from '../components';
 
 function Profile({ getData, storeData }) {
   useEffect(() => {
@@ -8,7 +9,13 @@ function Profile({ getData, storeData }) {
   }, []);
 
   return (
-    <div>Profile</div>
+    <div>
+      <PageButton
+        page="profile"
+        text="Edit"
+        size="short"
+      />
+    </div>
   )
 }
 
