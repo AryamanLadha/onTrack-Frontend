@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-import { EnterCoursesPageCard, PageButton, AutoDropdown } from "../components";
+import { MiniCourseCard, PageButton, AutoDropdown } from "../components";
 
 const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((theme) => ({
     layout: {
@@ -114,7 +114,7 @@ function EnterCourses({ quarter, allCourses, setAllCourses, setOverlayOpened }) 
           {Array.from(Array(numRows).keys()).map((i) => (
             <div key={i} className={classes.courseCardContainer}>
               {selectedCourses.slice(i*5, (i+1) * 5).map((course, idx) => (
-                <EnterCoursesPageCard 
+                <MiniCourseCard 
                   key={idx} 
                   name={course}
                   selectedCourses={selectedCourses}

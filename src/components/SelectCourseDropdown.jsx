@@ -5,7 +5,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import TriangleDown from "../assets/icons/DarkBrownTriangleDown.svg";
 import { makeStyles } from "@mui/styles";
-import { EnterCoursesPageCard } from "./index";
+import { MiniCourseCard } from "./index";
 
 const useStyles = (props) => makeStyles((theme) => ({
   accordionDropdown: {
@@ -127,14 +127,14 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
             {[...Array(numRows).keys()].map((i) => (
               <div key={i} className={classes.miniCourseCardContainer}>
                 {data.courses.slice(i*5, i*5+5).map((course, idx) => 
-                  <EnterCoursesPageCard 
+                  <MiniCourseCard 
                     key={idx} 
                     name={course} 
                     canBeDeleted={false}
                   />
                 )}
                 {((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
-                  <EnterCoursesPageCard 
+                  <MiniCourseCard 
                     quarter={data.quarter}
                     overlayOpened={overlayOpened}
                     setOverlayOpened={setOverlayOpened}
