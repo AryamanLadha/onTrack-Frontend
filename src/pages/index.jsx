@@ -1,3 +1,4 @@
+export { default as Confirmation } from './Confirmation';
 export { default as EditProfile } from './EditProfile';
 export { default as EligibleCourses } from './EligibleCourses';
 export { default as EnterCoursesByQuarter } from './EnterCoursesByQuarter';

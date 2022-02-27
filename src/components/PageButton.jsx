@@ -55,16 +55,19 @@ function PageButton({ page, text, size, action, setOverlayOpened, emptyError, se
     else if (page === 'year') {
       text === 'Back'
         ? // Go back to majors (skip minors)
-          navigate('/')
+          navigate('/majors')
         : navigate('/courses');
 
     }
     
     else if (page === 'courses')
-      text === 'Back' ? navigate('/year') : navigate('/eligible');
+      text === 'Back' ? navigate('/year') : navigate('/confirm');
 
     else if (page === 'coursesOverlay')
       setOverlayOpened(false);
+
+    else if (page === 'confirm')
+      text === 'Back' ? navigate('/courses') : navigate('/eligible');
 
     else if (page === 'eligible')
       text === 'Back' ? navigate('/courses') : navigate('/done');

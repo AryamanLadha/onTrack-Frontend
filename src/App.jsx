@@ -1,7 +1,7 @@
 import React from "react";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { EditProfile, EligibleCourses, EnterCoursesByQuarter, Login, Profile, WhatMajor, WhatYear } from "./pages";
+import { Confirmation, EditProfile, EligibleCourses, EnterCoursesByQuarter, Login, Profile, WhatMajor, WhatYear } from "./pages";
 
 function App() {
   return (
@@ -13,11 +13,12 @@ function App() {
           <Route exact path="/" element={<Login />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/edit" element={<EditProfile />} />
-          <Route exact path="/major" element={<WhatMajor majmin={'majors'} />} />
+          <Route exact path="/majors" element={<WhatMajor majmin={'majors'} />} />
           {/* <Route exact path="/minors" element={<WhatMajor majmin={"minors"} />} /> */}
           <Route exact path="/year" element={<WhatYear majmin={"year"} />} />
           {/* <Route exact path="/courses" element={<EnterCourses courses={courses} />} /> */}
           <Route exact path="/courses" element={<EnterCoursesByQuarter />} />
+          <Route exact path="/confirm" element={<Confirmation />} />
           <Route exact path="/eligible" element={<EligibleCourses />} />
         </Routes>
       </Router>
