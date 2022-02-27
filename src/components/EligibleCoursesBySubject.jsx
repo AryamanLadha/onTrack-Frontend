@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import CourseInfoPopdown from '../components/CourseInfoPopdown';
-import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   miniCourseCardsBySubject: {
@@ -49,8 +48,14 @@ const EligibleCoursesBySubject = ({
 }) => {
   const classes = useStyles();
 
-  const handleShowCourseInfo = (subject) => {
+  const [displayedCourse, setDisplayedCourse] = useState();
+
+  const handleShowCourseInfo = (subject, course) => {
     setActiveSubject(subject);
+
+    setDisplayedCourse(course);
+
+    console.log('course', course);
   };
 
   return (
@@ -62,14 +67,16 @@ const EligibleCoursesBySubject = ({
           <div
             key={idx}
             className={classes.card}
-            onClick={() => handleShowCourseInfo(subject)}
+            onClick={() => handleShowCourseInfo(subject, course)}
           >
             <span className={classes.cardText}> {course.name} </span>
           </div>
         ))}
       </div>
 
-      {subject === activeSubject && <CourseInfoPopdown />}
+      {subject === activeSubject && (
+        <CourseInfoPopdown course={displayedCourse} />
+      )}
     </div>
   );
 };
