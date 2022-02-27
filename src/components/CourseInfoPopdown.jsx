@@ -134,7 +134,9 @@ const CourseInfoPopdown = ({ course }) => {
             <EnrollmentInfoTooltip
               isCoreqTooltip
               title={
-                <div className={classes.corequisitesTooltip}>Corequisites</div>
+                <div className={classes.corequisitesTooltip}>
+                  {course.enforcedCorequisites[0]}
+                </div>
               }
             >
               <div className={classes.tag}>
