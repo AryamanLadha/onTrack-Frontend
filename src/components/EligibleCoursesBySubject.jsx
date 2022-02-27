@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import CourseInfoPopdown from '../components/CourseInfoPopdown';
+import { MiniCourseCard } from '.';
 
 const useStyles = makeStyles((theme) => ({
   miniCourseCardsBySubject: {
@@ -22,22 +23,6 @@ const useStyles = makeStyles((theme) => ({
     width: '117rem',
     height: 'auto',
   },
-
-  card: {
-    backgroundColor: theme.color.skyblue,
-    width: '12rem',
-    height: '12rem',
-    borderRadius: '2rem',
-    textAlign: 'center',
-    lineHeight: '12rem',
-    font: theme.font.miniCourseCard,
-  },
-
-  cardText: {
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    lineHeight: '2.346rem',
-  },
 }));
 
 const EligibleCoursesBySubject = ({
@@ -50,27 +35,22 @@ const EligibleCoursesBySubject = ({
 
   const [displayedCourse, setDisplayedCourse] = useState();
 
-  const handleShowCourseInfo = (subject, course) => {
-    setActiveSubject(subject);
-
-    setDisplayedCourse(course);
-
-    console.log('course', course);
-  };
-
   return (
     <div className={classes.miniCourseCardsBySubject}>
       <div className={classes.subject}>{subject}</div>
 
       <div className={classes.miniCourseCardContainer}>
         {courses.map((course, idx) => (
-          <div
+          <MiniCourseCard
             key={idx}
-            className={classes.card}
-            onClick={() => handleShowCourseInfo(subject, course)}
-          >
-            <span className={classes.cardText}> {course.name} </span>
-          </div>
+            name={course.name}
+            subject={subject}
+            course={course}
+            setActiveSubject={setActiveSubject}
+            setDisplayedCourse={setDisplayedCourse}
+            canBeDeleted={false}
+            onEligibleCoursesPage={true}
+          />
         ))}
       </div>
 
