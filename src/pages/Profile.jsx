@@ -4,7 +4,7 @@ import { TagComponent, SelectCourseDropdown } from "../components";
 import { connect } from "react-redux";
 import { setStartQtr, setEndQtr, setGradeEntered } from "../actions/actions";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = (props) => makeStyles((theme) => ({
   layout: {
     display: 'flex',
     alignItems: 'center',
@@ -44,6 +44,45 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
   },
 
+  degreeProgress: {
+    width: "59.3rem",
+    display: "grid",
+    gridTemplateColumns: "repeat(2,1fr)",
+    rowGap: "3rem",
+    margin: "7.5rem 0rem 9.8rem 0rem",
+  },
+
+  progressBar: {
+    width: "44.3rem",
+    height: "5rem",
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: theme.color.lightGreen,
+  },
+
+  progressTitle: {
+    width: "12rem",
+    textAlign: "right",
+    height: "5rem",
+    lineHeight: "5rem",
+    font: theme.font.progressBar,
+  },
+
+
+  upperDivProgressBar: {
+    width: `${props.upperDivProgressPercent}%`,
+    backgroundColor: theme.color.green,
+    position: "relative",
+    zIndex: "1rem",
+  },
+
+  degreeProgressBar: {
+    width: `${props.degreeProgressPercent}%`,
+    backgroundColor: theme.color.green,
+    position: "relative",
+    zIndex: "1rem",
+  },
+
   courseHistory: {
     display: "flex",
     alignItems: "center",
@@ -72,7 +111,14 @@ function Profile() {
   const [overlayOpened, setOverlayOpened] = useState(false);
   const [quarterOfOverlay, setQuarterOfOverlay] = useState("");
 
-  const classes = useStyles();
+
+  // pass on progress percentage to style progress bars
+  const props = {
+    upperDivProgressPercent: 30,
+    degreeProgressPercent: 50,
+  }
+
+  const classes = useStyles(props)();
 
   return (
     <div className={classes.layout}>
@@ -87,6 +133,16 @@ function Profile() {
           ))}
         </div>
       </header>
+      <div className={classes.degreeProgress} >
+        <div className={classes.progressTitle}>Upper Div</div>
+        <div className={classes.progressBar}>
+          <div className={classes.upperDivProgressBar} />
+        </div>
+        <div className={classes.progressTitle}>Degree</div>
+        <div className={classes.progressBar}>
+          <div className={classes.degreeProgressBar} />
+        </div>
+      </div>
       <div className={classes.courseHistory}>
         <div className={classes.courseHistoryTitle}>
           Course History
