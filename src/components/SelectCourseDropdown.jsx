@@ -38,6 +38,7 @@ const useStyles = (props) => makeStyles((theme) => ({
       width: "84.8rem",
       top: "7rem",
       left: "-0.1rem",
+      height: props.height,
       marginBottom: "0rem",
       border: "0.1rem solid",
       borderRadius: "0rem 0rem 1.5rem 1.5rem",
@@ -59,7 +60,7 @@ const useStyles = (props) => makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     height: "auto",
-    marginBottom: "2rem",
+    marginBottom: "3rem",
   },
   
   emptyDiv: {
@@ -91,7 +92,7 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
 
     // set height of emptyDiv: when accordian dropdown is expanded
     expanded
-    ? setHeight(`${(numRows-1)*14+17}rem`)
+    ? setHeight(`${(numRows-1)*14+18}rem`)
     : setHeight(`0rem`)
   }, [expanded]);
 
