@@ -11,7 +11,11 @@ const theme = createTheme({
     subtitle: 'normal 400 2rem/2rem "Work Sans"',
     radioButton: 'normal 400 2rem/2rem "Work Sans" !important',
     accordionDropdown: 'normal 500 3rem/3rem "Work Sans" !important',
+    profile: 'normal 700 5rem/5rem "Work Sans"',
+    courseHistory: 'normal 600 4.5rem/4.5rem "Work Sans" !important',
+    progressBar: 'normal 500 2.5rem/2.5rem "Work Sans"',
   },
+
   color: {
     button: "#A5B6BC",
     hoveredButton: "#78929B",
@@ -27,6 +31,8 @@ const theme = createTheme({
     white: "#FFFFFF",
     darkBrown: "#7B6958",
     lightYellow: "#FDFCF8",
+    lightGreen: "#ECF1F4",
+    green: "#BBD1A8",
   }
 })
 

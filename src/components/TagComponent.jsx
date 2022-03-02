@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme) => ({
   tagComponent: {
     display: 'flex, inline-block',
-    backgroundColor: theme.color.beige,
+    backgroundColor: theme.color.darkBeige,
     height: '5.4rem',
     lineHeight: '5.4rem',
     font: theme.font.subtitle,
@@ -26,5 +26,12 @@ const TagComponent = ({ major, selectedMajors, setSelectedMajors }) => {
       </div>
   );
 };
+
+
+TagComponent.defaultProps = {
+  selectedMajors: [],
+  setSelectedMajors: () => {},
+};
+
 
 export default TagComponent;
