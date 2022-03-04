@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import TriangleWarning from '../assets/icons/TriangleWarning.svg';
+import CourseInfoPopdownX from '../assets/icons/CourseInfoPopdownX.svg';
 
 const useStyles = makeStyles((theme) => ({
   popDown: {
@@ -11,6 +12,15 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5.5rem',
     padding: '6.25rem 3.75rem',
     margin: '3.75rem 0',
+    position: 'relative',
+  },
+
+  closeButton: {
+    position: 'absolute',
+    top: '3.5rem',
+    right: '3.5rem',
+    height: '2.5rem',
+    width: '2.5rem',
   },
 
   courseTitle: {
@@ -88,7 +98,7 @@ const EnrollmentInfoTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const CourseInfoPopdown = ({ course }) => {
+const CourseInfoPopdown = ({ course, setActiveSubject }) => {
   const classes = useStyles();
 
   const courseDescription = course.description.split('\n')[1];
@@ -103,8 +113,19 @@ const CourseInfoPopdown = ({ course }) => {
     console.log('courseRestrictions', courseRestrictions);
   }, []);
 
+  const handleClosePopdown = () => {
+    setActiveSubject('');
+  };
+
   return (
     <div className={classes.popDown}>
+      <img
+        src={CourseInfoPopdownX}
+        alt="closePopdownButton"
+        onClick={handleClosePopdown}
+        className={classes.closeButton}
+      />
+
       <div className={classes.courseTitle}>{course.name}</div>
 
       {(courseRestrictions !== 'None' ||

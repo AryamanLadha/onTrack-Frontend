@@ -55,7 +55,10 @@ const EligibleCoursesBySubject = ({
       </div>
 
       {subject === activeSubject && (
-        <CourseInfoPopdown course={displayedCourse} />
+        <CourseInfoPopdown
+          course={displayedCourse}
+          setActiveSubject={setActiveSubject}
+        />
       )}
     </div>
   );
