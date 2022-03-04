@@ -64,6 +64,12 @@ const useStyles = makeStyles((theme) => ({
   },
 
   corequisitesTooltip: {
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: '2.5rem',
+  },
+
+  corequisitesTooltipItem: {
     font: theme.font.corequisitesTooltipCourseName,
   },
 
@@ -157,7 +163,11 @@ const CourseInfoPopdown = ({ course, setActiveSubject }) => {
               isCoreqTooltip
               title={
                 <div className={classes.corequisitesTooltip}>
-                  {course.enforcedCorequisites[0]}
+                  {course.enforcedCorequisites.map((course, index) => (
+                    <div className={classes.corequisitesTooltipItem}>
+                      {course}
+                    </div>
+                  ))}
                 </div>
               }
             >
