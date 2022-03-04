@@ -9,7 +9,9 @@ import CourseInfoPopdownX from '../assets/icons/CourseInfoPopdownX.svg';
 const useStyles = makeStyles((theme) => ({
   popDown: {
     width: '117.5rem',
-    backgroundColor: '#D4D4D4',
+    backgroundColor: theme.color.white,
+    border: '0.125rem solid',
+    borderColor: theme.color.black,
     borderRadius: '5.5rem',
     padding: '6.25rem 3.75rem',
     margin: '3.75rem 0',
@@ -40,8 +42,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     gap: '0rem 2rem',
-    backgroundColor: theme.color.grey,
+    backgroundColor: theme.color.white,
     padding: '0rem 2.5rem',
+    border: '0.125rem solid',
+    borderColor: theme.color.black,
     borderRadius: '2rem',
     height: '6.25rem',
   },
@@ -78,7 +82,7 @@ const EnrollmentInfoTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} arrow />
 ))(({ theme, isCoreqTooltip = false }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: '#EDEDED',
+    backgroundColor: theme.color.bargrey,
     color: 'rgba(0, 0, 0, 1)',
     maxWidth: 'none',
     width: isCoreqTooltip ? 'none !important' : '36.875rem',
