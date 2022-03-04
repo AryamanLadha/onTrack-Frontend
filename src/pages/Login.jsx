@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import onTrackLogin from '../assets/icons/onTrackLogin.svg';
 import GoogleLogin from '../assets/icons/GoogleLogin.svg';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,9 +47,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
     const classes = useStyles();
+    const navigate = useNavigate();
 
-    const authenticate = async() => {
-        await axios.get('http://localhost:8000/api/auth/google')
+    const authenticate = () => {
+        navigate('http://localhost:8000/api/auth/google')
     }
 
     return (
