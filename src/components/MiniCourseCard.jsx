@@ -91,8 +91,6 @@ function MiniCourseCard({
     setActiveSubject(subject);
 
     setDisplayedCourse(course);
-
-    console.log('course', course);
   };
 
   const handleMouseEnter = () => {

@@ -93,8 +93,6 @@ function EligibleCourses({
     if (eligibleCoursesData.length !== 0) {
       setNextQuarter(eligibleCoursesData[0].quarter);
     }
-
-    console.log('courseData', eligibleCoursesData);
   }, [eligibleCoursesData]);
 
   return (
