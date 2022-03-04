@@ -109,10 +109,6 @@ const CourseInfoPopdown = ({ course, setActiveSubject }) => {
     courseRestrictions = course.restrictions.split(' ')[1];
   }
 
-  useEffect(() => {
-    console.log('courseRestrictions', courseRestrictions);
-  }, []);
-
   const handleClosePopdown = () => {
     setActiveSubject('');
   };
