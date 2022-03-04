@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import CorequisiteWarning from '../assets/icons/CorequisiteWarning.svg';
 import TriangleWarning from '../assets/icons/TriangleWarning.svg';
 import CourseInfoPopdownX from '../assets/icons/CourseInfoPopdownX.svg';
 
@@ -158,7 +159,7 @@ const CourseInfoPopdown = ({ course, setActiveSubject }) => {
             >
               <div className={classes.tag}>
                 <img
-                  src={TriangleWarning}
+                  src={CorequisiteWarning}
                   className={classes.warningIcon}
                   alt="enrollmentWarning"
                 />
