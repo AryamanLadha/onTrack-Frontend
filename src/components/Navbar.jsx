@@ -39,7 +39,6 @@ const Navbar = () => {
     return (
         <div className={classes.navbar}>
                 <img src = {onTrackLogoMini} className = {classes.navimg} alt="Nav bar"/>
-                <button className = {classes.textbutton} > Planner</button>
                 <button className = {classes.textbutton}> Eligible Courses</button>
                 <button className = {classes.textbutton}> Profile</button>
         </div>
