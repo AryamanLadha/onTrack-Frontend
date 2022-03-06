@@ -19,7 +19,7 @@ const useStyles = (props) =>
   }));
 
 // Button props: text, size, page
-function PageButton({ page, text, size, action, setOverlayOpened, }) {
+function PageButton({ page, text, size, action, setOverlayOpened, isOverlay}) {
   const [ isHovered, setIsHovered ] = React.useState(false);
 
   const props = {
@@ -36,8 +36,12 @@ function PageButton({ page, text, size, action, setOverlayOpened, }) {
   const handleClick = () => {
     if (page === 'majors') {
       // Skip minors
+      if (isOverlay === false) {
         navigate('/year');
-      
+      } else {
+        navigate('/editprofile');
+        setOverlayOpened(false);
+      }
     } else if (page === 'minors') {
       text === 'Back' ? navigate('/') : navigate('/year');
 
@@ -86,6 +90,7 @@ function PageButton({ page, text, size, action, setOverlayOpened, }) {
 }
 
 PageButton.defaultProps = {
+  isOverlay: false,
   setOverlayOpened: () => {},
 }
 

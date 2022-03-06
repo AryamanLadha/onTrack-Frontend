@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { setStartQtr, setEndQtr, setGradeEntered, setCourses } from "../actions/actions";
 import { getCurrQtr } from "../utils/utils";
 import { useNavigate } from 'react-router-dom';
+import Edit from '../assets/icons/Edit.svg';
+import WhatMajor from './WhatMajor';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '100rem',
     height: '9.4rem',
-    marginTop: '10.4rem',
+    marginTop: '1rem',
   },
 
   title: {
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   buttons: {
-    marginTop: "1rem",
+    margin: "1rem 0rem 10rem 0rem",
     width: "98vw",
     display: "flex",
     flexDirection: "row",
@@ -58,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   userInfoSection: {
+    marginTop: "10rem",
     display: "flex",
     flexDirection: "column",
   },
@@ -113,16 +116,16 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     position: "fixed",
     top: "0",
-    left: "0",
-    zIndex: "1.5rem",
+    right: "0",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
   },
 
   overlayBackground: {
-    width: "100%",
-    height: "100%",
+    alignSelf: "center",
+    width: "100vw",
+    height: "100vh",
     backgroundColor: theme.color.black,
     opacity: "0.7",
   },
@@ -142,7 +145,8 @@ function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntere
   // Hooks to store selections for this page
   const [selectedStartQtr, setSelectedStartQtr] = useState('');
   const [selectedEndQtr, setSelectedEndQtr] = useState('');
-  const [overlayOpened, setOverlayOpened] = useState(false);
+  const [coursesOverlayOpened, setCoursesOverlayOpened] = useState(false);
+  const [majorsOverlayOpened, setMajorsOverlayOpened] = useState(false);
   const [quarterOfOverlay, setQuarterOfOverlay] = useState("");
 
    // Parse start/end season and year using store data
@@ -214,81 +218,95 @@ function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntere
     }
   }
 
-  React.useEffect(() => {
-    console.log(overlayOpened);
-  }, [overlayOpened])
+  const handleClick = () => {
+    setMajorsOverlayOpened(true);
+  }
 
   return (
     <div className={classes.layout}>
-      <div className={classes.buttons}>
-        <button className={classes.cancelButton} onClick={() => navigate("/profile")}>Cancel</button>
-        <button className={classes.saveButton}>Save</button>
-      </div>
       <header className={classes.header}>
+        <div className={classes.buttons}>
+          <button className={classes.cancelButton} onClick={() => navigate("/profile")}>Cancel</button>
+          <button className={classes.saveButton}>Save</button>
+        </div>
         <h1 className={classes.title}>
           Edit Profile
         </h1>
       </header>
       <div className={classes.userInfoSection}>
-          <div className={classes.section} >
-            <span className={classes.sectionTitle}>Name</span>
-            <input className={classes.nameInput} type="text" placeholder={user.name}></input>
-          </div>
-          <div className={classes.section} >
-            <span className={classes.sectionTitle}>Major</span>
-            <div className={classes.majorSection}>
-              {storeMajors.map((major, idx) => (
-                <TagComponent key={idx} major={major} />
-              ))}
-            </div>
-          </div>
-          <div className={classes.quarterSection} >
-            <div className={classes.section} >
-              <span className={classes.sectionTitle}>Start Term</span>
-              <Dropdown 
-                placeholder={storeStartQtr !== null && storeStartQtr !== "" ? storeStartQtr : "Select a quarter"}
-                options={startQuarters}
-                initialOption={storeStartQtr}
-                setSelectedOption={setSelectedStartQtr}
-              />
-            </div>
-            <div className={classes.section} >
-              <span className={classes.sectionTitle}>Expected Graduation</span>
-              <Dropdown 
-                placeholder={storeEndQtr !== null && storeEndQtr !== "" ? storeEndQtr : "Select a quarter"}
-                options={startQuarters}
-                initialOption={storeEndQtr}
-                setSelectedOption={setSelectedEndQtr}
-              />
-            </div>
+        <div className={classes.section} >
+          <span className={classes.sectionTitle}>Name</span>
+          <input className={classes.nameInput} type="text" placeholder={user.name}></input>
+        </div>
+        <div className={classes.section} >
+          <span className={classes.sectionTitle}>Major</span>
+          <div className={classes.majorSection}>
+            {storeMajors.map((major, idx) => (
+              <TagComponent key={idx} major={major} />
+            ))}
+            <button onClick={handleClick}>
+                <img src={Edit} alt="edit-majors"/>
+            </button>
           </div>
         </div>
-        <div className={classes.courseHistory}>
-          <div className={classes.courseHistoryTitle}>
-            Course History
-          </div>
-          {storeCoursesTaken.map((object, idx) => (
-            <SelectCourseDropdown 
-              key={idx}
-              data={object}
-              overlayOpened={overlayOpened}
-              setOverlayOpened={setOverlayOpened}
-              setQuarterOfOverlay={setQuarterOfOverlay}
-              canEdit={true}
+        <div className={classes.quarterSection} >
+          <div className={classes.section} >
+            <span className={classes.sectionTitle}>Start Term</span>
+            <Dropdown 
+              placeholder={storeStartQtr !== null && storeStartQtr !== "" ? storeStartQtr : "Select a quarter"}
+              options={startQuarters}
+              initialOption={storeStartQtr}
+              setSelectedOption={setSelectedStartQtr}
             />
-          ))}
+          </div>
+          <div className={classes.section} >
+            <span className={classes.sectionTitle}>Expected Graduation</span>
+            <Dropdown 
+              placeholder={storeEndQtr !== null && storeEndQtr !== "" ? storeEndQtr : "Select a quarter"}
+              options={endQuarters}
+              initialOption={storeEndQtr}
+              setSelectedOption={setSelectedEndQtr}
+            />
+          </div>
         </div>
-        {overlayOpened && (
-          <div className={classes.overlay}>
-            <div className={classes.overlayBackground}></div>
-            <EnterCourses
-              quarter={quarterOfOverlay}
-              allCourses={coursesTaken}
-              setAllCourses={setCoursesTaken}
-              setOverlayOpened={setOverlayOpened}
-            />
-          </div>
-        )}
+      </div>
+      <div className={classes.courseHistory}>
+        <div className={classes.courseHistoryTitle}>
+          Course History
+        </div>
+        {storeCoursesTaken.map((object, idx) => (
+          <SelectCourseDropdown 
+            key={idx}
+            data={object}
+            overlayOpened={coursesOverlayOpened}
+            setOverlayOpened={setCoursesOverlayOpened}
+            setQuarterOfOverlay={setQuarterOfOverlay}
+            canEdit={true}
+          />
+        ))}
+      </div>
+      {coursesOverlayOpened && (
+        <div className={classes.overlay}>
+          <div className={classes.overlayBackground}></div>
+          <EnterCourses
+            quarter={quarterOfOverlay}
+            allCourses={coursesTaken}
+            setAllCourses={setCoursesTaken}
+            setOverlayOpened={setCoursesOverlayOpened}
+          />
+        </div>
+      )}
+      {majorsOverlayOpened && (
+        <div className={classes.overlay}>
+          <div className={classes.overlayBackground}></div>
+          <WhatMajor 
+            majmin={"majors"}
+            storeMajors={storeMajors}
+            isOverlay={true}
+            setOverlayOpened={setMajorsOverlayOpened}
+          />
+        </div>
+      )}
     </div>
   )
 }
