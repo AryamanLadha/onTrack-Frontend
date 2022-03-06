@@ -38,6 +38,7 @@ const useStyles = (props) => makeStyles((theme) => ({
       width: "84.8rem",
       top: "7rem",
       left: "-0.1rem",
+      height: props.height,
       marginBottom: "0rem",
       border: "0.1rem solid",
       borderRadius: "0rem 0rem 1.5rem 1.5rem",
@@ -59,7 +60,7 @@ const useStyles = (props) => makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     height: "auto",
-    marginBottom: "2rem",
+    marginBottom: "3rem",
   },
   
   emptyDiv: {
@@ -72,7 +73,7 @@ const useStyles = (props) => makeStyles((theme) => ({
 }));
 
 
-const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarterOfOverlay }) => {
+const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarterOfOverlay, canEdit }) => {
   const [ expanded, setExpanded ] = useState(false);
   const [ height, setHeight ] = useState(0);
   const [ numRows, setNumRows ] = useState(0);
@@ -84,13 +85,14 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
   const classes = useStyles(props)();
 
   useEffect(() => {
+    console.log(data);
     const numberOfCourses = data.courses.length;
     // // any subjects that have more than 5 courses adds extraRow
     setNumRows(Math.floor(numberOfCourses/5)+1);
 
     // set height of emptyDiv: when accordian dropdown is expanded
     expanded
-    ? setHeight(`${(numRows-1)*14+17}rem`)
+    ? setHeight(`${(numRows-1)*14+18}rem`)
     : setHeight(`0rem`)
   }, [expanded]);
 
@@ -133,14 +135,18 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
                     canBeDeleted={false}
                   />
                 )}
-                {((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
+                {canEdit 
+                  ? (((i === numRows-1 && data.courses.length !== 0) || data.courses.length === 0) && 
                   <MiniCourseCard 
                     quarter={data.quarter}
                     overlayOpened={overlayOpened}
                     setOverlayOpened={setOverlayOpened}
                     setQuarterOfOverlay={setQuarterOfOverlay}
                     canBeDeleted={false}
-                  />}
+                  />)
+                  : 
+                  (<></>)
+                }
               </div>
             ))}
           </div>
@@ -150,5 +156,9 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
     </div>
   );
 };
+
+SelectCourseDropdown.defaultProps = {
+  canEdit: true,
+}
 
 export default SelectCourseDropdown;

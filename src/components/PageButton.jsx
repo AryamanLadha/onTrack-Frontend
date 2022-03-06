@@ -3,6 +3,8 @@ import ButtonUnstyled from '@mui/core/ButtonUnstyled';
 import { makeStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
 import { config } from '../actions/actions';
+import GoogleLogin from '../assets/icons/GoogleLogin.svg';
+import EditProfile from '../assets/icons/EditProfile.svg';
 
 const useStyles = (props) =>
   makeStyles((theme) => ({
@@ -87,7 +89,10 @@ function PageButton({ page, text, size, action, setOverlayOpened, }) {
       onMouseEnter={handleHover}
       onMouseLeave={handleHover}
     >
-      {text}
+      <div>
+      {page === 'login' ? (<img src={GoogleLogin} alt="google-login" />) : text}
+      {page === 'profile' ? (<img src={EditProfile} alt="edit-profile" />) : text}
+      </div>
     </ButtonUnstyled>
   );
 }

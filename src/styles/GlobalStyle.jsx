@@ -27,8 +27,6 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #FDFCF8;
-    font-family: "Noto Sans kr", "Spoqa Han Sans Neo",
-      -apple-system, BlinkMacSystemFont, "Roboto",
     padding: 0;
     margin: 0;
     max-height: 100vh;
