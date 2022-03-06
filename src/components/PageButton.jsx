@@ -58,10 +58,14 @@ function PageButton({ page, text, size, action, setOverlayOpened, }) {
       text === 'Back' ? navigate('/courses') : navigate('/done');
     }
 
-    // props.page === "done"
-    // else {
-    //   nothing for now.
-    // }
+    else if (page === 'confirmation') {
+      navigate('/profile');
+    }
+
+    else if (page === 'profile') {
+      navigate('/editprofile');
+    }
+
 
     // VERY IMPORTANT -- DISPATCH ACTION IF AVAILABLE
     if (action != null) {

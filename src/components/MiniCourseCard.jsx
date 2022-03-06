@@ -64,6 +64,7 @@ function MiniCourseCard({ name, quarter, overlayOpened, setOverlayOpened, select
   }
 
   const handleIconClick = () => {
+    console.log("clicked");
     setOverlayOpened(!overlayOpened);
     overlayOpened = !overlayOpened;
     overlayOpened && setQuarterOfOverlay(quarter);

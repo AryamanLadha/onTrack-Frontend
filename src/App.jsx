@@ -1,7 +1,7 @@
 import React from "react";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Login, Confirmation, EnterCoursesByQuarter, WhatMajor, WhatYear, EligibleCourses, Profile } from "./pages";
+import { Login, Confirmation, EnterCoursesByQuarter, WhatMajor, WhatYear, EligibleCourses, Profile, EditProfile } from "./pages";
 
 function App() {
   return (
@@ -16,7 +16,9 @@ function App() {
           {/* <Route exact path="/courses" element={<EnterCourses courses={courses} />} /> */}
           <Route exact path="/courses" element={<EnterCoursesByQuarter />} />
           <Route exact path="/eligible" element={<EligibleCourses />} />
+          <Route exact path="/done" element={<Confirmation />} />
           <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/editprofile" element={<EditProfile />} />
         </Routes>
       </Router>
     </>
