@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#B2BCAA',
         height:'8rem',
         position: 'sticky',
-        width: '100%'
+        width: '100vw'
     },
 
     textbutton:{
