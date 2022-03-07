@@ -11,11 +11,12 @@ const useStyles = makeStyles((theme) => ({
     width: '117.5rem',
     backgroundColor: theme.color.white,
     border: '0.125rem solid',
-    borderColor: theme.color.black,
+    borderColor: theme.color.darkBeige,
     borderRadius: '5.5rem',
     padding: '6.25rem 3.75rem',
     margin: '3.75rem 0',
     position: 'relative',
+    filter: 'drop-shadow(0.125rem 0.625rem 0.75rem rgba(150, 135, 122, 0.4))',
   },
 
   closeButton: {
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.color.white,
     padding: '0rem 2.5rem',
     border: '0.125rem solid',
-    borderColor: theme.color.black,
+    borderColor: theme.color.darkBeige,
     borderRadius: '2rem',
     height: '6.25rem',
   },
