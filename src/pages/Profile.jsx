@@ -12,6 +12,7 @@ const useStyles = (props) => makeStyles((theme) => ({
     flexDirection: 'column',
     width: '100vw',
     height: 'auto',
+    marginTop: '8rem',
     backgroundColor: theme.color.background,
   },
 
@@ -131,7 +132,7 @@ function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeE
     // userLoggedIn 
     // ? (
       <div>
-        <Navbar />
+        <Navbar page='profile' />
         <div className={classes.layout}>
           {/* add onclick to enable editing  */}
           <PageButton

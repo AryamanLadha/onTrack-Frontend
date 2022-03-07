@@ -23,6 +23,17 @@ const useStyles = (props) =>
       all: 'none',
     },
 
+    // Styling for Navbar buttons
+    nav: {
+      backgroundColor: props.active ? '#858d80' : '#B2BBAA',
+      borderRadius: '.75rem',
+      font: theme.font.subtitle,
+      color: '#FFFFFF',
+      height: '4rem',
+      marginLeft: '3rem',
+      marginRight: '3rem',
+    },
+
     // Styling for special PageButtons (Google login, edit profile)
     special: {
       height: '7.5rem',
@@ -33,13 +44,14 @@ const useStyles = (props) =>
   }));
 
 // Button props: text, size, page
-function PageButton({ page, text, size, action, setOverlayOpened, }) {
+function PageButton({ page, text, size, action, setOverlayOpened, activeNavPage }) {
   const [ isHovered, setIsHovered ] = React.useState(false);
 
   const props = {
     page: page,
     isHovered: isHovered,
     size: size,
+    active: activeNavPage,
   };
   const classes = useStyles(props)();
   const navigate = useNavigate();
@@ -78,10 +90,10 @@ function PageButton({ page, text, size, action, setOverlayOpened, }) {
       setOverlayOpened(false);
 
     else if (page === 'confirm')
-      text === 'Back' ? navigate('/courses') : navigate('/eligible');
+      navigate('/eligible');
 
-    else if (page === 'eligible')
-      text === 'Back' ? navigate('/courses') : navigate('/done');
+    else if (page === 'nav')
+      text === 'Eligible Courses' ? navigate('/eligible') : navigate('/profile');
 
     // props.page === "done"
     // else {
@@ -96,7 +108,7 @@ function PageButton({ page, text, size, action, setOverlayOpened, }) {
 
   return (
     <ButtonUnstyled
-      className={page !== 'login' && props.page !== 'profile' ? classes.normal : classes.special} 
+      className={page !== 'nav' && page !== 'login' && props.page !== 'profile' ? classes.normal : page == 'nav' ? classes.nav : classes.special} 
       onClick={handleClick}
       onMouseEnter={handleHover}
       onMouseLeave={handleHover}
@@ -112,6 +124,7 @@ function PageButton({ page, text, size, action, setOverlayOpened, }) {
 
 PageButton.defaultProps = {
   setOverlayOpened: () => {},
+  activeNavPage: null,
 }
 
 export default PageButton;

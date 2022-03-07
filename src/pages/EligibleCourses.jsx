@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     width: '100vw',
-    height: '120vh',
+    height: 'auto',
+    marginTop: '8rem',
     backgroundColor: theme.color.background,
   },
 
@@ -66,27 +67,30 @@ function EligibleCourses({
   
   return (
     <>
-      <div className={classes.layout}>
-        <header className={classes.header}>
-          <h1 className={classes.title}>Eligible Courses</h1>
-          <span className={classes.subtitle}>
-            All the courses you can take this year. You're welcome.
-          </span>
-        </header>
-        <div>
-          {/* Displaying grid of miniCourseCards. We parse data from the course object to do this. */}
-          {eligibleCoursesData.length !== 0 ? (
-            eligibleCoursesData.map((eligibleCourse, index) => (
-              <AccordionDropdown
-                key={index}
-                quarter={eligibleCourse.quarter}
-                subjectAndcourses={eligibleCourse.subjects}
-              />
-            ))
-          ) : (
-            <div className={classes.pageButtonWrapper}></div>
-          )}
-        </div>
+      <div>
+        <Navbar page='eligible' />
+        <div className={classes.layout}>
+          <header className={classes.header}>
+            <h1 className={classes.title}>Eligible Courses</h1>
+            <span className={classes.subtitle}>
+              All the courses you can take this year. You're welcome.
+            </span>
+          </header>
+          <div>
+            {/* Displaying grid of miniCourseCards. We parse data from the course object to do this. */}
+            {eligibleCoursesData.length !== 0 ? (
+              eligibleCoursesData.map((eligibleCourse, index) => (
+                <AccordionDropdown
+                  key={index}
+                  quarter={eligibleCourse.quarter}
+                  subjectAndcourses={eligibleCourse.subjects}
+                />
+              ))
+            ) : (
+              <div className={classes.pageButtonWrapper}></div>
+            )}
+          </div>
+      </div>
       </div>
     </>
   );
