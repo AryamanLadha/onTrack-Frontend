@@ -103,10 +103,6 @@ const EnrollmentInfoTooltip = styled(({ className, ...props }) => (
   },
   [`& .${tooltipClasses.arrow}`]: {
     color: theme.color.bargrey,
-    width: '3rem',
-    height: '3rem',
-    overflow: 'visible',
-    top: '-2.5rem !important',
   },
 }));
 

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import { PageButton } from '../components';
 import { getEligible } from '../actions/actions';
-
 import EligibleCoursesBySubject from '../components/EligibleCoursesBySubject';
 
 const useStyles = makeStyles((theme) => ({
