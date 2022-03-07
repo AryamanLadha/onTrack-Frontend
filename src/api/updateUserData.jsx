@@ -8,7 +8,6 @@ export const config = {
 };
 
 export const updateUserData = async (data) => {
-  console.log("updated");
   await axios.put(`${config.baseURL}/api/auth/update`, {
     majors: data.majors,
     dates: {
@@ -19,7 +18,9 @@ export const updateUserData = async (data) => {
     coursesTaken: data.coursesTaken,
   }, { withCredentials: true })
   .then((res) => {
-    console.log("PUT_USER_DATA_SUCCESS");
-    // console.log(res.data);
+    // console.log("PUT_USER_DATA_SUCCESS");
   })
+  .catch((error) => {
+    console.log(error);
+  });
 };
