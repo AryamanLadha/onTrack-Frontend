@@ -10,20 +10,25 @@ const useStyles = (props) =>
   makeStyles((theme) => ({
     
     // If PageButton should be a normal button
-    button: props.page !== 'login' && props.page !== 'profile' ? {
-      // Two sizes of buttonsm depending on prop passed
+    normal: {
+      // Two sizes of buttons depending on prop passed
       width: props.size === 'short' ? '13.8rem' : '25.5rem',
       borderRadius: props.size === 'short' ? '3.1rem' : '3.75rem',
       backgroundColor: props.isHovered ? theme.color.hoveredButton : theme.color.button,
       font: theme.font.button,
       color: theme.color.white,
-    } : null,
-
-    // Styling for all PageButtons
-    button: {
       height: '7.5rem',
       border: '0rem',
       marginBottom: '5rem',
+      all: 'none',
+    },
+
+    // Styling for special PageButtons (Google login, edit profile)
+    special: {
+      height: '7.5rem',
+      border: '0rem',
+      marginBottom: '5rem',
+      all: 'none',
     },
   }));
 
@@ -90,16 +95,16 @@ function PageButton({ page, text, size, action, setOverlayOpened, }) {
   };
 
   return (
-    <ButtonUnstyled 
-      className={classes.button} 
+    <ButtonUnstyled
+      className={page !== 'login' && props.page !== 'profile' ? classes.normal : classes.special} 
       onClick={handleClick}
       onMouseEnter={handleHover}
       onMouseLeave={handleHover}
     >
       <div>
-      {page !== 'login' && page !== 'profile' ? text : null }
-      {page === 'login' ? (<img src={GoogleLogin} alt="google-login" />) : null }
-      {page === 'profile' ? (<img src={EditProfile} alt="edit-profile" />) : null }
+      {page !== 'login' && page !== 'profile' ? text : null}
+      {page === 'login' ? (<img src={GoogleLogin} alt="google-login" />) : null}
+      {page === 'profile' ? (<img src={EditProfile} alt="edit-profile" />) : null}
       </div>
     </ButtonUnstyled>
   );

@@ -137,7 +137,7 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
         }
         {majmin === 'majors' ? (
             <PageButton
-              text={'next'}
+              text={'Next'}
               size={'short'}
               page={'majors'}
               action={() => {

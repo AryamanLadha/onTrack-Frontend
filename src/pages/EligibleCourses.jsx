@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
-import { AccordionDropdown, PageButton } from '../components';
+import { AccordionDropdown, Navbar } from '../components';
 import { getEligible } from '../actions/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,14 +36,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     font: theme.font.subtitle,
     marginTop: '1rem',
-  },
-
-  pageButtonWrapper: {
-    display: 'flex',
-    width: '117.8rem',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    marginTop: '7.4rem',
   },
 }));
 
@@ -94,10 +86,6 @@ function EligibleCourses({
           ) : (
             <div className={classes.pageButtonWrapper}></div>
           )}
-        </div>
-        <div className={classes.pageButtonWrapper}>
-          <PageButton text="Back" size="short" page="eligible" />
-          <PageButton text="Next" size="short" page="eligible" />
         </div>
       </div>
     </>
