@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from "react-redux";
 import ButtonUnstyled from '@mui/core/ButtonUnstyled';
 import { makeStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
-import { config } from '../actions/actions';
+import { config, logout } from '../actions/actions';
 import GoogleLogin from '../assets/icons/GoogleLogin.svg';
 import EditProfile from '../assets/icons/EditProfile.svg';
+import Logout from '../assets/icons/Logout.svg';
 
 const useStyles = (props) =>
   makeStyles((theme) => ({
@@ -44,7 +46,7 @@ const useStyles = (props) =>
   }));
 
 // Button props: text, size, page
-function PageButton({ page, text, size, action, setOverlayOpened, activeNavPage }) {
+function PageButton({ page, text, size, action, setOverlayOpened, activeNavPage, logout }) {
   const [ isHovered, setIsHovered ] = React.useState(false);
 
   const props = {
@@ -65,7 +67,10 @@ function PageButton({ page, text, size, action, setOverlayOpened, activeNavPage 
       window.open(`${config.baseURL}/api/auth/google`, '_self');
 
     else if (page === 'profile')
+    {
       text === 'Edit' && navigate('/edit');
+      text === 'Logout' && logout();
+    }
 
     else if (page === 'majors') {
       // Skip minors
@@ -114,9 +119,10 @@ function PageButton({ page, text, size, action, setOverlayOpened, activeNavPage 
       onMouseLeave={handleHover}
     >
       <div>
-      {page !== 'login' && page !== 'profile' ? text : null}
+      {page !== 'login' && page !== 'profile' && page !== 'profile' ? text : null}
       {page === 'login' ? (<img src={GoogleLogin} alt="google-login" />) : null}
-      {page === 'profile' ? (<img src={EditProfile} alt="edit-profile" />) : null}
+      {text === 'Edit' ? (<img src={EditProfile} alt="edit-profile" />) : null}
+      {text === 'Logout' ? (<img src={Logout} alt="logout" />) : null}
       </div>
     </ButtonUnstyled>
   );
@@ -127,4 +133,10 @@ PageButton.defaultProps = {
   activeNavPage: null,
 }
 
-export default PageButton;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch(logout()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(PageButton);

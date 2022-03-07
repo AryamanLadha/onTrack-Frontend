@@ -142,3 +142,35 @@ export const setCourses = (newCourses) => {
     payload: { newCourses },
   };
 };
+
+// Clear the store and log the current user out
+export const logout = () => {
+  return (dispatch) => {
+    axios
+      .get(`${config.baseURL}/api/auth/logout`, {
+        crossdomain: true,
+        withCredentials: true,
+      })
+      .then((res) => {
+        dispatch({
+          type: 'LOGOUT_SUCCESS',
+          payload: {
+            majors: [],
+            minors: [],
+            courses: [],
+            eligibleCourses: [],
+            coursesTaken: [],
+            year: null,
+            allMajors: [],
+            startQtr: null,
+            endQtr: null,
+            gradeEntered: null,
+            data: null,
+          },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+}

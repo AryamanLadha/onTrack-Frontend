@@ -86,6 +86,14 @@ const reducer = (state = initState, action) => {
     };
   }
 
+  if (action.type === 'LOGOUT_SUCCESS') {
+    console.log("works");
+    return {
+      ...state,
+      data: action.payload.data,
+    };
+  }
+
   return state;
 };
 

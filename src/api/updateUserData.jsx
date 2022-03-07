@@ -17,7 +17,7 @@ export const updateUserData = async (data) => {
     enteredAs: data.gradeEntered,
     coursesTaken: data.coursesTaken,
   }, { withCredentials: true })
-  .then((res) => {
+  .then(() => {
     // console.log("PUT_USER_DATA_SUCCESS");
   })
   .catch((error) => {

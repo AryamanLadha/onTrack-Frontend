@@ -176,6 +176,11 @@ function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeE
               />
             ))}
           </div>
+          <PageButton
+            page="profile"
+            text="Logout"
+            size="short"
+          />
         </div>
       </div>
     // ) : (
