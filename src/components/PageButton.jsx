@@ -8,16 +8,22 @@ import EditProfile from '../assets/icons/EditProfile.svg';
 
 const useStyles = (props) =>
   makeStyles((theme) => ({
-    button: {
+    
+    // If PageButton should be a normal button
+    button: props.page !== 'login' && props.page !== 'profile' ? {
       // Two sizes of buttonsm depending on prop passed
       width: props.size === 'short' ? '13.8rem' : '25.5rem',
-      height: '7.5rem',
-      border: '0rem',
-      marginBottom: '5rem',
       borderRadius: props.size === 'short' ? '3.1rem' : '3.75rem',
       backgroundColor: props.isHovered ? theme.color.hoveredButton : theme.color.button,
       font: theme.font.button,
       color: theme.color.white,
+    } : null,
+
+    // Styling for all PageButtons
+    button: {
+      height: '7.5rem',
+      border: '0rem',
+      marginBottom: '5rem',
     },
   }));
 
@@ -26,6 +32,7 @@ function PageButton({ page, text, size, action, setOverlayOpened, }) {
   const [ isHovered, setIsHovered ] = React.useState(false);
 
   const props = {
+    page: page,
     isHovered: isHovered,
     size: size,
   };
