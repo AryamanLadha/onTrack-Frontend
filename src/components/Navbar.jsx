@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-start',
         backgroundColor: '#B2BCAA',
         height:'8rem',
-        position: 'absolute',
+        position: 'sticky',
         width: '100%'
     },
 
