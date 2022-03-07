@@ -90,8 +90,9 @@ function PageButton({ page, text, size, action, setOverlayOpened, }) {
       onMouseLeave={handleHover}
     >
       <div>
-      {page === 'login' ? (<img src={GoogleLogin} alt="google-login" />) : text}
-      {page === 'profile' ? (<img src={EditProfile} alt="edit-profile" />) : text}
+      {page !== 'login' && page !== 'profile' ? text : null }
+      {page === 'login' ? (<img src={GoogleLogin} alt="google-login" />) : null }
+      {page === 'profile' ? (<img src={EditProfile} alt="edit-profile" />) : null }
       </div>
     </ButtonUnstyled>
   );

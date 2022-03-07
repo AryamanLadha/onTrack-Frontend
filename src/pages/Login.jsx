@@ -68,13 +68,8 @@ const Login = () => {
                   text="Next"
                   size="short"
                 />
-                <button onClick={authenticate}><img src={GoogleLogin} alt="Google Login"/></button>
+                {/* <button onClick={authenticate}><img src={GoogleLogin} alt="Google Login"/></button> */}
             </header>
-            <PageButton
-        page="login"
-        text="Next"
-        size="short"
-      />
         </div>
     )
 }

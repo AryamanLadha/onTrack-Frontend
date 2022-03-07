@@ -4,7 +4,7 @@ export const config = {
   headers: {
     "Content-type": "application-json",
   },
-  baseURL: "http://127.0.0.1:8000",
+  baseURL: "http://localhost:8000",
 };
 
 export const updateUserData = async (data) => {
@@ -17,9 +17,9 @@ export const updateUserData = async (data) => {
     },
     enteredAs: data.gradeEntered,
     coursesTaken: data.coursesTaken,
-  })
+  }, { withCredentials: true })
   .then((res) => {
     console.log("PUT_USER_DATA_SUCCESS");
-    console.log(res.data);
+    // console.log(res.data);
   })
 };

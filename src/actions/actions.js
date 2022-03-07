@@ -4,7 +4,7 @@ export const config = {
   headers: {
       'Content-type': "application-json"
   },
-  baseURL: 'http://127.0.0.1:8000',
+  baseURL: 'http://localhost:8000',
 }
 // When you make an API call, or anything asynchronous, the action creator returns a function
 
