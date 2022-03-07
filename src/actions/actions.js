@@ -60,6 +60,7 @@ export const getData = () => {
     axios
       .get(`${config.baseURL}/api/auth/data`, {
         crossdomain: true,
+        withCredentials: true,
       })
       .then((res) => {
         dispatch({

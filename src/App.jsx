@@ -1,7 +1,7 @@
 import React from "react";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Login, Confirmation, EditProfile, EnterCoursesByQuarter, WhatMajor, WhatYear, EligibleCourses, Profile } from "./pages";
+import { Login, Confirmation, EditProfile, EligibleCourses, EnterCoursesByQuarter, WhatMajor, WhatYear, Profile } from "./pages";
 
 function App() {
   return (
