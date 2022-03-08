@@ -94,17 +94,21 @@ function EnterCoursesByQuarter({ storeStartQtr, storeCoursesTaken, setCourses })
     let existing = undefined;
     while (!(y === endYear && s === endSeason)) {
       existing = storeCoursesTaken.find(object => object.quarter === (seasons[s] + " " + y));
-      if (existing !== undefined && existing.courses.length > 0) {
+      if (existing !== undefined && existing.courses.length > 0)
         newCoursesTaken.push(existing);
-      }
-      newCoursesTaken.push({ quarter: seasons[s] + " " + y, courses: [] });
+      else
+        newCoursesTaken.push({ quarter: seasons[s] + " " + y, courses: [] });
       s++;
       if (s === seasons.length) {
         s = 0;
         y++;
       }
     }
-    newCoursesTaken.push({ quarter: seasons[s] + " " + y, courses: [] });
+    existing = storeCoursesTaken.find(object => object.quarter === (seasons[s] + " " + y));
+    if (existing !== undefined && existing.courses.length > 0)
+      newCoursesTaken.push(existing);
+    else
+      newCoursesTaken.push({ quarter: seasons[s] + " " + y, courses: [] });
   }
 
   const [coursesTaken, setCoursesTaken] = useState(newCoursesTaken);

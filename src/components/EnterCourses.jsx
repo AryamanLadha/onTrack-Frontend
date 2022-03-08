@@ -153,7 +153,7 @@ function EnterCourses({ isEditProfile, quarter, allCourses, setAllCourses, setOv
             />
             <PageButton
               page={"coursesOverlay"}
-              text="Next"
+              text="Done"
               size="short"
               setOverlayOpened={setOverlayOpened}
               action={() => {

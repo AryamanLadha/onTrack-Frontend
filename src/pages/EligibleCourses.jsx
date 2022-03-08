@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
-import { AccordionDropdown, PageButton } from '../components';
+import { AccordionDropdown, Navbar } from '../components';
 import { getEligible } from '../actions/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     width: '100vw',
-    height: '120vh',
+    height: 'auto',
+    marginTop: '8rem',
     backgroundColor: theme.color.background,
   },
 
@@ -36,14 +37,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     font: theme.font.subtitle,
     marginTop: '1rem',
-  },
-
-  pageButtonWrapper: {
-    display: 'flex',
-    width: '117.8rem',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    marginTop: '7.4rem',
   },
 }));
 
@@ -74,31 +67,30 @@ function EligibleCourses({
   
   return (
     <>
-      <div className={classes.layout}>
-        <header className={classes.header}>
-          <h1 className={classes.title}>Eligible Courses</h1>
-          <span className={classes.subtitle}>
-            All the courses you can take this year. You're welcome.
-          </span>
-        </header>
-        <div>
-          {/* Displaying grid of miniCourseCards. We parse data from the course object to do this. */}
-          {eligibleCoursesData.length !== 0 ? (
-            eligibleCoursesData.map((eligibleCourse, index) => (
-              <AccordionDropdown
-                key={index}
-                quarter={eligibleCourse.quarter}
-                subjectAndcourses={eligibleCourse.subjects}
-              />
-            ))
-          ) : (
-            <div className={classes.pageButtonWrapper}></div>
-          )}
-        </div>
-        <div className={classes.pageButtonWrapper}>
-          <PageButton text="Back" size="short" page="eligible" />
-          <PageButton text="Next" size="short" page="eligible" />
-        </div>
+      <div>
+        <Navbar page='eligible' />
+        <div className={classes.layout}>
+          <header className={classes.header}>
+            <h1 className={classes.title}>Eligible Courses</h1>
+            <span className={classes.subtitle}>
+              All the courses you can take this year. You're welcome.
+            </span>
+          </header>
+          <div>
+            {/* Displaying grid of miniCourseCards. We parse data from the course object to do this. */}
+            {eligibleCoursesData.length !== 0 ? (
+              eligibleCoursesData.map((eligibleCourse, index) => (
+                <AccordionDropdown
+                  key={index}
+                  quarter={eligibleCourse.quarter}
+                  subjectAndcourses={eligibleCourse.subjects}
+                />
+              ))
+            ) : (
+              <div className={classes.pageButtonWrapper}></div>
+            )}
+          </div>
+      </div>
       </div>
     </>
   );

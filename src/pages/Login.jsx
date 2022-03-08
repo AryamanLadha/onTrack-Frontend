@@ -4,7 +4,7 @@ import onTrackLogin from '../assets/icons/onTrackLogin.svg';
 import GoogleLogin from '../assets/icons/GoogleLogin.svg';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { PageButton } from '../components';
 
 const useStyles = makeStyles((theme) => ({
     layout: {
@@ -63,9 +63,13 @@ const Login = () => {
                 <span className={classes.subtitle}>
                     Log in now!
                 </span>
-                <button onClick={authenticate}><img src={GoogleLogin} alt="Google Login"/></button>
+                <PageButton
+                  page="login"
+                  text="Next"
+                  size="short"
+                />
+                {/* <button onClick={authenticate}><img src={GoogleLogin} alt="Google Login"/></button> */}
             </header>
-            
         </div>
     )
 }

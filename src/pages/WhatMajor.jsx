@@ -152,14 +152,14 @@ function WhatMajor({ majmin, storeMajors, setMajors, isOverlay, setOverlayOpened
         ? (
           isOverlay === false ? (
             <PageButton
-              text={'next'}
+              text={'Next'}
               size={'short'}
               page={'majors'}
               isOverlay={isOverlay}
               action={() => {
                 if (selectedMajors.length === 0) {
                   setEmptyError(true);
-                  navigate('/');
+                  navigate('/majors');
                 } else {
                   setMajors(selectedMajors);
                   setEmptyError(false);
@@ -167,7 +167,7 @@ function WhatMajor({ majmin, storeMajors, setMajors, isOverlay, setOverlayOpened
             />
           ) : (
             <PageButton
-              text={'save'}
+              text={'Save'}
               size={'long'}
               page={'majors'}
               isOverlay={isOverlay}
