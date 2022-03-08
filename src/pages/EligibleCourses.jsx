@@ -83,8 +83,6 @@ function EligibleCourses({
       currentClasses: [],
     };
     studentData && getEligible(JSON.stringify(studentData));
-    eligibleCoursesData !== undefined &&
-      setNextQuarter(eligibleCoursesData[0].quarter);
 
     // eslint-disable-next-line
   }, []);
