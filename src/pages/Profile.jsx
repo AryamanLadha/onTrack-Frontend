@@ -3,6 +3,8 @@ import { makeStyles } from "@mui/styles";
 import { TagComponent, SelectCourseDropdown } from "../components";
 import EditProfile from '../assets/icons/EditProfile.svg';
 import { connect } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+
 
 const useStyles = (props) => makeStyles((theme) => ({
   layout: {
@@ -111,6 +113,7 @@ function Profile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntered, s
   const [ overlayOpened, setOverlayOpened] = useState(false);
   const [ quarterOfOverlay, setQuarterOfOverlay] = useState("");
   // const [ userLoggedIn, setUserLoggedIn ] = useState(false);
+  const navigate = useNavigate();
 
   // pass on progress percentage to style progress bars
   const props = {
@@ -125,12 +128,16 @@ function Profile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntered, s
     // if (able to load user info) {setUserLoggedIn(true)}
   }, [])
 
+  const handleClick = () => {
+    navigate('/editprofile');
+  }
+
   return (
     // userLoggedIn 
     // ? (
       <div className={classes.layout}>
         {/* add onclick to enable editing  */}
-        <button className={classes.editProfile} >
+        <button className={classes.editProfile} onClick={handleClick}>
           <img src={EditProfile} alt="edit-profile" />
         </button>
         <header className={classes.header}>

@@ -71,7 +71,7 @@ const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((t
     },
   }));
 
-function EnterCourses({ quarter, allCourses, setAllCourses, setOverlayOpened }) {
+function EnterCourses({ isEditProfile, quarter, allCourses, setAllCourses, setOverlayOpened }) {
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [numRows, setNumRows] = useState(0);
   const [lengthOfSelectedCourses, setLengthOfSelectedCourses] = useState(5);
@@ -127,25 +127,48 @@ function EnterCourses({ quarter, allCourses, setAllCourses, setOverlayOpened }) 
       ) : (
         <div className={classes.courseCardWrapper}></div>
       )}
-      <div className={classes.pageButtonWrapper}>
-        <PageButton
-          page={"coursesOverlay"}
-          text="Back"
-          size="short"
-          setOverlayOpened={setOverlayOpened}
-        />
-        <PageButton
-          page={"coursesOverlay"}
-          text={"Done"}
-          size={"short"}
-          setOverlayOpened={setOverlayOpened}
-          action={() => {
-            updateQuarterCourses();
-          }}
-        />
-      </div>
+      {
+        isEditProfile === true ? (
+          <div style={{marginTop: "7.4rem"}}>
+            <PageButton
+              page={"coursesOverlay"}
+              text="Save"
+              size="long"
+              setOverlayOpened={setOverlayOpened}
+              action={() => {
+                updateQuarterCourses();
+              }}
+            />
+          </div>
+        ) : (
+          <div className={classes.pageButtonWrapper}>
+            <PageButton
+              page={"coursesOverlay"}
+              text="Back"
+              size="short"
+              setOverlayOpened={setOverlayOpened}
+              action={() => {
+                updateQuarterCourses();
+              }}
+            />
+            <PageButton
+              page={"coursesOverlay"}
+              text="Next"
+              size="short"
+              setOverlayOpened={setOverlayOpened}
+              action={() => {
+                updateQuarterCourses();
+              }}
+            />
+          </div>
+        )
+      }
     </div>
   );
+}
+
+EnterCourses.defaultProps = {
+  isEditProfile: false
 }
 
 export default EnterCourses;
