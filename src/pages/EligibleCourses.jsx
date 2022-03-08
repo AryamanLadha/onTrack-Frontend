@@ -71,18 +71,6 @@ function EligibleCourses({
 
   // 1. When page renders, create an object to hold display data, uses data pulled from the store (majors and coursesTaken). See mapStateToProps below.
   // 2. Then dispatch getEligible action to get the list of courses to display on this page (which will be stored in currentClasses portion of studentData object)
-
-  const fetchData = async (studentData) => {
-    try {
-      await getEligible(JSON.stringify(studentData));
-      if (eligibleCoursesData[0]) {
-        setNextQuarter(eligibleCoursesData[0].quarter);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   useEffect(() => {
     // See API Docs for more detail about course object structure: https://docs.google.com/document/d/1K_EwdJnraRhgYYT1dDU4aiw_GFCbMcqSNi7-EAOIdJA/edit?usp=sharing
     let completed = [];
@@ -94,7 +82,10 @@ function EligibleCourses({
       completedClasses: completed,
       currentClasses: [],
     };
-    fetchData(studentData);
+    studentData && getEligible(JSON.stringify(studentData));
+    eligibleCoursesData !== undefined &&
+      setNextQuarter(eligibleCoursesData[0].quarter);
+
     // eslint-disable-next-line
   }, []);
 
