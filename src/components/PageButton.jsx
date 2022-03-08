@@ -39,7 +39,6 @@ function PageButton({ page, text, size, action, setOverlayOpened, isOverlay}) {
       if (isOverlay === false) {
         navigate('/year');
       } else {
-        navigate('/editprofile');
         setOverlayOpened(false);
       }
     } else if (page === 'minors') {
@@ -69,7 +68,6 @@ function PageButton({ page, text, size, action, setOverlayOpened, isOverlay}) {
     else if (page === 'profile') {
       navigate('/editprofile');
     }
-
 
     // VERY IMPORTANT -- DISPATCH ACTION IF AVAILABLE
     if (action != null) {

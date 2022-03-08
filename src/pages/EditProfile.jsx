@@ -289,6 +289,7 @@ function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntere
         <div className={classes.overlay}>
           <div className={classes.overlayBackground}></div>
           <EnterCourses
+            isEditProfile={true}
             quarter={quarterOfOverlay}
             allCourses={coursesTaken}
             setAllCourses={setCoursesTaken}
