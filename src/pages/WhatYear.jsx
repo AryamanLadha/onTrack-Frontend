@@ -109,16 +109,7 @@ function WhatYear({ storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, 
       y++;
     }
   }
-
-  const handleClick = () => {
-    if (selectedStartQtr !== "")
-      setStartQtr(selectedStartQtr);
-    if (selectedEndQtr !== "")
-      setEndQtr(selectedEndQtr);
-    if (selectedGradeEntered !== "")
-      setGradeEntered(selectedGradeEntered);
-  }
-
+  
   return (
     <div className={classes.layout}>
       <header className={classes.header}>

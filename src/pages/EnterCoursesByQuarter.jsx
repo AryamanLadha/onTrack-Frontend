@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { SelectCourseDropdown, EnterCourses } from "../components";
 import { makeStyles } from "@mui/styles";
 import { PageButton } from "../components";
@@ -68,28 +68,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// i m using mock data for now
-let mockData = [
-  {
-    quarter: "Fall 2018",
-    courses: [
-      "COM SCI 1",
-      "COM SCI 31",
-      "MATH 31A",
-      "ENG COMP 3",
-      "PYSCH 7",
-      "COMM 1A",
-    ],
-  },
-  {
-    quarter: "Winter 2019",
-    courses: ["COM SCI 32", "MATH 31B", "PHYSICS 1A"],
-  },
-  {
-    quarter: "Spring 2019",
-    courses: ["COM SCI 33", "MATH 32A", "PHYSICS 1B"],
-  },
-];
 
 function EnterCoursesByQuarter({ storeStartQtr, storeCoursesTaken, setCourses }) {
   const classes = useStyles();

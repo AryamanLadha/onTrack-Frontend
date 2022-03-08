@@ -126,7 +126,7 @@ function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeE
     // check if user is logged in and update the state
     // if (able to load user info) {setUserLoggedIn(true)}
     getData();
-  }, [])
+  }, []);
 
   return (
     // userLoggedIn 
@@ -155,10 +155,6 @@ function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeE
             <div className={classes.progressTitle}>Upper Div</div>
             <div className={classes.progressBar}>
               <div className={classes.upperDivProgressBar} />
-            </div>
-            <div className={classes.progressTitle}>Degree</div>
-            <div className={classes.progressBar}>
-              <div className={classes.degreeProgressBar} />
             </div>
           </div>
           <div className={classes.courseHistory}>

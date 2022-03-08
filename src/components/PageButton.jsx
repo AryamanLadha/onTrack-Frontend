@@ -46,7 +46,7 @@ const useStyles = (props) =>
   }));
 
 // Button props: text, size, page
-function PageButton({ page, text, size, action, setOverlayOpened, activeNavPage, logout }) {
+function PageButton({ page, text, size, action, setOverlayOpened, isOverlay, activeNavPage, logout }) {
   const [ isHovered, setIsHovered ] = React.useState(false);
 
   const props = {
@@ -74,11 +74,15 @@ function PageButton({ page, text, size, action, setOverlayOpened, activeNavPage,
 
     else if (page === 'majors') {
       // Skip minors
-      navigate('/year');
+      if (isOverlay === false) {
+        navigate('/year');
+      } else {
+        setOverlayOpened(false);
+      }
     }
 
     else if (page === 'minors')
-      text === 'Back' ? navigate('/') : navigate('/year');
+      text === 'Back' ? navigate('/majors') : navigate('/year');
       
     else if (page === 'year') {
       text === 'Back'
@@ -100,10 +104,8 @@ function PageButton({ page, text, size, action, setOverlayOpened, activeNavPage,
     else if (page === 'nav')
       text === 'Eligible Courses' ? navigate('/eligible') : navigate('/profile');
 
-    // props.page === "done"
-    // else {
-    //   nothing for now.
-    // }
+    else if (page === 'profile')
+      navigate('/editprofile');
 
     // VERY IMPORTANT -- DISPATCH ACTION IF AVAILABLE
     if (action != null) {
@@ -129,6 +131,7 @@ function PageButton({ page, text, size, action, setOverlayOpened, activeNavPage,
 }
 
 PageButton.defaultProps = {
+  isOverlay: false,
   setOverlayOpened: () => {},
   activeNavPage: null,
 }

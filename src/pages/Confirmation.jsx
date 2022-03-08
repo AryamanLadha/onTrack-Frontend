@@ -54,12 +54,12 @@ const Confirmation = ({ userData, }) => {
                 Welcome to onTrack! Get started with planning your courses for the 2021-2022 school year!
             </span>
             <PageButton
-            text={'Done'}
-            size={'long'}
-            page={'confirm'}
-            action={() => {
-                updateUserData(userData);
-            }}
+                text={'Done'}
+                size={'long'}
+                page={'confirm'}
+                action={() => {
+                    updateUserData(userData);
+                }}
             />
             
         </div>

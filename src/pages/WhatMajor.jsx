@@ -11,9 +11,22 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    width: '100vw',
+    width: '100%',
     height: 'auto',
     backgroundColor: theme.color.background,
+  },
+
+  layoutOverlay: {
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    zIndex: "1.6rem",
+    display: "flex",
+    width: "105rem",
+    height: "100.6rem",
+    borderRadius: "5rem",
+    backgroundColor: theme.color.white,
   },
 
   header: {
@@ -76,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function WhatMajor({ majmin, storeMajors, setMajors }) {
+function WhatMajor({ majmin, storeMajors, setMajors, isOverlay, setOverlayOpened }) {
   // This hook is very important! See AutoDropdown component below...
   const [selectedMajors, setSelectedMajors] = useState([]);
   const [isAutoDropdownOpen, setIsAutoDropdownOpen] = useState(false);
@@ -85,7 +98,7 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
   const navigate = useNavigate();
 
   return (
-    <div className={classes.layout}>
+    <div className={isOverlay === true ? classes.layoutOverlay : classes.layout}>
       <header className={classes.header}>
         <h1 className={classes.title}>
           Enter Your
@@ -135,11 +148,14 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
         {
           emptyError ? (<div className={classes.emptyError}>Sorry, you can't move on without entering this information.</div>) : (<div></div>)
         }
-        {majmin === 'majors' ? (
+        {majmin === 'majors'
+        ? (
+          isOverlay === false ? (
             <PageButton
               text={'Next'}
               size={'short'}
               page={'majors'}
+              isOverlay={isOverlay}
               action={() => {
                 if (selectedMajors.length === 0) {
                   setEmptyError(true);
@@ -149,6 +165,23 @@ function WhatMajor({ majmin, storeMajors, setMajors }) {
                   setEmptyError(false);
                 }}}
             />
+          ) : (
+            <PageButton
+              text={'Save'}
+              size={'long'}
+              page={'majors'}
+              isOverlay={isOverlay}
+              setOverlayOpened={setOverlayOpened}
+              action={() => {
+                if (selectedMajors.length === 0) {
+                  setEmptyError(true);
+                  navigate('/');
+                } else {
+                  setMajors(selectedMajors);
+                  setEmptyError(false);
+                }}}
+            />
+          )
         ) : (
           <div className={classes.pageButtonWrapper}>
             <PageButton
@@ -205,5 +238,10 @@ const mapDispatchToProps = (dispatch, {majmin}) => {
       }
   )
 };
+
+WhatMajor.defaultProps = {
+  isOverlay: false,
+  setOverlayOpened: () => {}
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(WhatMajor);

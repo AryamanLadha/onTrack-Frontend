@@ -111,7 +111,7 @@ function AccordionDropdown({ quarter, subjectAndcourses }) {
         <AccordionDetails>
           <div className={classes.miniCourseCardWrapper}>
             {Object.entries(subjectAndcourses).map(([key, value]) => (
-              <div className={classes.miniCourseCardsBySubject}>
+              <div key={key} className={classes.miniCourseCardsBySubject}>
                 <div className={classes.subject}>{key}</div>
                 <div className={classes.miniCourseCardContainer}>
                   {value.map((course, idx) => (

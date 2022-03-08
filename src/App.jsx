@@ -20,7 +20,9 @@ function App() {
           <Route exact path="/courses" element={<EnterCoursesByQuarter />} />
           <Route exact path="/confirm" element={<Confirmation />} />
           <Route exact path="/eligible" element={<EligibleCourses />} />
+          <Route exact path="/done" element={<Confirmation />} />
           <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/editprofile" element={<EditProfile />} />
         </Routes>
       </Router>
     </>
