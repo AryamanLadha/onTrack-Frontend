@@ -143,7 +143,7 @@ function EnterCourses({ isEditProfile, quarter, allCourses, setAllCourses, setOv
         ) : (
           <div className={classes.pageButtonWrapper}>
             <PageButton
-              page={"courses"}
+              page={"coursesOverlay"}
               text="Back"
               size="short"
               setOverlayOpened={setOverlayOpened}
@@ -152,7 +152,7 @@ function EnterCourses({ isEditProfile, quarter, allCourses, setAllCourses, setOv
               }}
             />
             <PageButton
-              page="courses"
+              page={"coursesOverlay"}
               text="Next"
               size="short"
               setOverlayOpened={setOverlayOpened}

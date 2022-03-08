@@ -94,11 +94,9 @@ function EnterCoursesByQuarter({ storeStartQtr, storeCoursesTaken, setCourses })
     let existing = undefined;
     while (!(y === endYear && s === endSeason)) {
       existing = storeCoursesTaken.find(object => object.quarter === (seasons[s] + " " + y));
-      if (existing !== undefined && existing.courses.length > 0)
-      {
+      if (existing !== undefined && existing.courses.length > 0) {
         newCoursesTaken.push(existing);
       }
-      else
       newCoursesTaken.push({ quarter: seasons[s] + " " + y, courses: [] });
       s++;
       if (s === seasons.length) {

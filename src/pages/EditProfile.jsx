@@ -173,7 +173,6 @@ function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntere
       {
         newCoursesTaken.push(existing);
       }
-      else
       newCoursesTaken.push({ quarter: seasons[s] + " " + y, courses: [] });
       s++;
       if (s === seasons.length) {
