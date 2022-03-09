@@ -85,7 +85,6 @@ const SelectCourseDropdown = ({ data, overlayOpened, setOverlayOpened, setQuarte
   const classes = useStyles(props)();
 
   useEffect(() => {
-    console.log(data);
     const numberOfCourses = data.courses.length;
     // // any subjects that have more than 5 courses adds extraRow
     setNumRows(Math.floor(numberOfCourses/5)+1);

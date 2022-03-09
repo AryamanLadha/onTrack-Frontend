@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { TagComponent, SelectCourseDropdown } from "../components";
-import EditProfile from '../assets/icons/EditProfile.svg';
 import { connect } from "react-redux";
+import { PageButton, Navbar } from '../components';
+import { getData } from "../actions/actions";
 
 const useStyles = (props) => makeStyles((theme) => ({
   layout: {
@@ -11,6 +12,7 @@ const useStyles = (props) => makeStyles((theme) => ({
     flexDirection: 'column',
     width: '100vw',
     height: 'auto',
+    marginTop: '8rem',
     backgroundColor: theme.color.background,
   },
 
@@ -107,7 +109,7 @@ const user = {
   name: "username",
 }
 
-function Profile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntered, storeCoursesTaken }) {
+function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeEntered, storeCoursesTaken }) {
   const [ overlayOpened, setOverlayOpened] = useState(false);
   const [ quarterOfOverlay, setQuarterOfOverlay] = useState("");
   // const [ userLoggedIn, setUserLoggedIn ] = useState(false);
@@ -123,51 +125,58 @@ function Profile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntered, s
   useEffect(() => {
     // check if user is logged in and update the state
     // if (able to load user info) {setUserLoggedIn(true)}
-  }, [])
+    getData();
+  }, []);
 
   return (
     // userLoggedIn 
     // ? (
-      <div className={classes.layout}>
-        {/* add onclick to enable editing  */}
-        <button className={classes.editProfile} >
-          <img src={EditProfile} alt="edit-profile" />
-        </button>
-        <header className={classes.header}>
-          <h1 className={classes.title}>
-            Welcome, {user.name}!
-          </h1>
-          <span className={classes.subtitle}>Expected graduation: {storeEndQtr} </span>
-          <div className={classes.majors}>
-            {storeMajors.map((major, idx) => (
-              <TagComponent key={idx} major={major} />
+      <div>
+        <Navbar page='profile' />
+        <div className={classes.layout}>
+          {/* add onclick to enable editing  */}
+          <PageButton
+            page="profile"
+            text="Edit"
+            size="short"
+          />
+          <header className={classes.header}>
+            <h1 className={classes.title}>
+              Welcome, {user.name}!
+            </h1>
+            <span className={classes.subtitle}>Expected graduation: {storeEndQtr} </span>
+            <div className={classes.majors}>
+              {storeMajors.map((major, idx) => (
+                <TagComponent key={idx} major={major} />
+              ))}
+            </div>
+          </header>
+          <div className={classes.degreeProgress} >
+            <div className={classes.progressTitle}>Upper Div</div>
+            <div className={classes.progressBar}>
+              <div className={classes.upperDivProgressBar} />
+            </div>
+          </div>
+          <div className={classes.courseHistory}>
+            <div className={classes.courseHistoryTitle}>
+              Course History
+            </div>
+            {storeCoursesTaken.map((object, idx) => (
+              <SelectCourseDropdown 
+                key={idx}
+                data={object}
+                overlayOpened={overlayOpened}
+                setOverlayOpened={setOverlayOpened}
+                setQuarterOfOverlay={setQuarterOfOverlay}
+                canEdit={false}
+              />
             ))}
           </div>
-        </header>
-        <div className={classes.degreeProgress} >
-          <div className={classes.progressTitle}>Upper Div</div>
-          <div className={classes.progressBar}>
-            <div className={classes.upperDivProgressBar} />
-          </div>
-          <div className={classes.progressTitle}>Degree</div>
-          <div className={classes.progressBar}>
-            <div className={classes.degreeProgressBar} />
-          </div>
-        </div>
-        <div className={classes.courseHistory}>
-          <div className={classes.courseHistoryTitle}>
-            Course History
-          </div>
-          {storeCoursesTaken.map((object, idx) => (
-            <SelectCourseDropdown 
-              key={idx}
-              data={object}
-              overlayOpened={overlayOpened}
-              setOverlayOpened={setOverlayOpened}
-              setQuarterOfOverlay={setQuarterOfOverlay}
-              canEdit={false}
-            />
-          ))}
+          <PageButton
+            page="profile"
+            text="Logout"
+            size="short"
+          />
         </div>
       </div>
     // ) : (
@@ -194,4 +203,10 @@ const mapStateToProps = (store) => {
   )
 };
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getData: () => dispatch(getData()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

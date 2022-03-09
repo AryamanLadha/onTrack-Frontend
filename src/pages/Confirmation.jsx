@@ -1,8 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import onTrackLogoSmall from '../assets/icons/onTrackLogoSmall.svg';
 import { PageButton } from '../components';
-
+import { updateUserData } from '../api/updateUserData';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-const Confirmation = () => {
+const Confirmation = ({ userData, }) => {
     const classes = useStyles();
 
     return (
@@ -53,14 +54,22 @@ const Confirmation = () => {
                 Welcome to onTrack! Get started with planning your courses for the 2021-2022 school year!
             </span>
             <PageButton
-            text={'Done'}
-            size={'long'}
-            page={'confirmation'}
-            action={() => {}}
+                text={'Done'}
+                size={'long'}
+                page={'confirm'}
+                action={() => {
+                    updateUserData(userData);
+                }}
             />
             
         </div>
     )
 }
 
-export default Confirmation
+const mapStateToProps = (store) => {
+    return {
+      userData: store,
+    }
+  };
+
+export default connect(mapStateToProps, null)(Confirmation);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
-import { PageButton } from '../components';
+import { Navbar } from '../components';
 import { getEligible } from '../actions/actions';
 import EligibleCoursesBySubject from '../components/EligibleCoursesBySubject';
 
@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     width: '100vw',
-    height: '120vh',
+    height: 'auto',
+    marginTop: '8rem',
     backgroundColor: theme.color.background,
   },
 
@@ -41,14 +42,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '1.5rem',
     padding: '1.5rem 2rem',
     margin: '2rem',
-  },
-
-  pageButtonWrapper: {
-    display: 'flex',
-    width: '117.8rem',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    marginTop: '7.4rem',
   },
 
   miniCourseCardWrapper: {
@@ -94,7 +87,9 @@ function EligibleCourses({
   }, [eligibleCoursesData]);
 
   return (
-    <>
+    <div>
+      <Navbar page="eligible" />
+
       <div className={classes.layout}>
         <header className={classes.header}>
           <h1 className={classes.title}>Eligible Courses</h1>
@@ -123,12 +118,8 @@ function EligibleCourses({
             <div className={classes.miniCourseCardWrapper}></div>
           )}
         </div>
-        <div className={classes.pageButtonWrapper}>
-          <PageButton text="Back" size="short" page="eligible" />
-          <PageButton text="Next" size="short" page="eligible" />
-        </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const config = {
+export const config = {
   headers: {
     'Content-type': 'application-json',
   },
-  baseURL: 'http://127.0.0.1:8000',
+  baseURL: 'http://localhost:8000',
 };
 // When you make an API call, or anything asynchronous, the action creator returns a function
 
@@ -44,6 +44,26 @@ export const getEligible = (studentData) => {
         dispatch({
           type: 'GET_ELIGIBLE_SUCCESS',
           payload: { eligibleCourses: res.data },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+// Get the user’s data represented as an object
+export const getData = () => {
+  return (dispatch) => {
+    axios
+      .get(`${config.baseURL}/api/auth/data`, {
+        crossdomain: true,
+        withCredentials: true,
+      })
+      .then((res) => {
+        dispatch({
+          type: 'GET_DATA_SUCCESS',
+          payload: { data: res.data },
         });
       })
       .catch((error) => {
@@ -118,5 +138,37 @@ export const setCourses = (newCourses) => {
   return {
     type: 'SET_COURSES',
     payload: { newCourses },
+  };
+};
+
+// Clear the store and log the current user out
+export const logout = () => {
+  return (dispatch) => {
+    axios
+      .get(`${config.baseURL}/api/auth/logout`, {
+        crossdomain: true,
+        withCredentials: true,
+      })
+      .then((res) => {
+        dispatch({
+          type: 'LOGOUT_SUCCESS',
+          payload: {
+            majors: [],
+            minors: [],
+            courses: [],
+            eligibleCourses: [],
+            coursesTaken: [],
+            year: null,
+            allMajors: [],
+            startQtr: null,
+            endQtr: null,
+            gradeEntered: null,
+            data: null,
+          },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };
