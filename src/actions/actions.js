@@ -40,6 +40,7 @@ export const getEligible = (studentData) => {
         params: {
           studentData,
         },
+        withCredentials: true,
       })
       .then((res) => {
         dispatch({
