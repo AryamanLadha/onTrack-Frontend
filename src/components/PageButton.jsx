@@ -68,8 +68,11 @@ function PageButton({ page, text, size, action, setOverlayOpened, isOverlay, act
 
     else if (page === 'profile')
     {
-      text === 'Edit' && navigate('/edit');
-      text === 'Logout' && logout();
+      text === 'Edit' && navigate('/editprofile');
+      if (text === 'Logout') {
+        logout();
+        navigate('/');
+      }
     }
 
     else if (page === 'majors') {
@@ -103,9 +106,6 @@ function PageButton({ page, text, size, action, setOverlayOpened, isOverlay, act
 
     else if (page === 'nav')
       text === 'Eligible Courses' ? navigate('/eligible') : navigate('/profile');
-
-    else if (page === 'profile')
-      navigate('/editprofile');
 
     // VERY IMPORTANT -- DISPATCH ACTION IF AVAILABLE
     if (action != null) {
