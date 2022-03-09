@@ -2,12 +2,11 @@ import axios from 'axios';
 
 export const config = {
   headers: {
-      'Content-type': "application-json"
+    'Content-type': 'application-json',
   },
   baseURL: 'http://localhost:8000',
-}
+};
 // When you make an API call, or anything asynchronous, the action creator returns a function
-
 
 // API call to get list of all courses
 export const getCourses = () => {
@@ -70,8 +69,8 @@ export const getData = () => {
       .catch((error) => {
         console.log(error);
       });
-  }
-}
+  };
+};
 
 // Regular action creator returns an object, i.e an action
 
@@ -172,4 +171,4 @@ export const logout = () => {
         console.log(error);
       });
   };
-}
+};

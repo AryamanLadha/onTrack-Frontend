@@ -20,7 +20,7 @@ const useStyles = (props) => makeStyles((theme) => ({
 
   typography: {
     paddingTop: "0.5rem",
-    font: theme.font.accordionDropdown,
+    font: theme.font.selectCourseDropdown,
   },
 
   root: {

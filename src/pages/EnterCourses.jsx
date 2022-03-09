@@ -59,7 +59,7 @@ const useStyles = (marginTop) =>
       flexDirection: 'row',
       width: '99rem',
       justifyContent: 'space-between',
-    }
+    },
   }));
 
 function EnterCourses({ storeCoursesTaken, setCourses }) {
@@ -86,7 +86,7 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
         <span className={classes.subtitle}>One last step....We promise.</span>
       </header>
       <AutoDropdown
-        whichPage={"courses"}
+        whichPage={'courses'}
         setLengthOfSelectedCourses={setLengthOfSelectedCourses}
         initialSelectedOptions={storeCoursesTaken}
         selectedOptions={selectedCourses}
@@ -98,11 +98,11 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
           {Array.from(Array(numRows).keys()).map((i) => (
             <div key={i} className={classes.courseCardContainer}>
               {selectedCourses.slice(i * 4, (i + 1) * 4).map((course, idx) => (
-                <MiniCourseCard 
-                  key={idx} 
+                <MiniCourseCard
+                  key={idx}
                   name={course}
                   selectedCourses={selectedCourses}
-                  setSelectedCourses={setSelectedCourses} 
+                  setSelectedCourses={setSelectedCourses}
                   canBeDeleted={true}
                 />
               ))}
@@ -114,7 +114,7 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
       )}
       <div className={classes.pageButtonWrapper}>
         <PageButton
-          page={"courses"}
+          page={'courses'}
           text="Back"
           size="short"
           action={() => {
@@ -137,14 +137,14 @@ function EnterCourses({ storeCoursesTaken, setCourses }) {
 const mapStateToProps = (store) => {
   return {
     storeCoursesTaken: store.coursesTaken,
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   // Update the store with courses the user has taken
   return {
     setCourses: (newCourses) => dispatch(setCourses(newCourses)),
-  }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnterCourses);

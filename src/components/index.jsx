@@ -1,4 +1,3 @@
-export { default as AccordionDropdown } from './AccordionDropdown';
 export { default as AutoDropdown } from './AutoDropdown';
 export { default as CourseCard } from './CourseCard';
 export { default as Dropdown } from './Dropdown';
