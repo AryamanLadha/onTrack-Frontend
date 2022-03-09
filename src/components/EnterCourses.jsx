@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { MiniCourseCard, PageButton, AutoDropdown } from "../components";
+import { connect } from "react-redux";
+import { getData } from "../actions/actions";
 
 const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((theme) => ({
     layout: {
@@ -71,7 +73,7 @@ const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((t
     },
   }));
 
-function EnterCourses({ isEditProfile, quarter, allCourses, setAllCourses, setOverlayOpened }) {
+function EnterCourses({ storeUserData, getData, isEditProfile, quarter, allCourses, setAllCourses, setOverlayOpened }) {
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [numRows, setNumRows] = useState(0);
   const [lengthOfSelectedCourses, setLengthOfSelectedCourses] = useState(5);
@@ -79,7 +81,9 @@ function EnterCourses({ isEditProfile, quarter, allCourses, setAllCourses, setOv
 
   const classes = useStyles(lengthOfSelectedCourses, isAutoDropdownOpen)();
 
-  let initialCoursesTaken = allCourses.find(object => object.quarter == quarter).courses;
+  let initialCoursesTaken = isEditProfile 
+    ? storeUserData.coursesTaken.filter(obj => obj.quarter === quarter)[0].courses
+    : allCourses.find(object => object.quarter === quarter).courses
 
   useEffect(() => {
     setNumRows(parseInt(selectedCourses.length /5)+1);
@@ -87,10 +91,19 @@ function EnterCourses({ isEditProfile, quarter, allCourses, setAllCourses, setOv
   }, [selectedCourses, isAutoDropdownOpen]);
 
   const updateQuarterCourses = () => {
-    for (let i = 0; i < allCourses.length; i++) {
-      if (allCourses[i].quarter == quarter) {
-        allCourses[i].courses = selectedCourses
-        setAllCourses(allCourses);
+    if (isEditProfile === true) {
+      for (let i = 0; i < storeUserData.coursesTaken.length; i++) {
+        if (storeUserData.coursesTaken[i].quarter === quarter) {
+          storeUserData.coursesTaken[i].courses = selectedCourses
+          setAllCourses(storeUserData.coursesTaken);
+        }
+      }
+    } else {
+      for (let i = 0; i < allCourses.length; i++) {
+        if (allCourses[i].quarter === quarter) {
+          allCourses[i].courses = selectedCourses
+          setAllCourses(allCourses);
+        }
       }
     }
   }
@@ -171,4 +184,26 @@ EnterCourses.defaultProps = {
   isEditProfile: false
 }
 
-export default EnterCourses;
+const mapStateToProps = (store) => {
+  return {
+    // storeMajors: store.majors,
+    // storeCoursesTaken: store.coursesTaken,
+    // storeStartQtr: store.startQtr,
+    // storeEndQtr: store.endQtr,
+    // storeGradeEntered: store.gradeEntered,
+    storeUserData: store.data,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  // Update the store with user's start quarter, end quarter, and grade entered
+  return {
+    // setStartQtr: (newStartQtr) => dispatch(setStartQtr(newStartQtr)),
+    // setEndQtr: (newEndQtr) => dispatch(setEndQtr(newEndQtr)),
+    // setGradeEntered: (newGradeEntered) => dispatch(setGradeEntered(newGradeEntered)),
+    // setCourses: (newCourses) => dispatch(setCourses(newCourses)),
+    getData: () => dispatch(getData()),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EnterCourses);

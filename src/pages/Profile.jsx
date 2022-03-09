@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { PageButton, Navbar } from '../components';
 import { getData } from "../actions/actions";
 
-const useStyles = (props) => makeStyles((theme) => ({
+const useStyles = () => makeStyles((theme) => ({
   layout: {
     display: 'flex',
     alignItems: 'center',
@@ -56,45 +56,6 @@ const useStyles = (props) => makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     flexDirection: "row",
-  },
-
-  degreeProgress: {
-    width: "59.3rem",
-    display: "grid",
-    gridTemplateColumns: "repeat(2,1fr)",
-    rowGap: "3rem",
-    margin: "7.5rem 0rem 9.8rem 0rem",
-  },
-
-  progressBar: {
-    width: "44.3rem",
-    height: "5rem",
-    display: "flex",
-    flexDirection: "row",
-    backgroundColor: theme.color.lightGreen,
-  },
-
-  progressTitle: {
-    width: "12rem",
-    textAlign: "right",
-    height: "5rem",
-    lineHeight: "5rem",
-    font: theme.font.progressBar,
-  },
-
-
-  upperDivProgressBar: {
-    width: `${props.upperDivProgressPercent}%`,
-    backgroundColor: theme.color.green,
-    position: "relative",
-    zIndex: "1rem",
-  },
-
-  degreeProgressBar: {
-    width: `${props.degreeProgressPercent}%`,
-    backgroundColor: theme.color.green,
-    position: "relative",
-    zIndex: "1rem",
   },
 
   courseHistory: {
@@ -148,9 +109,9 @@ function Profile({ getData, storeUserData }) {
           </div>
           <header className={classes.header}>
             <h1 className={classes.title}>
-              Welcome, {user.name}!
+              Welcome, {storeUserData.fullName}!
             </h1>
-            <span className={classes.subtitle}>Expected graduation: {storeUserData.quarterExpectedGraduation} </span>
+            <span className={classes.subtitle}>Expected graduation: {storeUserData.dates.quarterExpectedGraduation} </span>
             <div className={classes.majors}>
               {storeUserData.majors.map((major, idx) => (
                 <TagComponent key={idx} major={major} />

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TagComponent, Dropdown, SelectCourseDropdown, EnterCourses } from "../components";
 import { makeStyles } from "@mui/styles";
 import { connect } from "react-redux";
-import { setStartQtr, setEndQtr, setGradeEntered, setCourses } from "../actions/actions";
+import { setStartQtr, setEndQtr, setGradeEntered, setCourses, getData} from "../actions/actions";
 import { getCurrQtr } from "../utils/utils";
 import { useNavigate } from 'react-router-dom';
 import Edit from '../assets/icons/Edit.svg';
@@ -138,7 +138,19 @@ const user = {
 }
 
 
-function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, setEndQtr, setGradeEntered, storeCoursesTaken, setCourses  }) {
+function EditProfile({ 
+  getData, 
+  storeUserData, 
+  storeMajors, 
+  storeStartQtr, 
+  storeEndQtr, 
+  storeGradeEntered, 
+  setStartQtr, 
+  setEndQtr, 
+  setGradeEntered, 
+  storeCoursesTaken, 
+  setCourses  
+}) {
   const classes = useStyles();
   const navigate = useNavigate();
 
@@ -148,6 +160,14 @@ function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntere
   const [coursesOverlayOpened, setCoursesOverlayOpened] = useState(false);
   const [majorsOverlayOpened, setMajorsOverlayOpened] = useState(false);
   const [quarterOfOverlay, setQuarterOfOverlay] = useState("");
+  const [userData, setUserData] = useState({
+      fullName: "",
+      dates: {
+        quarterEntered: "",
+        quarterExpectedGraduation: "",
+      },
+      coursesTaken: []
+  });
 
    // Parse start/end season and year using store data
   let startSeason, endSeason;
@@ -173,6 +193,7 @@ function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntere
       {
         newCoursesTaken.push(existing);
       }
+
       newCoursesTaken.push({ quarter: seasons[s] + " " + y, courses: [] });
       s++;
       if (s === seasons.length) {
@@ -221,93 +242,126 @@ function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntere
     setMajorsOverlayOpened(true);
   }
 
+  // const handleChange = (e) => {
+  //   setUserData(s);
+  // }
+
+  useEffect(() => {
+    getData();
+    storeUserData && setUserData(userData)
+  }, [])
+
+
   return (
-    <div className={classes.layout}>
-      <header className={classes.header}>
-        <div className={classes.buttons}>
-          <button className={classes.cancelButton} onClick={() => navigate("/profile")}>Cancel</button>
-          <button className={classes.saveButton}>Save</button>
-        </div>
-        <h1 className={classes.title}>
-          Edit Profile
-        </h1>
-      </header>
-      <div className={classes.userInfoSection}>
-        <div className={classes.section} >
-          <span className={classes.sectionTitle}>Name</span>
-          <input className={classes.nameInput} type="text" placeholder={user.name}></input>
-        </div>
-        <div className={classes.section} >
-          <span className={classes.sectionTitle}>Major</span>
-          <div className={classes.majorSection}>
-            {storeMajors.map((major, idx) => (
-              <TagComponent key={idx} major={major} />
-            ))}
-            <button onClick={handleClick}>
-              <img src={Edit} alt="edit-majors"/>
-            </button>
+    // storeUserData !== null 
+    // ? (
+      <div className={classes.layout}>
+        <header className={classes.header}>
+          <div className={classes.buttons}>
+            <button className={classes.cancelButton} onClick={() => navigate("/profile")}>Cancel</button>
+            <button className={classes.saveButton}
+              // action={() => {
+              //   updateUserData(userData);
+              // }}
+            >Save</button>
           </div>
-        </div>
-        <div className={classes.quarterSection} >
+          <h1 className={classes.title}>
+            Edit Profile
+          </h1>
+        </header>
+        <div className={classes.userInfoSection}>
           <div className={classes.section} >
-            <span className={classes.sectionTitle}>Start Term</span>
-            <Dropdown 
-              placeholder={storeStartQtr !== null && storeStartQtr !== "" ? storeStartQtr : "Select a quarter"}
-              options={startQuarters}
-              initialOption={storeStartQtr}
-              setSelectedOption={setSelectedStartQtr}
-            />
+            <span className={classes.sectionTitle}>Name</span>
+            <input 
+              className={classes.nameInput} 
+              type="text" 
+              placeholder={"username"}
+              // value={userName}
+              // onChange={handleChange}
+            ></input>
           </div>
           <div className={classes.section} >
-            <span className={classes.sectionTitle}>Expected Graduation</span>
-            <Dropdown 
-              placeholder={storeEndQtr !== null && storeEndQtr !== "" ? storeEndQtr : "Select a quarter"}
-              options={endQuarters}
-              initialOption={storeEndQtr}
-              setSelectedOption={setSelectedEndQtr}
-            />
+            <span className={classes.sectionTitle}>Major</span>
+            <div className={classes.majorSection}>
+              {storeUserData.majors.map((major, idx) => (
+                <TagComponent key={idx} major={major} />
+              ))}
+              <button onClick={handleClick}>
+                <img src={Edit} alt="edit-majors"/>
+              </button>
+            </div>
+          </div>
+          <div className={classes.quarterSection} >
+            <div className={classes.section} >
+              <span className={classes.sectionTitle}>Start Term</span>
+              <Dropdown 
+                placeholder={
+                  storeUserData.dates.quarterEntered !== null && storeUserData.dates.quarterEntered !== "" 
+                    ? storeUserData.dates.quarterEntered 
+                    : "Select a quarter"
+                }
+                options={startQuarters}
+                initialOption={storeUserData.quarterEntered}
+                setSelectedOption={setSelectedStartQtr}
+              />
+            </div>
+            <div className={classes.section} >
+              <span className={classes.sectionTitle}>Expected Graduation</span>
+              <Dropdown 
+                placeholder={
+                  storeUserData.dates.quarterExpectedGraduation!== null && storeUserData.dates.quarterExpectedGraduation !== "" 
+                    ? storeUserData.dates.quarterExpectedGraduation
+                    : "Select a quarter"
+                }
+                options={endQuarters}
+                initialOption={storeUserData.dates.quarterExpectedGraduation}
+                setSelectedOption={setSelectedEndQtr}
+              />
+            </div>
           </div>
         </div>
+        <div className={classes.courseHistory}>
+          <div className={classes.courseHistoryTitle}>
+            Course History
+          </div>
+          {storeUserData.coursesTaken.map((object, idx) => (
+            <SelectCourseDropdown 
+              key={idx}
+              data={object}
+              overlayOpened={coursesOverlayOpened}
+              setOverlayOpened={setCoursesOverlayOpened}
+              setQuarterOfOverlay={setQuarterOfOverlay}
+              canEdit={true}
+            />
+          ))}
+        </div>
+        {coursesOverlayOpened && (
+          <div className={classes.overlay}>
+            <div className={classes.overlayBackground}></div>
+            <EnterCourses
+              isEditProfile={true}
+              quarter={quarterOfOverlay}
+              allCourses={coursesTaken}
+              setAllCourses={setCoursesTaken}
+              setOverlayOpened={setCoursesOverlayOpened}
+            />
+          </div>
+        )}
+        {majorsOverlayOpened && (
+          <div className={classes.overlay}>
+            <div className={classes.overlayBackground}></div>
+            <WhatMajor 
+              majmin={"majors"}
+              storeMajors={storeUserData.majors}
+              isOverlay={true}
+              setOverlayOpened={setMajorsOverlayOpened}
+            />
+          </div>
+        )}
       </div>
-      <div className={classes.courseHistory}>
-        <div className={classes.courseHistoryTitle}>
-          Course History
-        </div>
-        {storeCoursesTaken.map((object, idx) => (
-          <SelectCourseDropdown 
-            key={idx}
-            data={object}
-            overlayOpened={coursesOverlayOpened}
-            setOverlayOpened={setCoursesOverlayOpened}
-            setQuarterOfOverlay={setQuarterOfOverlay}
-            canEdit={true}
-          />
-        ))}
-      </div>
-      {coursesOverlayOpened && (
-        <div className={classes.overlay}>
-          <div className={classes.overlayBackground}></div>
-          <EnterCourses
-            isEditProfile={true}
-            quarter={quarterOfOverlay}
-            allCourses={coursesTaken}
-            setAllCourses={setCoursesTaken}
-            setOverlayOpened={setCoursesOverlayOpened}
-          />
-        </div>
-      )}
-      {majorsOverlayOpened && (
-        <div className={classes.overlay}>
-          <div className={classes.overlayBackground}></div>
-          <WhatMajor 
-            majmin={"majors"}
-            storeMajors={storeMajors}
-            isOverlay={true}
-            setOverlayOpened={setMajorsOverlayOpened}
-          />
-        </div>
-      )}
-    </div>
+    // ) : (
+    //   <>Log in </>
+    // )
   )
 }
 
@@ -318,6 +372,7 @@ const mapStateToProps = (store) => {
     storeStartQtr: store.startQtr,
     storeEndQtr: store.endQtr,
     storeGradeEntered: store.gradeEntered,
+    storeUserData: store.data,
   }
 };
 
@@ -328,6 +383,7 @@ const mapDispatchToProps = (dispatch) => {
     setEndQtr: (newEndQtr) => dispatch(setEndQtr(newEndQtr)),
     setGradeEntered: (newGradeEntered) => dispatch(setGradeEntered(newGradeEntered)),
     setCourses: (newCourses) => dispatch(setCourses(newCourses)),
+    getData: () => dispatch(getData()),
   }
 };
 
