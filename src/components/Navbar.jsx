@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   navbar: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignItems: 'center',
     backgroundColor: "#B2BCAA",
     height: "8rem",
@@ -31,16 +31,18 @@ function Navbar ({ page }) {
   return (
     <div className={classes.navbar}>
       <img src={onTrackLogoMini} className={classes.navimg} alt="Nav bar" />
-      <PageButton
-        page="nav"
-        activeNavPage={ page === 'eligible' ? true : false }
-        text="Eligible Courses"
-      />
-      <PageButton
-        page="nav"
-        activeNavPage={ page === 'profile' ? true : false }
-        text="Profile"
-      />
+      <div className={classes.pageButtonWrapper}>
+        <PageButton
+          page="nav"
+          activeNavPage={ page === 'eligible' ? true : false }
+          text="Eligible Courses"
+        />
+        <PageButton
+          page="nav"
+          activeNavPage={ page === 'profile' ? true : false }
+          text="Profile"
+        />
+      </div>
     </div>
   );
 };

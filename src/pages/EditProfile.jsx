@@ -244,7 +244,7 @@ function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntere
               <TagComponent key={idx} major={major} />
             ))}
             <button onClick={handleClick}>
-                <img src={Edit} alt="edit-majors"/>
+              <img src={Edit} alt="edit-majors"/>
             </button>
           </div>
         </div>

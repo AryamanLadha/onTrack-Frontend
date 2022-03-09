@@ -16,13 +16,19 @@ const useStyles = (props) => makeStyles((theme) => ({
     backgroundColor: theme.color.background,
   },
 
+  pageButtonWrapper: {
+    width: '95%',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+
   header: {
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
     width: '100rem',
     height: '9.4rem',
-    marginTop: '18.4rem',
+    marginTop: '9.4rem',
     marginBottom: '12.4rem',
   },
 
@@ -135,11 +141,13 @@ function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeE
         <Navbar page='profile' />
         <div className={classes.layout}>
           {/* add onclick to enable editing  */}
-          <PageButton
-            page="profile"
-            text="Edit"
-            size="short"
-          />
+          <div className={classes.pageButtonWrapper}>
+            <PageButton
+              page="profile"
+              text="Edit"
+              size="short"
+            />
+          </div>
           <header className={classes.header}>
             <h1 className={classes.title}>
               Welcome, {user.name}!
