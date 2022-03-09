@@ -12,7 +12,7 @@ function App() {
           {/* Default path goes to Login page */}
           <Route exact path="/" element={<Login />} />
           <Route exact path="/profile" element={<Profile />} />
-          <Route exact path="/edit" element={<EditProfile />} />
+          <Route exact path="/editprofile" element={<EditProfile />} />
           <Route exact path="/majors" element={<WhatMajor majmin={'majors'} />} />
           {/* <Route exact path="/minors" element={<WhatMajor majmin={"minors"} />} /> */}
           <Route exact path="/year" element={<WhatYear majmin={"year"} />} />
@@ -22,7 +22,6 @@ function App() {
           <Route exact path="/eligible" element={<EligibleCourses />} />
           <Route exact path="/done" element={<Confirmation />} />
           <Route exact path="/profile" element={<Profile />} />
-          <Route exact path="/editprofile" element={<EditProfile />} />
         </Routes>
       </Router>
     </>
