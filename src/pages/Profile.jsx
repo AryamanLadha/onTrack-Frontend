@@ -102,6 +102,7 @@ const useStyles = (props) => makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
+    marginTop: "8rem",
   },
 
   courseHistoryTitle : {
@@ -115,10 +116,9 @@ const user = {
   name: "username",
 }
 
-function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeEntered, storeCoursesTaken }) {
+function Profile({ getData, storeUserData }) {
   const [ overlayOpened, setOverlayOpened] = useState(false);
   const [ quarterOfOverlay, setQuarterOfOverlay] = useState("");
-  // const [ userLoggedIn, setUserLoggedIn ] = useState(false);
 
   // pass on progress percentage to style progress bars
   const props = {
@@ -129,14 +129,12 @@ function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeE
   const classes = useStyles(props)();
 
   useEffect(() => {
-    // check if user is logged in and update the state
-    // if (able to load user info) {setUserLoggedIn(true)}
     getData();
   }, []);
 
   return (
-    // userLoggedIn 
-    // ? (
+    storeUserData !== null  
+    ? (
       <div>
         <Navbar page='profile' />
         <div className={classes.layout}>
@@ -152,24 +150,18 @@ function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeE
             <h1 className={classes.title}>
               Welcome, {user.name}!
             </h1>
-            <span className={classes.subtitle}>Expected graduation: {storeEndQtr} </span>
+            <span className={classes.subtitle}>Expected graduation: {storeUserData.quarterExpectedGraduation} </span>
             <div className={classes.majors}>
-              {storeMajors.map((major, idx) => (
+              {storeUserData.majors.map((major, idx) => (
                 <TagComponent key={idx} major={major} />
               ))}
             </div>
           </header>
-          <div className={classes.degreeProgress} >
-            <div className={classes.progressTitle}>Upper Div</div>
-            <div className={classes.progressBar}>
-              <div className={classes.upperDivProgressBar} />
-            </div>
-          </div>
           <div className={classes.courseHistory}>
             <div className={classes.courseHistoryTitle}>
               Course History
             </div>
-            {storeCoursesTaken.map((object, idx) => (
+            {storeUserData.coursesTaken.map((object, idx) => (
               <SelectCourseDropdown 
                 key={idx}
                 data={object}
@@ -187,26 +179,22 @@ function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeE
           />
         </div>
       </div>
-    // ) : (
-    //   <div className={classes.layout}>
-    //     <header className={classes.header}>
-    //       <h1 className={classes.title}>
-    //         Please login
-    //       </h1>
-    //     </header>
-    //   </div>
-    // )
+    ) : (
+      <div className={classes.layout}>
+        <header className={classes.header}>
+          <h1 className={classes.title}>
+            Please login
+          </h1>
+        </header>
+      </div>
+    )
   )
 }
 
 const mapStateToProps = (store) => {
   return (
     { 
-      storeMajors: store.majors,
-      storeStartQtr: store.startQtr,
-      storeEndQtr: store.endQtr,
-      storeGradeEntered: store.gradeEntered,
-      storeCoursesTaken: store.coursesTaken,
+      storeUserData: store.data,
     }
   )
 };
