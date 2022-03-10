@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { TagComponent, Dropdown, SelectCourseDropdown, EnterCourses } from "../components";
 import { makeStyles } from "@mui/styles";
 import { connect } from "react-redux";
-import { setStartQtr, setEndQtr, setGradeEntered, setCourses, getData} from "../actions/actions";
+import { setStartQtr, setEndQtr, setGradeEntered, setCourses, getData, setMajors} from "../actions/actions";
 import { getCurrQtr } from "../utils/utils";
 import { useNavigate } from 'react-router-dom';
 import Edit from '../assets/icons/Edit.svg';
@@ -183,8 +183,7 @@ function EditProfile({
     let existing = undefined;
     while (!(y === endYear && s === endSeason)) {
       existing = storeCoursesTaken.find(object => object.quarter === (seasons[s] + " " + y));
-      if (existing !== undefined && existing.courses.length > 0)
-      {
+      if (existing !== undefined && existing.courses.length > 0) {
         newCoursesTaken.push(existing);
       }
 
@@ -236,8 +235,8 @@ function EditProfile({
     setMajorsOverlayOpened(true);
   }
 
-  const handleSaveClick = () => {
-    updateUserData({
+  const handleSaveClick = async () => {
+    await updateUserData({
       majors: storeMajors !== [] ? storeMajors : storeUserData.majors,
       startQtr: storeStartQtr !== null ? storeStartQtr : storeUserData.dates.quarterEntered,
       endQtr: storeEndQtr !== null ? storeEndQtr : storeUserData.dates.quarterExpectedGraduation,
@@ -248,12 +247,17 @@ function EditProfile({
 
   useEffect(() => {
     getData();
-    storeUserData && setSelectedEndQtr(storeUserData.dates.quarterEntered)
+
+    // fill in redux store with data from backend
+    storeUserData && setMajors(storeUserData.majors)
+    storeUserData && setSelectedStartQtr(storeUserData.dates.quarterEntered)
     storeUserData && setSelectedEndQtr(storeUserData.dates.quarterExpectedGraduation)
+    storeUserData && setCourses(storeUserData.coursesTaken)
   }, [])
 
   useEffect(() => {
     if (storeUserData) {
+      // if there is a change, set isEditing true
       if (storeUserData.majors !== storeMajors ||
         storeUserData.dates.quarterEntered !== storeStartQtr ||
         storeUserData.dates.quarterExpectedGraduation !== storeEndQtr ||
@@ -266,7 +270,7 @@ function EditProfile({
 
   // chaging selectedStartQtr, selectedEndQtr. 
   useEffect(() => {
-    setStartQtr(selectedStartQtr)
+    setStartQtr(selectedStartQtr) 
     setEndQtr(selectedEndQtr)
   }, [selectedEndQtr, selectedStartQtr])
 
@@ -334,16 +338,28 @@ function EditProfile({
           <div className={classes.courseHistoryTitle}>
             Course History
           </div>
-          {storeUserData.coursesTaken.map((object, idx) => (
-            <SelectCourseDropdown 
-              key={idx}
-              data={object}
-              overlayOpened={coursesOverlayOpened}
-              setOverlayOpened={setCoursesOverlayOpened}
-              setQuarterOfOverlay={setQuarterOfOverlay}
-              canEdit={true}
-            />
-          ))}
+          {(isEditing === true) 
+          ? (
+            storeCoursesTaken.map((object, idx) => (
+              <SelectCourseDropdown 
+                key={idx}
+                data={object}
+                overlayOpened={coursesOverlayOpened}
+                setOverlayOpened={setCoursesOverlayOpened}
+                setQuarterOfOverlay={setQuarterOfOverlay}
+                canEdit={true}
+              />))
+          ) : (
+            storeUserData.coursesTaken.map((object, idx) => (
+              <SelectCourseDropdown 
+                key={idx}
+                data={object}
+                overlayOpened={coursesOverlayOpened}
+                setOverlayOpened={setCoursesOverlayOpened}
+                setQuarterOfOverlay={setQuarterOfOverlay}
+                canEdit={true}
+              />))
+          )}
         </div>
         {coursesOverlayOpened && (
           <div className={classes.overlay}>
