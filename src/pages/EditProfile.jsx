@@ -6,6 +6,7 @@ import { setStartQtr, setEndQtr, setGradeEntered, setCourses, getData} from "../
 import { getCurrQtr } from "../utils/utils";
 import { useNavigate } from 'react-router-dom';
 import Edit from '../assets/icons/Edit.svg';
+import { updateUserData } from '../api/updateUserData';
 import WhatMajor from './WhatMajor';
 
 
@@ -160,14 +161,7 @@ function EditProfile({
   const [coursesOverlayOpened, setCoursesOverlayOpened] = useState(false);
   const [majorsOverlayOpened, setMajorsOverlayOpened] = useState(false);
   const [quarterOfOverlay, setQuarterOfOverlay] = useState("");
-  const [userData, setUserData] = useState({
-      fullName: "",
-      dates: {
-        quarterEntered: "",
-        quarterExpectedGraduation: "",
-      },
-      coursesTaken: []
-  });
+  const [isEditing, setIsEditing] = useState(false);
 
    // Parse start/end season and year using store data
   let startSeason, endSeason;
@@ -242,28 +236,49 @@ function EditProfile({
     setMajorsOverlayOpened(true);
   }
 
-  // const handleChange = (e) => {
-  //   setUserData(s);
-  // }
+  const handleSaveClick = () => {
+    updateUserData({
+      majors: storeMajors !== [] ? storeMajors : storeUserData.majors,
+      startQtr: storeStartQtr !== null ? storeStartQtr : storeUserData.dates.quarterEntered,
+      endQtr: storeEndQtr !== null ? storeEndQtr : storeUserData.dates.quarterExpectedGraduation,
+      coursesTaken: storeCoursesTaken !== [] ? storeCoursesTaken : storeUserData.coursesTaken,
+    });
+    navigate('/profile');
+  }
 
   useEffect(() => {
     getData();
-    storeUserData && setUserData(userData)
+    storeUserData && setSelectedEndQtr(storeUserData.dates.quarterEntered)
+    storeUserData && setSelectedEndQtr(storeUserData.dates.quarterExpectedGraduation)
   }, [])
+
+  useEffect(() => {
+    if (storeUserData) {
+      if (storeUserData.majors !== storeMajors ||
+        storeUserData.dates.quarterEntered !== storeStartQtr ||
+        storeUserData.dates.quarterExpectedGraduation !== storeEndQtr ||
+        storeUserData.coursesTaken !== storeCoursesTaken
+        ) {
+        setIsEditing(true)
+      }
+    }
+  }, [storeMajors, storeEndQtr, storeStartQtr, storeCoursesTaken])
+
+  // chaging selectedStartQtr, selectedEndQtr. 
+  useEffect(() => {
+    setStartQtr(selectedStartQtr)
+    setEndQtr(selectedEndQtr)
+  }, [selectedEndQtr, selectedStartQtr])
 
 
   return (
-    // storeUserData !== null 
-    // ? (
+    storeUserData !== null 
+    ? (
       <div className={classes.layout}>
         <header className={classes.header}>
           <div className={classes.buttons}>
             <button className={classes.cancelButton} onClick={() => navigate("/profile")}>Cancel</button>
-            <button className={classes.saveButton}
-              // action={() => {
-              //   updateUserData(userData);
-              // }}
-            >Save</button>
+            <button className={classes.saveButton} onClick={handleSaveClick}>Save</button>
           </div>
           <h1 className={classes.title}>
             Edit Profile
@@ -271,21 +286,16 @@ function EditProfile({
         </header>
         <div className={classes.userInfoSection}>
           <div className={classes.section} >
-            <span className={classes.sectionTitle}>Name</span>
-            <input 
-              className={classes.nameInput} 
-              type="text" 
-              placeholder={"username"}
-              // value={userName}
-              // onChange={handleChange}
-            ></input>
-          </div>
-          <div className={classes.section} >
             <span className={classes.sectionTitle}>Major</span>
             <div className={classes.majorSection}>
-              {storeUserData.majors.map((major, idx) => (
-                <TagComponent key={idx} major={major} />
-              ))}
+              {(isEditing === true) 
+                ? (storeMajors.map((major, idx) => (
+                    <TagComponent key={idx} major={major} />
+                  )))
+                : (storeUserData.majors.map((major, idx) => (
+                    <TagComponent key={idx} major={major} />
+                  ))
+              )}
               <button onClick={handleClick}>
                 <img src={Edit} alt="edit-majors"/>
               </button>
@@ -301,7 +311,7 @@ function EditProfile({
                     : "Select a quarter"
                 }
                 options={startQuarters}
-                initialOption={storeUserData.quarterEntered}
+                initialOption={storeUserData.dates.quarterEntered}
                 setSelectedOption={setSelectedStartQtr}
               />
             </div>
@@ -352,16 +362,16 @@ function EditProfile({
             <div className={classes.overlayBackground}></div>
             <WhatMajor 
               majmin={"majors"}
-              storeMajors={storeUserData.majors}
+              majorsFromEditProfile={storeUserData.majors}
               isOverlay={true}
               setOverlayOpened={setMajorsOverlayOpened}
             />
           </div>
         )}
       </div>
-    // ) : (
-    //   <>Log in </>
-    // )
+    ) : (
+      <>Log in </>
+    )
   )
 }
 

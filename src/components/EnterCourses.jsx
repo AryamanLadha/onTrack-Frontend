@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { MiniCourseCard, PageButton, AutoDropdown } from "../components";
 import { connect } from "react-redux";
-import { getData } from "../actions/actions";
+import { getData, setCourses } from "../actions/actions";
 
 const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((theme) => ({
     layout: {
@@ -73,7 +73,7 @@ const useStyles = (lengthOfSelectedCourses, isAutoDropdownOpen) => makeStyles((t
     },
   }));
 
-function EnterCourses({ storeUserData, getData, isEditProfile, quarter, allCourses, setAllCourses, setOverlayOpened }) {
+function EnterCourses({ storeUserData, getData, setCourses, isEditProfile, quarter, allCourses, setAllCourses, setOverlayOpened }) {
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [numRows, setNumRows] = useState(0);
   const [lengthOfSelectedCourses, setLengthOfSelectedCourses] = useState(5);
@@ -92,10 +92,11 @@ function EnterCourses({ storeUserData, getData, isEditProfile, quarter, allCours
 
   const updateQuarterCourses = () => {
     if (isEditProfile === true) {
-      for (let i = 0; i < storeUserData.coursesTaken.length; i++) {
-        if (storeUserData.coursesTaken[i].quarter === quarter) {
-          storeUserData.coursesTaken[i].courses = selectedCourses
-          setAllCourses(storeUserData.coursesTaken);
+      let tempCoursesTakenData = storeUserData.coursesTaken;
+      for (let i = 0; i < tempCoursesTakenData.length; i++) {
+        if (tempCoursesTakenData[i].quarter === quarter) {
+          tempCoursesTakenData[i].courses = selectedCourses
+          setCourses(tempCoursesTakenData);
         }
       }
     } else {
@@ -201,7 +202,7 @@ const mapDispatchToProps = (dispatch) => {
     // setStartQtr: (newStartQtr) => dispatch(setStartQtr(newStartQtr)),
     // setEndQtr: (newEndQtr) => dispatch(setEndQtr(newEndQtr)),
     // setGradeEntered: (newGradeEntered) => dispatch(setGradeEntered(newGradeEntered)),
-    // setCourses: (newCourses) => dispatch(setCourses(newCourses)),
+    setCourses: (newCourses) => dispatch(setCourses(newCourses)),
     getData: () => dispatch(getData()),
   }
 };
