@@ -65,10 +65,13 @@ function PageButton({ page, text, size, action, setOverlayOpened, isOverlay, act
   const handleClick = () => {
     if (page === 'login')
       window.open(`${config.baseURL}/api/auth/google`, '_self');
-
+    
     else if (page === 'profile') {
       text === 'Edit' && navigate('/edit');
-      text === 'Logout' && logout();
+      if (text === 'Logout') {
+        logout();
+        navigate('/');
+      }
     }
 
     else if (page === 'majors') {
