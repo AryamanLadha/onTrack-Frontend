@@ -4,6 +4,7 @@ import { TagComponent, SelectCourseDropdown } from "../components";
 import { connect } from "react-redux";
 import { PageButton, Navbar } from '../components';
 import { getData } from "../actions/actions";
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = () => makeStyles((theme) => ({
   layout: {
@@ -93,9 +94,10 @@ function Profile({ getData, storeUserData }) {
     getData();
   }, []);
 
-  return (
-    storeUserData !== null  
-    ? (
+  const navigate = useNavigate();
+
+  if (storeUserData !== null) {
+    return (
       <div>
         <Navbar page='profile' />
         <div className={classes.layout}>
@@ -140,16 +142,11 @@ function Profile({ getData, storeUserData }) {
           />
         </div>
       </div>
-    ) : (
-      <div className={classes.layout}>
-        <header className={classes.header}>
-          <h1 className={classes.title}>
-            Please login
-          </h1>
-        </header>
-      </div>
-    )
-  )
+      ) 
+  } else {
+    navigate('/');
+    return null;
+  }
 }
 
 const mapStateToProps = (store) => {
