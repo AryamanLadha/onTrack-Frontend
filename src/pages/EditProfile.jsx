@@ -133,12 +133,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-// mock data for visuals
-const user = {
-  name: "username",
-}
-
-
 function EditProfile({ 
   getData, 
   storeUserData, 
@@ -246,7 +240,6 @@ function EditProfile({
 
   useEffect(() => {
     getData();
-    console.log(storeUserData.majors)
     // fill in redux store with data from backend
     storeUserData && setMajors(storeUserData.majors)
     storeUserData && setSelectedStartQtr(storeUserData.dates.quarterEntered)
@@ -385,7 +378,7 @@ function EditProfile({
         )}
       </div>
     ) : (
-      <>Log in </>
+      <></>
     )
   )
 }

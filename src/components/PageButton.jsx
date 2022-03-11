@@ -105,7 +105,7 @@ function PageButton({ page, text, size, action, setOverlayOpened, isOverlay, act
       text === 'Eligible Courses' ? navigate('/eligible') : navigate('/profile');
 
     else if (page === 'profile')
-      navigate('/editprofile');
+      navigate('/edit');
 
     // VERY IMPORTANT -- DISPATCH ACTION IF AVAILABLE
     if (action != null) {

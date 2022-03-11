@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function EligibleCourses({
   getData,
   storeUserData,
@@ -64,7 +65,13 @@ function EligibleCourses({
   // 1. When page renders, create an object to hold display data, uses data pulled from the store (majors and coursesTaken). See mapStateToProps below.
   // 2. Then dispatch getEligible action to get the list of courses to display on this page (which will be stored in currentClasses portion of studentData object)
 
-  const fetchData = async (studentData) => {
+  const fetchData = async (completed) => {
+    const studentData = {
+      major: storeUserData.majors,
+      completedClasses: completed,
+      currentClasses: [],
+    };
+
     try {
       await getEligible(JSON.stringify(studentData))
       if (eligibleCoursesData[0]) {
@@ -79,21 +86,13 @@ function EligibleCourses({
   useEffect(() => {
     // See API Docs for more detail about course object structure: https://docs.google.com/document/d/1K_EwdJnraRhgYYT1dDU4aiw_GFCbMcqSNi7-EAOIdJA/edit?usp=sharing
     let completed = [];
-
     if (storeUserData === null) {
       getData();
     } 
     storeUserData && storeUserData.coursesTaken.map((object) => completed.push(...object.courses));
-    
-    const studentData = {
-      major: storeUserData.majors,
-      completedClasses: completed,
-      currentClasses: [],
-    };
-
-    studentData && fetchData(studentData);
+    (storeUserData && completed) && fetchData(completed);
     // eslint-disable-next-line
-  }, []);
+  }, [storeUserData]);
 
   useEffect(() => {
     if (eligibleCoursesData.length !== 0) {

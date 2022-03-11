@@ -187,11 +187,6 @@ EnterCourses.defaultProps = {
 
 const mapStateToProps = (store) => {
   return {
-    // storeMajors: store.majors,
-    // storeCoursesTaken: store.coursesTaken,
-    // storeStartQtr: store.startQtr,
-    // storeEndQtr: store.endQtr,
-    // storeGradeEntered: store.gradeEntered,
     storeUserData: store.data,
   }
 };
@@ -199,9 +194,6 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   // Update the store with user's start quarter, end quarter, and grade entered
   return {
-    // setStartQtr: (newStartQtr) => dispatch(setStartQtr(newStartQtr)),
-    // setEndQtr: (newEndQtr) => dispatch(setEndQtr(newEndQtr)),
-    // setGradeEntered: (newGradeEntered) => dispatch(setGradeEntered(newGradeEntered)),
     setCourses: (newCourses) => dispatch(setCourses(newCourses)),
     getData: () => dispatch(getData()),
   }
