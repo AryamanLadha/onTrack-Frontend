@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { TagComponent, Dropdown, SelectCourseDropdown, EnterCourses } from "../components";
 import { makeStyles } from "@mui/styles";
 import { connect } from "react-redux";
-import { setStartQtr, setEndQtr, setGradeEntered, setCourses, getData, setMajors} from "../actions/actions";
+import { setStartQtr, setEndQtr, setCourses, getData, setMajors} from "../actions/actions";
 import { getCurrQtr } from "../utils/utils";
 import { useNavigate } from 'react-router-dom';
 import Edit from '../assets/icons/Edit.svg';
@@ -142,15 +142,14 @@ const user = {
 function EditProfile({ 
   getData, 
   storeUserData, 
+  setMajors, 
   storeMajors, 
-  storeStartQtr, 
-  storeEndQtr, 
-  storeGradeEntered, 
   setStartQtr, 
+  storeStartQtr, 
   setEndQtr, 
-  setGradeEntered, 
+  storeEndQtr, 
+  setCourses,
   storeCoursesTaken, 
-  setCourses  
 }) {
   const classes = useStyles();
   const navigate = useNavigate();
@@ -247,7 +246,7 @@ function EditProfile({
 
   useEffect(() => {
     getData();
-
+    console.log(storeUserData.majors)
     // fill in redux store with data from backend
     storeUserData && setMajors(storeUserData.majors)
     storeUserData && setSelectedStartQtr(storeUserData.dates.quarterEntered)
@@ -397,7 +396,6 @@ const mapStateToProps = (store) => {
     storeCoursesTaken: store.coursesTaken,
     storeStartQtr: store.startQtr,
     storeEndQtr: store.endQtr,
-    storeGradeEntered: store.gradeEntered,
     storeUserData: store.data,
   }
 };
@@ -405,9 +403,9 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   // Update the store with user's start quarter, end quarter, and grade entered
   return {
+    setMajors: (newMajors) => dispatch(setMajors(newMajors)),
     setStartQtr: (newStartQtr) => dispatch(setStartQtr(newStartQtr)),
     setEndQtr: (newEndQtr) => dispatch(setEndQtr(newEndQtr)),
-    setGradeEntered: (newGradeEntered) => dispatch(setGradeEntered(newGradeEntered)),
     setCourses: (newCourses) => dispatch(setCourses(newCourses)),
     getData: () => dispatch(getData()),
   }
