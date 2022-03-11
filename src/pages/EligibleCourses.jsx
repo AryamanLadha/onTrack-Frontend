@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import { Navbar } from '../components';
-import { getEligible } from '../actions/actions';
+import { getEligible, getData } from '../actions/actions';
 import EligibleCoursesBySubject from '../components/EligibleCoursesBySubject';
 
 const useStyles = makeStyles((theme) => ({
@@ -50,35 +50,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function EligibleCourses({
+  getData,
+  storeUserData,
   getEligible,
   eligibleCoursesData,
-  storeMajors,
-  storeCoursesTaken,
 }) {
   const classes = useStyles();
 
   const [nextQuarter, setNextQuarter] = useState('');
-
   const [activeSubject, setActiveSubject] = useState('');
 
   // 1. When page renders, create an object to hold display data, uses data pulled from the store (majors and coursesTaken). See mapStateToProps below.
   // 2. Then dispatch getEligible action to get the list of courses to display on this page (which will be stored in currentClasses portion of studentData object)
-  useEffect(() => {
-    // See API Docs for more detail about course object structure: https://docs.google.com/document/d/1K_EwdJnraRhgYYT1dDU4aiw_GFCbMcqSNi7-EAOIdJA/edit?usp=sharing
-    let completed = [];
 
-    storeCoursesTaken.map((object) => completed.push(...object.courses));
-
+  const fetchData = async (completed) => {
     const studentData = {
-      major: storeMajors,
+      major: storeUserData.majors,
       completedClasses: completed,
       currentClasses: [],
     };
-    studentData && getEligible(JSON.stringify(studentData));
 
+    try {
+      await getEligible(JSON.stringify(studentData))
+      if (eligibleCoursesData[0]) {
+        setNextQuarter(eligibleCoursesData[0].quarter)
+      } 
+    } catch (e) {
+      console.log(e);
+    }
+  } 
+
+  
+  useEffect(() => {
+    // See API Docs for more detail about course object structure: https://docs.google.com/document/d/1K_EwdJnraRhgYYT1dDU4aiw_GFCbMcqSNi7-EAOIdJA/edit?usp=sharing
+    let completed = [];
+    if (storeUserData === null) {
+      getData();
+    } 
+    storeUserData && storeUserData.coursesTaken.map((object) => completed.push(...object.courses));
+    (storeUserData && completed) && fetchData(completed);
     // eslint-disable-next-line
-  }, []);
+  }, [storeUserData]);
 
   useEffect(() => {
     if (eligibleCoursesData.length !== 0) {
@@ -126,8 +140,7 @@ function EligibleCourses({
 const mapStateToProps = (store) => {
   // Get the user's major(s), courses taken, and eligible courses
   return {
-    storeMajors: store.majors,
-    storeCoursesTaken: store.coursesTaken,
+    storeUserData: store.data,
     eligibleCoursesData: store.eligibleCourses,
   };
 };
@@ -135,6 +148,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   // Dispatch eligible courses (based on studentData object) to the store
   return {
+    getData: () => dispatch(getData()),
     getEligible: (studentData) => dispatch(getEligible(studentData)),
   };
 };

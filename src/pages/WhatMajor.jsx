@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import AutoDropdown from '../components/AutoDropdown';
@@ -89,13 +89,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function WhatMajor({ majmin, storeMajors, setMajors, isOverlay, setOverlayOpened }) {
+function WhatMajor({ majmin, storeMajors, setMajors, isOverlay, setOverlayOpened, majorsFromEditProfile }) {
   // This hook is very important! See AutoDropdown component below...
   const [selectedMajors, setSelectedMajors] = useState([]);
   const [isAutoDropdownOpen, setIsAutoDropdownOpen] = useState(false);
   const [emptyError, setEmptyError] = useState(false);
   const classes = useStyles();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setSelectedMajors(storeMajors)
+  }, [])
 
   return (
     <div className={isOverlay === true ? classes.layoutOverlay : classes.layout}>
@@ -108,32 +112,21 @@ function WhatMajor({ majmin, storeMajors, setMajors, isOverlay, setOverlayOpened
       </header>
         <div>
         {
-            majmin === "majors"
+          ((selectedMajors.length !== 0)
             ? (
-              (selectedMajors.length !== 0)
-              ? (
-                <div className={classes.tagComponentContainer}>
-                  {selectedMajors.map((major, idx) => (
-                    <TagComponent 
-                      key={idx} 
-                      major={major} 
-                      selectedMajors={selectedMajors}
-                      setSelectedMajors={setSelectedMajors}
-                    />
-                  ))}
-                </div>
-              )
-              : <div></div>
-            ) : ( 
-              (selectedMajors.length !== 0)
-              ? (
-                <div className={classes.tagComponentContainer}>
-                  {selectedMajors.map((major, idx) => (
-                    <TagComponent key={idx} major={major} />
-                  ))}
-                </div>
-              ) : <div></div>
+              <div className={classes.tagComponentContainer}>
+                {selectedMajors.map((major, idx) => (
+                  <TagComponent 
+                    key={idx} 
+                    major={major} 
+                    selectedMajors={selectedMajors}
+                    setSelectedMajors={setSelectedMajors}
+                  />
+                ))}
+              </div>
             )
+            : <div></div>
+          ) 
         }
           <AutoDropdown 
             whichPage={"majors"}
@@ -173,13 +166,8 @@ function WhatMajor({ majmin, storeMajors, setMajors, isOverlay, setOverlayOpened
               isOverlay={isOverlay}
               setOverlayOpened={setOverlayOpened}
               action={() => {
-                if (selectedMajors.length === 0) {
-                  setEmptyError(true);
-                  navigate('/');
-                } else {
-                  setMajors(selectedMajors);
-                  setEmptyError(false);
-                }}}
+                setMajors(selectedMajors);
+              }}
             />
           )
         ) : (
@@ -197,12 +185,6 @@ function WhatMajor({ majmin, storeMajors, setMajors, isOverlay, setOverlayOpened
               size="short"
               page="minors"
               action={() => {
-                // MINORS LOGIC
-                // if (selectedMinors.length === 0) {
-                //   setEmptyError(emptyError);
-                // } else {
-                //   setMinors(selectedMinors);
-                // }}}
                 setMajors(selectedMajors);
               }}
             />

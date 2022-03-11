@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TagComponent, Dropdown, SelectCourseDropdown, EnterCourses } from "../components";
 import { makeStyles } from "@mui/styles";
 import { connect } from "react-redux";
-import { setStartQtr, setEndQtr, setGradeEntered, setCourses } from "../actions/actions";
+import { setStartQtr, setEndQtr, setCourses, getData, setMajors} from "../actions/actions";
 import { getCurrQtr } from "../utils/utils";
 import { useNavigate } from 'react-router-dom';
 import Edit from '../assets/icons/Edit.svg';
+import { updateUserData } from '../api/updateUserData';
 import WhatMajor from './WhatMajor';
 
 
@@ -132,13 +133,18 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-// mock data for visuals
-const user = {
-  name: "username",
-}
-
-
-function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntered, setStartQtr, setEndQtr, setGradeEntered, storeCoursesTaken, setCourses  }) {
+function EditProfile({ 
+  getData, 
+  storeUserData, 
+  setMajors, 
+  storeMajors, 
+  setStartQtr, 
+  storeStartQtr, 
+  setEndQtr, 
+  storeEndQtr, 
+  setCourses,
+  storeCoursesTaken, 
+}) {
   const classes = useStyles();
   const navigate = useNavigate();
 
@@ -148,6 +154,7 @@ function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntere
   const [coursesOverlayOpened, setCoursesOverlayOpened] = useState(false);
   const [majorsOverlayOpened, setMajorsOverlayOpened] = useState(false);
   const [quarterOfOverlay, setQuarterOfOverlay] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
    // Parse start/end season and year using store data
   let startSeason, endSeason;
@@ -169,10 +176,10 @@ function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntere
     let existing = undefined;
     while (!(y === endYear && s === endSeason)) {
       existing = storeCoursesTaken.find(object => object.quarter === (seasons[s] + " " + y));
-      if (existing !== undefined && existing.courses.length > 0)
-      {
+      if (existing !== undefined && existing.courses.length > 0) {
         newCoursesTaken.push(existing);
       }
+
       newCoursesTaken.push({ quarter: seasons[s] + " " + y, courses: [] });
       s++;
       if (s === seasons.length) {
@@ -221,93 +228,158 @@ function EditProfile({ storeMajors, storeStartQtr, storeEndQtr, storeGradeEntere
     setMajorsOverlayOpened(true);
   }
 
+  const handleSaveClick = async () => {
+    await updateUserData({
+      majors: storeMajors !== [] ? storeMajors : storeUserData.majors,
+      startQtr: storeStartQtr !== null ? storeStartQtr : storeUserData.dates.quarterEntered,
+      endQtr: storeEndQtr !== null ? storeEndQtr : storeUserData.dates.quarterExpectedGraduation,
+      coursesTaken: storeCoursesTaken !== [] ? storeCoursesTaken : storeUserData.coursesTaken,
+    });
+    navigate('/profile');
+  }
+
+  useEffect(() => {
+    getData();
+    // fill in redux store with data from backend
+    storeUserData && setMajors(storeUserData.majors)
+    storeUserData && setSelectedStartQtr(storeUserData.dates.quarterEntered)
+    storeUserData && setSelectedEndQtr(storeUserData.dates.quarterExpectedGraduation)
+    storeUserData && setCourses(storeUserData.coursesTaken)
+  }, [])
+
+  useEffect(() => {
+    if (storeUserData) {
+      // if there is a change, set isEditing true
+      if (storeUserData.majors !== storeMajors ||
+        storeUserData.dates.quarterEntered !== storeStartQtr ||
+        storeUserData.dates.quarterExpectedGraduation !== storeEndQtr ||
+        storeUserData.coursesTaken !== storeCoursesTaken
+        ) {
+        setIsEditing(true)
+      }
+    }
+  }, [storeMajors, storeEndQtr, storeStartQtr, storeCoursesTaken])
+
+  // chaging selectedStartQtr, selectedEndQtr. 
+  useEffect(() => {
+    setStartQtr(selectedStartQtr) 
+    setEndQtr(selectedEndQtr)
+  }, [selectedEndQtr, selectedStartQtr])
+
+
   return (
-    <div className={classes.layout}>
-      <header className={classes.header}>
-        <div className={classes.buttons}>
-          <button className={classes.cancelButton} onClick={() => navigate("/profile")}>Cancel</button>
-          <button className={classes.saveButton}>Save</button>
-        </div>
-        <h1 className={classes.title}>
-          Edit Profile
-        </h1>
-      </header>
-      <div className={classes.userInfoSection}>
-        <div className={classes.section} >
-          <span className={classes.sectionTitle}>Name</span>
-          <input className={classes.nameInput} type="text" placeholder={user.name}></input>
-        </div>
-        <div className={classes.section} >
-          <span className={classes.sectionTitle}>Major</span>
-          <div className={classes.majorSection}>
-            {storeMajors.map((major, idx) => (
-              <TagComponent key={idx} major={major} />
-            ))}
-            <button onClick={handleClick}>
+    storeUserData !== null 
+    ? (
+      <div className={classes.layout}>
+        <header className={classes.header}>
+          <div className={classes.buttons}>
+            <button className={classes.cancelButton} onClick={() => navigate("/profile")}>Cancel</button>
+            <button className={classes.saveButton} onClick={handleSaveClick}>Save</button>
+          </div>
+          <h1 className={classes.title}>
+            Edit Profile
+          </h1>
+        </header>
+        <div className={classes.userInfoSection}>
+          <div className={classes.section} >
+            <span className={classes.sectionTitle}>Major</span>
+            <div className={classes.majorSection}>
+              {(isEditing === true) 
+                ? (storeMajors.map((major, idx) => (
+                    <TagComponent key={idx} major={major} />
+                  )))
+                : (storeUserData.majors.map((major, idx) => (
+                    <TagComponent key={idx} major={major} />
+                  ))
+              )}
+              <button onClick={handleClick}>
                 <img src={Edit} alt="edit-majors"/>
-            </button>
+              </button>
+            </div>
+          </div>
+          <div className={classes.quarterSection} >
+            <div className={classes.section} >
+              <span className={classes.sectionTitle}>Start Term</span>
+              <Dropdown 
+                placeholder={
+                  storeUserData.dates.quarterEntered !== null && storeUserData.dates.quarterEntered !== "" 
+                    ? storeUserData.dates.quarterEntered 
+                    : "Select a quarter"
+                }
+                options={startQuarters}
+                initialOption={storeUserData.dates.quarterEntered}
+                setSelectedOption={setSelectedStartQtr}
+              />
+            </div>
+            <div className={classes.section} >
+              <span className={classes.sectionTitle}>Expected Graduation</span>
+              <Dropdown 
+                placeholder={
+                  storeUserData.dates.quarterExpectedGraduation!== null && storeUserData.dates.quarterExpectedGraduation !== "" 
+                    ? storeUserData.dates.quarterExpectedGraduation
+                    : "Select a quarter"
+                }
+                options={endQuarters}
+                initialOption={storeUserData.dates.quarterExpectedGraduation}
+                setSelectedOption={setSelectedEndQtr}
+              />
+            </div>
           </div>
         </div>
-        <div className={classes.quarterSection} >
-          <div className={classes.section} >
-            <span className={classes.sectionTitle}>Start Term</span>
-            <Dropdown 
-              placeholder={storeStartQtr !== null && storeStartQtr !== "" ? storeStartQtr : "Select a quarter"}
-              options={startQuarters}
-              initialOption={storeStartQtr}
-              setSelectedOption={setSelectedStartQtr}
+        <div className={classes.courseHistory}>
+          <div className={classes.courseHistoryTitle}>
+            Course History
+          </div>
+          {(isEditing === true) 
+          ? (
+            storeCoursesTaken.map((object, idx) => (
+              <SelectCourseDropdown 
+                key={idx}
+                data={object}
+                overlayOpened={coursesOverlayOpened}
+                setOverlayOpened={setCoursesOverlayOpened}
+                setQuarterOfOverlay={setQuarterOfOverlay}
+                canEdit={true}
+              />))
+          ) : (
+            storeUserData.coursesTaken.map((object, idx) => (
+              <SelectCourseDropdown 
+                key={idx}
+                data={object}
+                overlayOpened={coursesOverlayOpened}
+                setOverlayOpened={setCoursesOverlayOpened}
+                setQuarterOfOverlay={setQuarterOfOverlay}
+                canEdit={true}
+              />))
+          )}
+        </div>
+        {coursesOverlayOpened && (
+          <div className={classes.overlay}>
+            <div className={classes.overlayBackground}></div>
+            <EnterCourses
+              isEditProfile={true}
+              quarter={quarterOfOverlay}
+              allCourses={coursesTaken}
+              setAllCourses={setCoursesTaken}
+              setOverlayOpened={setCoursesOverlayOpened}
             />
           </div>
-          <div className={classes.section} >
-            <span className={classes.sectionTitle}>Expected Graduation</span>
-            <Dropdown 
-              placeholder={storeEndQtr !== null && storeEndQtr !== "" ? storeEndQtr : "Select a quarter"}
-              options={endQuarters}
-              initialOption={storeEndQtr}
-              setSelectedOption={setSelectedEndQtr}
+        )}
+        {majorsOverlayOpened && (
+          <div className={classes.overlay}>
+            <div className={classes.overlayBackground}></div>
+            <WhatMajor 
+              majmin={"majors"}
+              majorsFromEditProfile={storeUserData.majors}
+              isOverlay={true}
+              setOverlayOpened={setMajorsOverlayOpened}
             />
           </div>
-        </div>
+        )}
       </div>
-      <div className={classes.courseHistory}>
-        <div className={classes.courseHistoryTitle}>
-          Course History
-        </div>
-        {storeCoursesTaken.map((object, idx) => (
-          <SelectCourseDropdown 
-            key={idx}
-            data={object}
-            overlayOpened={coursesOverlayOpened}
-            setOverlayOpened={setCoursesOverlayOpened}
-            setQuarterOfOverlay={setQuarterOfOverlay}
-            canEdit={true}
-          />
-        ))}
-      </div>
-      {coursesOverlayOpened && (
-        <div className={classes.overlay}>
-          <div className={classes.overlayBackground}></div>
-          <EnterCourses
-            isEditProfile={true}
-            quarter={quarterOfOverlay}
-            allCourses={coursesTaken}
-            setAllCourses={setCoursesTaken}
-            setOverlayOpened={setCoursesOverlayOpened}
-          />
-        </div>
-      )}
-      {majorsOverlayOpened && (
-        <div className={classes.overlay}>
-          <div className={classes.overlayBackground}></div>
-          <WhatMajor 
-            majmin={"majors"}
-            storeMajors={storeMajors}
-            isOverlay={true}
-            setOverlayOpened={setMajorsOverlayOpened}
-          />
-        </div>
-      )}
-    </div>
+    ) : (
+      <></>
+    )
   )
 }
 
@@ -317,17 +389,18 @@ const mapStateToProps = (store) => {
     storeCoursesTaken: store.coursesTaken,
     storeStartQtr: store.startQtr,
     storeEndQtr: store.endQtr,
-    storeGradeEntered: store.gradeEntered,
+    storeUserData: store.data,
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   // Update the store with user's start quarter, end quarter, and grade entered
   return {
+    setMajors: (newMajors) => dispatch(setMajors(newMajors)),
     setStartQtr: (newStartQtr) => dispatch(setStartQtr(newStartQtr)),
     setEndQtr: (newEndQtr) => dispatch(setEndQtr(newEndQtr)),
-    setGradeEntered: (newGradeEntered) => dispatch(setGradeEntered(newGradeEntered)),
     setCourses: (newCourses) => dispatch(setCourses(newCourses)),
+    getData: () => dispatch(getData()),
   }
 };
 

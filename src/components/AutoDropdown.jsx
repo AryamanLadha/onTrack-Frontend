@@ -137,7 +137,9 @@ function AutoDropdown({ whichPage, initialSelectedOptions, selectedOptions, setS
       : data.map(major => major)
 
   useEffect(() => {
-    getData();
+    if (data.length === 0) {
+      getData();
+    }
     setSelectedOptions(selectedOptions.concat(initialSelectedOptions));
     // eslint-disable-next-line
   }, []);

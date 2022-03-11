@@ -42,6 +42,7 @@ const theme = createTheme({
     lightYellow: '#FDFCF8',
     lightGreen: '#ECF1F4',
     green: '#BBD1A8',
+    olive: '#B2BCAA',
     loginBlack: '#443E3E',
   },
 });

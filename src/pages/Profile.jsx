@@ -4,8 +4,9 @@ import { TagComponent, SelectCourseDropdown } from "../components";
 import { connect } from "react-redux";
 import { PageButton, Navbar } from '../components';
 import { getData } from "../actions/actions";
+import { useNavigate } from "react-router-dom";
 
-const useStyles = (props) => makeStyles((theme) => ({
+const useStyles = () => makeStyles((theme) => ({
   layout: {
     display: 'flex',
     alignItems: 'center',
@@ -16,13 +17,19 @@ const useStyles = (props) => makeStyles((theme) => ({
     backgroundColor: theme.color.background,
   },
 
+  pageButtonWrapper: {
+    width: '95%',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+
   header: {
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
     width: '100rem',
     height: '9.4rem',
-    marginTop: '18.4rem',
+    marginTop: '9.4rem',
     marginBottom: '12.4rem',
   },
 
@@ -52,50 +59,12 @@ const useStyles = (props) => makeStyles((theme) => ({
     flexDirection: "row",
   },
 
-  degreeProgress: {
-    width: "59.3rem",
-    display: "grid",
-    gridTemplateColumns: "repeat(2,1fr)",
-    rowGap: "3rem",
-    margin: "7.5rem 0rem 9.8rem 0rem",
-  },
-
-  progressBar: {
-    width: "44.3rem",
-    height: "5rem",
-    display: "flex",
-    flexDirection: "row",
-    backgroundColor: theme.color.lightGreen,
-  },
-
-  progressTitle: {
-    width: "12rem",
-    textAlign: "right",
-    height: "5rem",
-    lineHeight: "5rem",
-    font: theme.font.progressBar,
-  },
-
-
-  upperDivProgressBar: {
-    width: `${props.upperDivProgressPercent}%`,
-    backgroundColor: theme.color.green,
-    position: "relative",
-    zIndex: "1rem",
-  },
-
-  degreeProgressBar: {
-    width: `${props.degreeProgressPercent}%`,
-    backgroundColor: theme.color.green,
-    position: "relative",
-    zIndex: "1rem",
-  },
-
   courseHistory: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
+    marginTop: "8rem",
   },
 
   courseHistoryTitle : {
@@ -104,15 +73,10 @@ const useStyles = (props) => makeStyles((theme) => ({
   }
 }))
 
-// mock data for visuals
-const user = {
-  name: "username",
-}
 
-function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeEntered, storeCoursesTaken }) {
+function Profile({ getData, storeUserData }) {
   const [ overlayOpened, setOverlayOpened] = useState(false);
   const [ quarterOfOverlay, setQuarterOfOverlay] = useState("");
-  // const [ userLoggedIn, setUserLoggedIn ] = useState(false);
 
   // pass on progress percentage to style progress bars
   const props = {
@@ -123,45 +87,40 @@ function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeE
   const classes = useStyles(props)();
 
   useEffect(() => {
-    // check if user is logged in and update the state
-    // if (able to load user info) {setUserLoggedIn(true)}
     getData();
   }, []);
 
-  return (
-    // userLoggedIn 
-    // ? (
+  const navigate = useNavigate();
+
+  if (storeUserData !== null) {
+    return (
       <div>
         <Navbar page='profile' />
         <div className={classes.layout}>
           {/* add onclick to enable editing  */}
-          <PageButton
-            page="profile"
-            text="Edit"
-            size="short"
-          />
+          <div className={classes.pageButtonWrapper}>
+            <PageButton
+              page="profile"
+              text="Edit"
+              size="short"
+            />
+          </div>
           <header className={classes.header}>
             <h1 className={classes.title}>
-              Welcome, {user.name}!
+              Welcome, {storeUserData.fullName}!
             </h1>
-            <span className={classes.subtitle}>Expected graduation: {storeEndQtr} </span>
+            <span className={classes.subtitle}>Expected graduation: {storeUserData.dates.quarterExpectedGraduation} </span>
             <div className={classes.majors}>
-              {storeMajors.map((major, idx) => (
+              {storeUserData.majors.map((major, idx) => (
                 <TagComponent key={idx} major={major} />
               ))}
             </div>
           </header>
-          <div className={classes.degreeProgress} >
-            <div className={classes.progressTitle}>Upper Div</div>
-            <div className={classes.progressBar}>
-              <div className={classes.upperDivProgressBar} />
-            </div>
-          </div>
           <div className={classes.courseHistory}>
             <div className={classes.courseHistoryTitle}>
               Course History
             </div>
-            {storeCoursesTaken.map((object, idx) => (
+            {storeUserData.coursesTaken.map((object, idx) => (
               <SelectCourseDropdown 
                 key={idx}
                 data={object}
@@ -179,26 +138,17 @@ function Profile({ getData, storeMajors, storeStartQtr, storeEndQtr, storeGradeE
           />
         </div>
       </div>
-    // ) : (
-    //   <div className={classes.layout}>
-    //     <header className={classes.header}>
-    //       <h1 className={classes.title}>
-    //         Please login
-    //       </h1>
-    //     </header>
-    //   </div>
-    // )
-  )
+    ) 
+  } else {
+    navigate("/");
+    return null;
+  }
 }
 
 const mapStateToProps = (store) => {
   return (
     { 
-      storeMajors: store.majors,
-      storeStartQtr: store.startQtr,
-      storeEndQtr: store.endQtr,
-      storeGradeEntered: store.gradeEntered,
-      storeCoursesTaken: store.coursesTaken,
+      storeUserData: store.data,
     }
   )
 };
