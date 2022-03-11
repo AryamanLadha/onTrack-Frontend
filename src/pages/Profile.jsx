@@ -73,10 +73,6 @@ const useStyles = () => makeStyles((theme) => ({
   }
 }))
 
-// mock data for visuals
-const user = {
-  name: "username",
-}
 
 function Profile({ getData, storeUserData }) {
   const [ overlayOpened, setOverlayOpened] = useState(false);

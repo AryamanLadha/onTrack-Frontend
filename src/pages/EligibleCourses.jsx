@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import { Navbar } from '../components';
-import { getEligible, getData, setCourses, setMajors } from '../actions/actions';
+import { getEligible, getData } from '../actions/actions';
 import EligibleCoursesBySubject from '../components/EligibleCoursesBySubject';
 
 const useStyles = makeStyles((theme) => ({

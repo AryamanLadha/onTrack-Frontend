@@ -66,8 +66,7 @@ function PageButton({ page, text, size, action, setOverlayOpened, isOverlay, act
     if (page === 'login')
       window.open(`${config.baseURL}/api/auth/google`, '_self');
 
-    else if (page === 'profile')
-    {
+    else if (page === 'profile') {
       text === 'Edit' && navigate('/edit');
       text === 'Logout' && logout();
     }
@@ -89,7 +88,6 @@ function PageButton({ page, text, size, action, setOverlayOpened, isOverlay, act
         ? // Go back to majors (skip minors)
           navigate('/majors')
         : navigate('/courses');
-
     }
     
     else if (page === 'courses')
@@ -103,9 +101,6 @@ function PageButton({ page, text, size, action, setOverlayOpened, isOverlay, act
 
     else if (page === 'nav')
       text === 'Eligible Courses' ? navigate('/eligible') : navigate('/profile');
-
-    else if (page === 'profile')
-      navigate('/edit');
 
     // VERY IMPORTANT -- DISPATCH ACTION IF AVAILABLE
     if (action != null) {
