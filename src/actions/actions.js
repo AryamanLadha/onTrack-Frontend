@@ -4,7 +4,7 @@ export const config = {
   headers: {
     'Content-type': 'application-json',
   },
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://ontrack-backend.herokuapp.com',
 };
 // When you make an API call, or anything asynchronous, the action creator returns a function
 

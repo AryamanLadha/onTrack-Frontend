@@ -49,7 +49,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const authenticate = () => {
-    navigate('http://localhost:8000/api/auth/google')
+    navigate('https://ontrack-backend.herokuapp.com/api/auth/google')
   }
 
   return (
